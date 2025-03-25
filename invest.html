@@ -915,110 +915,6 @@
             margin-top: var(--spacing-lg);
         }
 
-        /* Currency Switcher */
-        .currency-switcher {
-            position: fixed;
-            top: var(--spacing-xl);
-            left: calc(var(--spacing-xl) + 60px);
-            background: var(--bg-card);
-            border-radius: var(--radius-md);
-            padding: var(--spacing-xs);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-md);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            width: 120px;
-        }
-
-        .currency-dropdown {
-            position: relative;
-            cursor: pointer;
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: var(--transition-normal);
-        }
-
-        .currency-dropdown:hover {
-            background: var(--glass-hover);
-        }
-
-        .currency-dropdown::after {
-            content: '▼';
-            font-size: 0.7em;
-            margin-left: var(--spacing-sm);
-            transition: transform 0.3s ease;
-        }
-
-        .currency-dropdown.active::after {
-            transform: rotate(180deg);
-        }
-
-        .currency-options {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--bg-card);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            max-height: 0;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 101;
-            pointer-events: none;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .currency-options.show {
-            max-height: 300px;
-            opacity: 1;
-            pointer-events: all;
-            margin-top: var(--spacing-xs);
-        }
-
-        .currency-option {
-            padding: var(--spacing-sm) var(--spacing-md);
-            cursor: pointer;
-            transition: var(--transition-normal);
-        }
-
-        .currency-option:hover {
-            background: var(--glass-hover);
-        }
-
-        .currency-option.active {
-            background: var(--gradient-primary);
-            color: white;
-        }
-
-        .currency-info {
-            font-size: 0.7rem;
-            color: var(--text-tertiary);
-            padding: var(--spacing-xs) var(--spacing-sm);
-            margin-top: var(--spacing-xs);
-            border-top: 1px solid var(--border);
-            text-align: center;
-            line-height: 1.2;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .currency-switcher:hover .currency-info {
-            opacity: 1;
-        }
-
-        .currency-info-date {
-            font-weight: 600;
-        }
-
         /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -1075,12 +971,6 @@
             .add-btn {
                 bottom: var(--spacing-xl);
                 right: calc(var(--spacing-xl) + 60px + var(--spacing-md));
-            }
-
-            .currency-switcher {
-                top: auto;
-                bottom: var(--spacing-xl);
-                left: var(--spacing-xl);
             }
         }
 
@@ -1141,27 +1031,6 @@
         <line id="sun-ray-7" x1="4.22" y1="19.78" x2="5.64" y2="18.36" style="display:none;"/>
         <line id="sun-ray-8" x1="18.36" y1="5.64" x2="19.78" y2="4.22" style="display:none;"/>
     </svg>
-</div>
-
-<div class="currency-switcher">
-    <div class="currency-dropdown" onclick="toggleCurrencyOptions()">
-        <span id="currentCurrency">USD</span>
-    </div>
-    <div class="currency-options" id="currencyOptions">
-        <div class="currency-option active" data-currency="USD" onclick="changeCurrency('USD')">USD</div>
-        <div class="currency-option" data-currency="EUR" onclick="changeCurrency('EUR')">EUR</div>
-        <div class="currency-option" data-currency="GBP" onclick="changeCurrency('GBP')">GBP</div>
-        <div class="currency-option" data-currency="CAD" onclick="changeCurrency('CAD')">CAD</div>
-        <div class="currency-option" data-currency="PLN" onclick="changeCurrency('PLN')">PLN</div>
-        <div class="currency-option" data-currency="UAH" onclick="changeCurrency('UAH')">UAH</div>
-        <div class="currency-option" data-currency="RUB" onclick="changeCurrency('RUB')">RUB</div>
-        <div class="currency-option" data-currency="KZT" onclick="changeCurrency('KZT')">KZT</div>
-    </div>
-    <div class="currency-info" id="currencyInfo">
-        <span>Курс обновляется ежедневно.</span><br>
-        <span>Последнее обновление:</span><br>
-        <span class="currency-info-date" id="lastUpdateDate">24.03.2025 13:40</span>
-    </div>
 </div>
 
 <div class="nav-bar">
@@ -1460,31 +1329,6 @@
     let currentSkinId = null;
     let currentSoldSkinId = null;
     let confirmCallback = null;
-    let currentCurrency = 'USD';
-    
-    // Currency conversion rates
-    const currencyRates = {
-        USD: 1,
-        EUR: 0.92,
-        GBP: 0.78,
-        CAD: 1.35,
-        PLN: 3.95,
-        UAH: 39.5,
-        RUB: 92.5,
-        KZT: 450
-    };
-    
-    // Currency symbols
-    const currencySymbols = {
-        USD: '$',
-        EUR: '€',
-        GBP: '£',
-        CAD: 'C$',
-        PLN: 'zł',
-        UAH: '₴',
-        RUB: '₽',
-        KZT: '₸'
-    };
     
     // Set today's date as default for date inputs
     document.addEventListener('DOMContentLoaded', function() {
@@ -1519,75 +1363,10 @@
         
         // Create particles effect
         createParticles();
-        
-        // Initialize currency switcher
-        initCurrencySwitcher();
-        
-        // Set last update date
-        updateLastCurrencyUpdateDate();
     });
     
-    function updateLastCurrencyUpdateDate() {
-        // Set a fixed date as requested
-        document.getElementById('lastUpdateDate').textContent = '24.03.2025 13:40';
-    }
-    
-    function toggleCurrencyOptions() {
-        const dropdown = document.querySelector('.currency-dropdown');
-        const options = document.getElementById('currencyOptions');
-        
-        dropdown.classList.toggle('active');
-        options.classList.toggle('show');
-    }
-    
-    function changeCurrency(currency) {
-        // Update current currency
-        currentCurrency = currency;
-        
-        // Update UI
-        document.getElementById('currentCurrency').textContent = currency;
-        
-        // Update active class
-        const options = document.querySelectorAll('.currency-option');
-        options.forEach(option => {
-            if (option.getAttribute('data-currency') === currency) {
-                option.classList.add('active');
-            } else {
-                option.classList.remove('active');
-            }
-        });
-        
-        // Close dropdown
-        toggleCurrencyOptions();
-        
-        // Update UI with new currency
-        updateDashboard();
-        renderSkinsTable();
-        renderSoldSkinsTable();
-    }
-    
-    function initCurrencySwitcher() {
-        // Set initial currency
-        document.getElementById('currentCurrency').textContent = currentCurrency;
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const dropdown = document.querySelector('.currency-dropdown');
-            const options = document.getElementById('currencyOptions');
-            
-            if (!event.target.closest('.currency-switcher')) {
-                dropdown.classList.remove('active');
-                options.classList.remove('show');
-            }
-        });
-    }
-    
     function formatCurrency(amount) {
-        // Convert amount to current currency
-        const convertedAmount = amount * currencyRates[currentCurrency];
-        
-        // Format with currency symbol
-        return currencySymbols[currentCurrency] + convertedAmount.toFixed(2);
+        return '$' + amount.toFixed(2);
     }
     
     function initChart() {
@@ -2556,3 +2335,4 @@
 </button>
 </body>
 </html>
+

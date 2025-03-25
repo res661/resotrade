@@ -1646,102 +1646,6 @@
         margin-top: var(--spacing-lg);
         margin-bottom: var(--spacing-lg);
     }
-
-    /* Currency Switcher Styles */
-    .currency-switcher {
-        position: fixed;
-        top: var(--spacing-xl);
-        left: calc(var(--spacing-xl) + 60px);
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-sm);
-        z-index: 100;
-    }
-
-    .currency-dropdown {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        padding: var(--spacing-sm) var(--spacing-md);
-        color: var(--text-primary);
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition-normal);
-        box-shadow: var(--shadow-sm);
-        position: relative;
-        min-width: 100px;
-        text-align: center;
-    }
-
-    .currency-dropdown:hover {
-        border-color: var(--accent-primary);
-        box-shadow: var(--shadow-md);
-        transform: translateY(-2px);
-    }
-
-    .currency-options {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        margin-top: var(--spacing-xs);
-        box-shadow: var(--shadow-md);
-        overflow: hidden;
-        z-index: 101;
-        display: none;
-        animation: fadeIn 0.3s ease;
-    }
-
-    .currency-option {
-        padding: var(--spacing-sm) var(--spacing-md);
-        cursor: pointer;
-        transition: var(--transition-fast);
-    }
-
-    .currency-option:hover {
-        background: var(--glass-hover);
-        color: var(--accent-primary);
-    }
-
-    .currency-option.active {
-        background: var(--accent-primary);
-        color: white;
-    }
-
-    /* Modified currency info to appear on the right side */
-    .currency-info {
-        position: absolute;
-        top: 0;
-        left: 100%;
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        padding: var(--spacing-sm) var(--spacing-md);
-        font-size: 0.8rem;
-        color: var(--text-tertiary);
-        max-width: 200px;
-        box-shadow: var(--shadow-sm);
-        z-index: 99;
-        opacity: 0;
-        transform: translateY(-10px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
-        pointer-events: none;
-        margin-left: var(--spacing-md);
-    }
-
-    .currency-dropdown:hover + .currency-info,
-    .currency-info:hover {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .currency-info-date {
-        font-weight: 600;
-        color: var(--accent-primary);
-    }
 </style>
 </head>
 <body>
@@ -1760,27 +1664,6 @@
     <line id="sun-ray-7" x1="4.22" y1="19.78" x2="5.64" y2="18.36" style="display:none;"/>
     <line id="sun-ray-8" x1="18.36" y1="5.64" x2="19.78" y2="4.22" style="display:none;"/>
 </svg>
-</div>
-
-<!-- Currency Switcher -->
-<div class="currency-switcher">
-    <div class="currency-dropdown" onclick="toggleCurrencyOptions()">
-        <span id="currentCurrency">USD</span>
-        <div class="currency-options" id="currencyOptions">
-            <div class="currency-option active" data-currency="USD" onclick="changeCurrency('USD')">USD</div>
-            <div class="currency-option" data-currency="EUR" onclick="changeCurrency('EUR')">EUR</div>
-            <div class="currency-option" data-currency="GBP" onclick="changeCurrency('GBP')">GBP</div>
-            <div class="currency-option" data-currency="CAD" onclick="changeCurrency('CAD')">CAD</div>
-            <div class="currency-option" data-currency="PLN" onclick="changeCurrency('PLN')">PLN</div>
-            <div class="currency-option" data-currency="UAH" onclick="changeCurrency('UAH')">UAH</div>
-            <div class="currency-option" data-currency="RUB" onclick="changeCurrency('RUB')">RUB</div>
-            <div class="currency-option" data-currency="KZT" onclick="changeCurrency('KZT')">KZT</div>
-        </div>
-    </div>
-    <div class="currency-info" id="currencyInfo">
-        <span>Курс обновляется ежедневно. Последнее обновление: </span> 
-        <span class="currency-info-date" id="lastUpdateDate">Загрузка...</span>
-    </div>
 </div>
 
 <div class="nav-bar">
@@ -2087,187 +1970,6 @@ let currentDate = new Date();
 let editingTransactionIndex = null;
 let hasChanges = false;
 let sparkles = [];
-let currentCurrency = 'USD';
-let exchangeRates = {};
-let lastRatesUpdate = null;
-
-// API конфигурация
-const API_CONFIG = {
-    url: 'https://apilayer.net/api/live',
-    access_key: 'c02aef899e848950cd99e5899c67e134',
-    currencies: 'EUR,GBP,CAD,PLN,UAH,RUB,KZT',
-    source: 'USD',
-    format: 1
-};
-
-// Функция для получения курсов валют
-async function fetchExchangeRates() {
-    try {
-        // Проверяем, есть ли сохраненные курсы и не устарели ли они
-        const savedRates = localStorage.getItem('exchangeRates');
-        const savedDate = localStorage.getItem('ratesLastUpdate');
-        
-        if (savedRates && savedDate) {
-            const lastUpdate = new Date(savedDate);
-            const now = new Date();
-            
-            // Если курсы обновлялись сегодня, используем их
-            if (lastUpdate.toDateString() === now.toDateString()) {
-                exchangeRates = JSON.parse(savedRates);
-                lastRatesUpdate = lastUpdate;
-                updateCurrencyInfo();
-                return;
-            }
-        }
-        
-        // Если курсов нет или они устарели, запрашиваем новые
-        const queryParams = new URLSearchParams({
-            access_key: API_CONFIG.access_key,
-            currencies: API_CONFIG.currencies,
-            source: API_CONFIG.source,
-            format: API_CONFIG.format
-        });
-        
-        const response = await fetch(`${API_CONFIG.url}?${queryParams}`);
-        const data = await response.json();
-        
-        if (data.success) {
-            exchangeRates = data.quotes;
-            lastRatesUpdate = new Date();
-            
-            // Сохраняем курсы и дату обновления
-            localStorage.setItem('exchangeRates', JSON.stringify(exchangeRates));
-            localStorage.setItem('ratesLastUpdate', lastRatesUpdate.toISOString());
-            
-            updateCurrencyInfo();
-            showNotification('Курсы валют успешно обновлены', 'success');
-        } else {
-            throw new Error(data.error?.info || 'Ошибка при получении курсов валют');
-        }
-    } catch (error) {
-        console.error('Ошибка при получении курсов валют:', error);
-        
-        // Если есть сохраненные курсы, используем их даже если они устарели
-        const savedRates = localStorage.getItem('exchangeRates');
-        const savedDate = localStorage.getItem('ratesLastUpdate');
-        
-        if (savedRates && savedDate) {
-            exchangeRates = JSON.parse(savedRates);
-            lastRatesUpdate = new Date(savedDate);
-            updateCurrencyInfo();
-            showNotification('Используются сохраненные курсы валют', 'info');
-        } else {
-            showNotification('Ошибка при получении курсов валют', 'error');
-        }
-    }
-}
-
-// Обновляем информацию о последнем обновлении курсов
-function updateCurrencyInfo() {
-    const dateElement = document.getElementById('lastUpdateDate');
-    if (lastRatesUpdate) {
-        dateElement.textContent = lastRatesUpdate.toLocaleDateString();
-    } else {
-        dateElement.textContent = 'Нет данных';
-    }
-}
-
-// Функция для конвертации суммы из USD в выбранную валюту
-function convertCurrency(amount, fromCurrency = 'USD', toCurrency = currentCurrency) {
-    if (fromCurrency === toCurrency) return amount;
-    
-    if (toCurrency === 'USD') {
-        // Конвертация из другой валюты в USD
-        const rate = exchangeRates[`USD${fromCurrency}`];
-        return rate ? amount / rate : amount;
-    } else {
-        // Конвертация из USD в другую валюту
-        const rate = exchangeRates[`USD${toCurrency}`];
-        return rate ? amount * rate : amount;
-    }
-}
-
-// Функция для получения символа валюты
-function getCurrencySymbol(currency) {
-    const symbols = {
-        'USD': '$',
-        'EUR': '€',
-        'GBP': '£',
-        'CAD': 'C$',
-        'PLN': 'zł',
-        'UAH': '₴',
-        'RUB': '₽',
-        'KZT': '₸'
-    };
-    
-    return symbols[currency] || currency;
-}
-
-// Функция для форматирования суммы в выбранной валюте
-function formatCurrency(amount, currency = currentCurrency) {
-    const symbol = getCurrencySymbol(currency);
-    return `${symbol}${amount.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2
-    })}`;
-}
-
-// Функция для переключения валюты
-function changeCurrency(currency) {
-    if (currency === currentCurrency) return;
-    
-    currentCurrency = currency;
-    document.getElementById('currentCurrency').textContent = currency;
-    
-    // Обновляем активную валюту в выпадающем списке
-    const options = document.querySelectorAll('.currency-option');
-    options.forEach(option => {
-        if (option.dataset.currency === currency) {
-            option.classList.add('active');
-        } else {
-            option.classList.remove('active');
-        }
-    });
-    
-    // Закрываем выпадающий список
-    document.getElementById('currencyOptions').style.display = 'none';
-    
-    // Обновляем UI с новой валютой
-    updateUI();
-    
-    // Создаем эффект искр
-    createSparklesAround(document.querySelector('.currency-dropdown'), 15);
-    
-    // Показываем уведомление
-    showNotification(`Валюта изменена на ${currency}`, 'success');
-}
-
-// Функция для отображения/скрытия списка валют
-function toggleCurrencyOptions() {
-    const options = document.getElementById('currencyOptions');
-    options.style.display = options.style.display === 'block' ? 'none' : 'block';
-    
-    if (options.style.display === 'block') {
-        // Анимируем появление опций
-        const optionElements = document.querySelectorAll('.currency-option');
-        optionElements.forEach((option, index) => {
-            gsap.fromTo(option, 
-                { opacity: 0, y: -10 }, 
-                { opacity: 1, y: 0, duration: 0.2, delay: index * 0.05 }
-            );
-        });
-    }
-}
-
-// Закрываем выпадающий список при клике вне его
-document.addEventListener('click', function(event) {
-    const dropdown = document.querySelector('.currency-dropdown');
-    const options = document.getElementById('currencyOptions');
-    
-    if (!dropdown.contains(event.target) && options.style.display === 'block') {
-        options.style.display = 'none';
-    }
-});
 
 function initChart() {
     const ctx = document.getElementById('mainChart').getContext('2d');
@@ -2312,7 +2014,7 @@ function initChart() {
                     displayColors: false,
                     callbacks: {
                         label: function(context) {
-                            return formatCurrency(context.parsed.y);
+                            return '$' + context.parsed.y.toLocaleString();
                         }
                     },
                     animation: {
@@ -2342,7 +2044,7 @@ function initChart() {
                     },
                     ticks: { 
                         color: 'rgba(255, 255, 255, 0.5)',
-                        callback: value => formatCurrency(value),
+                        callback: value => '$' + value.toLocaleString(),
                         font: {
                             size: 10
                         }
@@ -2417,7 +2119,7 @@ function initMonthlyProfitChart() {
                     displayColors: false,
                     callbacks: {
                         label: function(context) {
-                            return formatCurrency(context.parsed.y);
+                            return '$' + context.parsed.y.toLocaleString();
                         }
                     }
                 }
@@ -2442,7 +2144,7 @@ function initMonthlyProfitChart() {
                     },
                     ticks: { 
                         color: 'rgba(255, 255, 255, 0.5)',
-                        callback: value => formatCurrency(value),
+                        callback: value => '$' + value.toLocaleString(),
                         font: {
                             size: 10
                         }
@@ -2471,12 +2173,10 @@ function getMonthlyProfitData() {
             monthlyProfit[monthYear] = 0;
         }
         
-        const amount = convertCurrency(t.amount);
-        
         if (t.type === 'income') {
-            monthlyProfit[monthYear] += amount;
+            monthlyProfit[monthYear] += t.amount;
         } else {
-            monthlyProfit[monthYear] -= amount;
+            monthlyProfit[monthYear] -= t.amount;
         }
     });
     
@@ -2502,13 +2202,13 @@ function updateTopDeals() {
     // Получаем топ-5 прибыльных сделок
     const profitableDeals = [...transactions]
         .filter(t => t.type === 'income')
-        .sort((a, b) => convertCurrency(b.amount) - convertCurrency(a.amount))
+        .sort((a, b) => b.amount - a.amount)
         .slice(0, 5);
     
     // Получаем топ-5 убыточных сделок
     const lossDeals = [...transactions]
         .filter(t => t.type === 'expense')
-        .sort((a, b) => convertCurrency(b.amount) - convertCurrency(a.amount))
+        .sort((a, b) => b.amount - a.amount)
         .slice(0, 5);
     
     // Обновляем списки
@@ -2522,7 +2222,7 @@ function updateTopDeals() {
                     <span class="transaction-rank-name">${deal.description}</span>
                     <span class="transaction-rank-date">${new Date(deal.date).toLocaleDateString()}</span>
                 </div>
-                <span class="transaction-rank-amount positive">+${formatCurrency(convertCurrency(deal.amount))}</span>
+                <span class="transaction-rank-amount positive">+$${deal.amount.toLocaleString()}</span>
             </li>
         `).join('');
         
@@ -2549,7 +2249,7 @@ function updateTopDeals() {
                     <span class="transaction-rank-name">${deal.description}</span>
                     <span class="transaction-rank-date">${new Date(deal.date).toLocaleDateString()}</span>
                 </div>
-                <span class="transaction-rank-amount negative">-${formatCurrency(convertCurrency(deal.amount))}</span>
+                <span class="transaction-rank-amount negative">-$${deal.amount.toLocaleString()}</span>
             </li>
         `).join('');
         
@@ -2579,12 +2279,10 @@ function updateBestWorstDays() {
             dailyProfits[t.date] = 0;
         }
         
-        const amount = convertCurrency(t.amount);
-        
         if (t.type === 'income') {
-            dailyProfits[t.date] += amount;
+            dailyProfits[t.date] += t.amount;
         } else {
-            dailyProfits[t.date] -= amount;
+            dailyProfits[t.date] -= t.amount;
         }
     });
     
@@ -2609,7 +2307,7 @@ function updateBestWorstDays() {
     if (bestDayInfo && bestDay.date) {
         bestDayInfo.innerHTML = `
             <span class="best-day-date">${new Date(bestDay.date).toLocaleDateString()}</span>
-            <span class="best-day-amount positive">+${formatCurrency(bestDay.profit)}</span>
+            <span class="best-day-amount positive">+$${bestDay.profit.toLocaleString()}</span>
         `;
     } else if (bestDayInfo) {
         bestDayInfo.innerHTML = `
@@ -2621,7 +2319,7 @@ function updateBestWorstDays() {
     if (worstDayInfo && worstDay.date) {
         worstDayInfo.innerHTML = `
             <span class="best-day-date">${new Date(worstDay.date).toLocaleDateString()}</span>
-            <span class="best-day-amount negative">-${formatCurrency(Math.abs(worstDay.profit))}</span>
+            <span class="best-day-amount negative">-$${Math.abs(worstDay.profit).toLocaleString()}</span>
         `;
     } else if (worstDayInfo) {
         worstDayInfo.innerHTML = `
@@ -2637,7 +2335,10 @@ function updateBestWorstDays() {
         const totalProfit = Object.values(dailyProfits).reduce((sum, profit) => sum + profit, 0);
         const averageProfit = days > 0 ? totalProfit / days : 0;
         
-        averageDailyProfitElement.textContent = formatCurrency(averageProfit);
+        averageDailyProfitElement.textContent = '$' + averageProfit.toLocaleString(undefined, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
+        });
         averageDailyProfitElement.className = averageProfit >= 0 ? 'best-day-amount positive' : 'best-day-amount negative';
     }
 }
@@ -2680,8 +2381,7 @@ function updateBalance() {
     let balance = 0;
     
     filteredTransactions.forEach(t => {
-        const amount = convertCurrency(t.amount);
-        balance = t.type === 'income' ? balance + amount : balance - amount;
+        balance = t.type === 'income' ? balance + t.amount : balance - t.amount;
     });
     
     // Animate the balance change
@@ -2689,7 +2389,7 @@ function updateBalance() {
     const currentBalanceText = balanceElement.textContent;
     const currentBalanceValue = parseFloat(currentBalanceText.replace(/[^0-9.-]+/g, '')) || 0;
     
-    animateValue(balanceElement, currentBalanceValue, balance, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(balanceElement, currentBalanceValue, balance, 1000, '$');
 }
 
 function animateValue(element, start, end, duration, prefix = '', suffix = '') {
@@ -2732,7 +2432,7 @@ function renderTransactions() {
             </div>
             <div class="transaction-actions">
                 <span class="transaction-amount ${t.type === 'income' ? 'amount-positive' : 'amount-negative'}">
-                    ${t.type === 'income' ? '+' : '-'}${formatCurrency(convertCurrency(t.amount))}
+                    ${t.type === 'income' ? '+' : '-'}$${t.amount.toLocaleString()}
                 </span>
                 <button onclick="editTransaction(${i})" class="btn btn-secondary btn-icon">
                     <ion-icon name="create-outline"></ion-icon>
@@ -2801,10 +2501,10 @@ function calculateProfit() {
 
     const resultHTML = `
         <p><strong>Тема:</strong> ${skinName}</p>
-        <p><strong>Цена покупки:</strong> ${formatCurrency(convertCurrency(buy))}</p>
-        <p><strong>Цена продажи:</strong> ${formatCurrency(convertCurrency(sell))}</p>
-        <p><strong>Комиссия:</strong> ${formatCurrency(convertCurrency(fee))} (${percent}%)</p>
-        <p><strong>Прибыль:</strong> <span class="${profit >= 0 ? 'positive-balance' : 'negative-balance'}">${formatCurrency(convertCurrency(profit))}</span></p>
+        <p><strong>Цена покупки:</strong> $${buy.toLocaleString()}</p>
+        <p><strong>Цена продажи:</strong> $${sell.toLocaleString()}</p>
+        <p><strong>Комиссия:</strong> $${fee.toLocaleString()} (${percent}%)</p>
+        <p><strong>Прибыль:</strong> <span class="${profit >= 0 ? 'positive-balance' : 'negative-balance'}">$${profit.toLocaleString()}</span></p>
     `;
     
     const resultElement = document.getElementById('calculationResult');
@@ -2848,7 +2548,7 @@ function addAdvancedTransaction() {
     const transaction = {
         type: lastCalculatedProfit >= 0 ? 'income' : 'expense',
         amount: Math.abs(lastCalculatedProfit),
-        description: `${skinName} (${lastCalculatedProfit >= 0 ? 'прибыль' : 'убыток'}: ${formatCurrency(Math.abs(lastCalculatedProfit))})`,
+        description: `${skinName} (${lastCalculatedProfit >= 0 ? 'прибыль' : 'убыток'}: $${Math.abs(lastCalculatedProfit).toLocaleString()})`,
         date: date,
         theme: skinName,
         buyPrice: buyPrice,
@@ -2986,11 +2686,10 @@ function updateProfitLoss() {
     let expense = 0;
     
     filteredTransactions.forEach(t => {
-        const amount = convertCurrency(t.amount);
         if (t.type === 'income') {
-            income += amount;
+            income += t.amount;
         } else {
-            expense += amount;
+            expense += t.amount;
         }
     });
     
@@ -3001,8 +2700,8 @@ function updateProfitLoss() {
     const currentIncome = parseFloat(incomeElement.textContent.replace(/[^0-9.-]+/g, '')) || 0;
     const currentExpense = parseFloat(expenseElement.textContent.replace(/[^0-9.-]+/g, '')) || 0;
     
-    animateValue(incomeElement, currentIncome, income, 1000, getCurrencySymbol(currentCurrency));
-    animateValue(expenseElement, currentExpense, expense, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(incomeElement, currentIncome, income, 1000, '$');
+    animateValue(expenseElement, currentExpense, expense, 1000, '$');
 }
 
 function editTransaction(index) {
@@ -3147,8 +2846,7 @@ function updateChart() {
     const data = [];
     
     filteredTransactions.forEach(t => {
-        const amount = convertCurrency(t.amount);
-        balance = t.type === 'income' ? balance + amount : balance - amount;
+        balance = t.type === 'income' ? balance + t.amount : balance - t.amount;
         labels.push(new Date(t.date).toLocaleDateString('ru-RU', { 
             month: 'short', 
             day: 'numeric' 
@@ -3253,7 +2951,7 @@ function filterTransactions() {
             </div>
             <div class="transaction-actions">
                 <span class="transaction-amount ${t.type === 'income' ? 'amount-positive' : 'amount-negative'}">
-                    ${t.type === 'income' ? '+' : '-'}${formatCurrency(convertCurrency(t.amount))}
+                    ${t.type === 'income' ? '+' : '-'}$${t.amount.toLocaleString()}
                 </span>
                 <button onclick="editTransaction(${transactions.indexOf(t)})" class="btn btn-secondary btn-icon">
                     <ion-icon name="create-outline"></ion-icon>
@@ -3431,7 +3129,7 @@ function updateChartColors() {
                 grid: { color: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
                 ticks: { 
                     color: isDarkTheme ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)',
-                    callback: value => formatCurrency(value)
+                    callback: value => '$' + value.toLocaleString()
                 }
             }
         },
@@ -3573,12 +3271,11 @@ function renderCalendar() {
         
         let dayTotal = 0;
         currentDayTransactions.forEach(t => {
-            const amount = convertCurrency(t.amount);
-            dayTotal = t.type === 'income' ? dayTotal + amount : dayTotal - amount;
+            dayTotal = t.type === 'income' ? dayTotal + t.amount : dayTotal - t.amount;
         });
         
         if (dayTotal !== 0) {
-            dayBalance.textContent = `${dayTotal > 0 ? '+' : ''}${formatCurrency(dayTotal)}`;
+            dayBalance.textContent = `${dayTotal > 0 ? '+' : ''}$${dayTotal.toLocaleString()}`;
             dayBalance.classList.add(dayTotal > 0 ? 'positive-balance' : 'negative-balance');
         }
         
@@ -3711,19 +3408,19 @@ function updateStats() {
     const totalStats = calculateStats(transactions);
 
     // Анимируем обновление статистики
-    animateValue(document.getElementById('todayEarnings'), 0, todayStats.earnings, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(document.getElementById('todayEarnings'), 0, todayStats.earnings, 1000, '$');
     document.getElementById('todayDeals').textContent = `${todayStats.deals} сделок`;
     
-    animateValue(document.getElementById('yesterdayEarnings'), 0, yesterdayStats.earnings, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(document.getElementById('yesterdayEarnings'), 0, yesterdayStats.earnings, 1000, '$');
     document.getElementById('yesterdayDeals').textContent = `${yesterdayStats.deals} сделок`;
     
-    animateValue(document.getElementById('weekEarnings'), 0, weekStats.earnings, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(document.getElementById('weekEarnings'), 0, weekStats.earnings, 1000, '$');
     document.getElementById('weekDeals').textContent = `${weekStats.deals} сделок`;
     
-    animateValue(document.getElementById('monthEarnings'), 0, monthStats.earnings, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(document.getElementById('monthEarnings'), 0, monthStats.earnings, 1000, '$');
     document.getElementById('monthDeals').textContent = `${monthStats.deals} сделок`;
     
-    animateValue(document.getElementById('totalEarnings'), 0, totalStats.earnings, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(document.getElementById('totalEarnings'), 0, totalStats.earnings, 1000, '$');
     document.getElementById('totalDeals').textContent = `${totalStats.deals} сделок`;
     
     // Добавляем классы для стилизации положительных/отрицательных значений
@@ -3739,11 +3436,10 @@ function calculateStats(transactions) {
     let expense = 0;
     
     transactions.forEach(t => {
-        const amount = convertCurrency(t.amount);
         if (t.type === 'income') {
-            income += amount;
+            income += t.amount;
         } else {
-            expense += amount;
+            expense += t.amount;
         }
     });
     
@@ -3834,7 +3530,7 @@ function createStars() {
     }
 }
 
-// Запускаем обновление курсов валют при загрузке страницы
+// Запускаем инициализацию при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
     // Устанавливаем текущую дату по умолчанию
     const today = new Date().toISOString().split('T')[0];
@@ -3843,11 +3539,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Инициализируем график и обновляем UI
     initChart();
-    
-    // Загружаем курсы валют
-    fetchExchangeRates().then(() => {
-        updateUI();
-    });
+    updateUI();
     
     // Создаем визуальные эффекты
     createParticles();
@@ -3856,10 +3548,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Скрываем левую кнопку переключения вида
     document.querySelector('.switch-view.left').style.display = 'none';
-    
-    // Устанавливаем интервал для обновления курсов валют (раз в день)
-    setInterval(fetchExchangeRates, 24 * 60 * 60 * 1000);
 });
 </script>
 </body>
 </html>
+

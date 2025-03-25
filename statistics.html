@@ -631,101 +631,6 @@
         visibility: visible;
     }
 
-    /* Currency Switcher Styles */
-    .currency-switcher {
-        position: fixed;
-        top: var(--spacing-xl);
-        left: calc(var(--spacing-xl) + 60px);
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-sm);
-        z-index: 100;
-    }
-
-    .currency-dropdown {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        padding: var(--spacing-sm) var(--spacing-md);
-        color: var(--text-primary);
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition-normal);
-        box-shadow: var(--shadow-sm);
-        position: relative;
-        min-width: 100px;
-        text-align: center;
-    }
-
-    .currency-dropdown:hover {
-        border-color: var(--accent-primary);
-        box-shadow: var(--shadow-md);
-        transform: translateY(-2px);
-    }
-
-    .currency-options {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        margin-top: var(--spacing-xs);
-        box-shadow: var(--shadow-md);
-        overflow: hidden;
-        z-index: 101;
-        display: none;
-        animation: fadeIn 0.3s ease;
-    }
-
-    .currency-option {
-        padding: var(--spacing-sm) var(--spacing-md);
-        cursor: pointer;
-        transition: var(--transition-fast);
-    }
-
-    .currency-option:hover {
-        background: var(--glass-hover);
-        color: var(--accent-primary);
-    }
-
-    .currency-option.active {
-        background: var(--accent-primary);
-        color: white;
-    }
-
-    .currency-info {
-        position: absolute;
-        top: 0;
-        left: 100%;
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        padding: var(--spacing-sm) var(--spacing-md);
-        font-size: 0.8rem;
-        color: var(--text-tertiary);
-        max-width: 200px;
-        box-shadow: var(--shadow-sm);
-        z-index: 99;
-        opacity: 0;
-        transform: translateY(-10px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
-        pointer-events: none;
-        margin-left: var(--spacing-md);
-    }
-
-    .currency-dropdown:hover + .currency-info,
-    .currency-info:hover {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .currency-info-date {
-        font-weight: 600;
-        color: var(--accent-primary);
-    }
-
     /* Таблица сделок */
     .deals-table {
         width: 100%;
@@ -958,27 +863,6 @@
     <line id="sun-ray-7" x1="4.22" y1="19.78" x2="5.64" y2="18.36" style="display:none;"/>
     <line id="sun-ray-8" x1="18.36" y1="5.64" x2="19.78" y2="4.22" style="display:none;"/>
 </svg>
-</div>
-
-<!-- Currency Switcher -->
-<div class="currency-switcher">
-    <div class="currency-dropdown" onclick="toggleCurrencyOptions()">
-        <span id="currentCurrency">USD</span>
-        <div class="currency-options" id="currencyOptions">
-            <div class="currency-option active" data-currency="USD" onclick="changeCurrency('USD')">USD</div>
-            <div class="currency-option" data-currency="EUR" onclick="changeCurrency('EUR')">EUR</div>
-            <div class="currency-option" data-currency="GBP" onclick="changeCurrency('GBP')">GBP</div>
-            <div class="currency-option" data-currency="CAD" onclick="changeCurrency('CAD')">CAD</div>
-            <div class="currency-option" data-currency="PLN" onclick="changeCurrency('PLN')">PLN</div>
-            <div class="currency-option" data-currency="UAH" onclick="changeCurrency('UAH')">UAH</div>
-            <div class="currency-option" data-currency="RUB" onclick="changeCurrency('RUB')">RUB</div>
-            <div class="currency-option" data-currency="KZT" onclick="changeCurrency('KZT')">KZT</div>
-        </div>
-    </div>
-    <div class="currency-info" id="currencyInfo">
-        <span>Курс обновляется ежедневно. Последнее обновление: </span> 
-        <span class="currency-info-date" id="lastUpdateDate">Загрузка...</span>
-    </div>
 </div>
 
 <div class="nav-bar">
@@ -1251,163 +1135,8 @@
 <script>
 let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 let currentPeriod = 'all';
-let currentCurrency = 'USD';
-let exchangeRates = {};
-let lastRatesUpdate = null;
 let monthlyProfitChart;
 let categories = ['Оружие', 'Перчатки', 'Ножи', 'Контракты', 'Другое'];
-
-// Функция для получения курсов валют
-async function fetchExchangeRates() {
-    try {
-        // Проверяем, есть ли сохраненные курсы и не устарели ли они
-        const savedRates = localStorage.getItem('exchangeRates');
-        const savedDate = localStorage.getItem('ratesLastUpdate');
-        
-        if (savedRates && savedDate) {
-            const lastUpdate = new Date(savedDate);
-            const now = new Date();
-            
-            // Если курсы обновлялись сегодня, используем их
-            if (lastUpdate.toDateString() === now.toDateString()) {
-                exchangeRates = JSON.parse(savedRates);
-                lastRatesUpdate = lastUpdate;
-                updateCurrencyInfo();
-                return;
-            }
-        }
-        
-        // Если курсов нет или они устарели, используем сохраненные или дефолтные
-        if (savedRates) {
-            exchangeRates = JSON.parse(savedRates);
-            lastRatesUpdate = savedDate ? new Date(savedDate) : new Date();
-        } else {
-            // Дефолтные курсы на случай, если API недоступен
-            exchangeRates = {
-                "USDEUR": 0.92,
-                "USDGBP": 0.79,
-                "USDCAD": 1.35,
-                "USDPLN": 3.94,
-                "USDUAH": 38.5,
-                "USDRUB": 91.2,
-                "USDKZT": 450.5
-            };
-            lastRatesUpdate = new Date();
-        }
-        
-        updateCurrencyInfo();
-    } catch (error) {
-        console.error('Ошибка при получении курсов валют:', error);
-        showNotification('Ошибка при получении курсов валют', 'error');
-    }
-}
-
-// Обновляем информацию о последнем обновлении курсов
-function updateCurrencyInfo() {
-    const dateElement = document.getElementById('lastUpdateDate');
-    if (lastRatesUpdate) {
-        dateElement.textContent = lastRatesUpdate.toLocaleDateString();
-    } else {
-        dateElement.textContent = 'Нет данных';
-    }
-}
-
-// Функция для конвертации суммы из USD в выбранную валюту
-function convertCurrency(amount, fromCurrency = 'USD', toCurrency = currentCurrency) {
-    if (fromCurrency === toCurrency) return amount;
-    
-    if (toCurrency === 'USD') {
-        // Конвертация из другой валюты в USD
-        const rate = exchangeRates[`USD${fromCurrency}`];
-        return rate ? amount / rate : amount;
-    } else {
-        // Конвертация из USD в другую валюту
-        const rate = exchangeRates[`USD${toCurrency}`];
-        return rate ? amount * rate : amount;
-    }
-}
-
-// Функция для получения символа валюты
-function getCurrencySymbol(currency) {
-    const symbols = {
-        'USD': '$',
-        'EUR': '€',
-        'GBP': '£',
-        'CAD': 'C$',
-        'PLN': 'zł',
-        'UAH': '₴',
-        'RUB': '₽',
-        'KZT': '₸'
-    };
-    
-    return symbols[currency] || currency;
-}
-
-// Функция для форматирования суммы в выбранной валюте
-function formatCurrency(amount, currency = currentCurrency) {
-    const symbol = getCurrencySymbol(currency);
-    return `${symbol}${amount.toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2
-    })}`;
-}
-
-// Функция для переключения валюты
-function changeCurrency(currency) {
-    if (currency === currentCurrency) return;
-    
-    currentCurrency = currency;
-    document.getElementById('currentCurrency').textContent = currency;
-    
-    // Обновляем активную валюту в выпадающем списке
-    const options = document.querySelectorAll('.currency-option');
-    options.forEach(option => {
-        if (option.dataset.currency === currency) {
-            option.classList.add('active');
-        } else {
-            option.classList.remove('active');
-        }
-    });
-    
-    // Закрываем выпадающий список
-    document.getElementById('currencyOptions').style.display = 'none';
-    
-    // Обновляем UI с новой валютой
-    updateAllStats();
-    
-    // Создаем эффект искр
-    createSparklesAround(document.querySelector('.currency-dropdown'), 15);
-    
-    // Показываем уведомление
-    showNotification(`Валюта изменена на ${currency}`, 'success');
-}
-
-// Функция для отображения/скрытия списка валют
-function toggleCurrencyOptions() {
-    const options = document.getElementById('currencyOptions');
-    options.style.display = options.style.display === 'block' ? 'none' : 'block';
-    
-    if (options.style.display === 'block') {
-        // Анимируем появление опций
-        const optionElements = document.querySelectorAll('.currency-option');
-        optionElements.forEach((option, index) => {
-            gsap.fromTo(option, 
-                { opacity: 0, y: -10 }, 
-                { opacity: 1, y: 0, duration: 0.2, delay: index * 0.05 }
-            );
-        });
-    }
-}
-
-// Закрываем выпадающий список при клике вне его
-document.addEventListener('click', function(event) {
-    const dropdown = document.querySelector('.currency-dropdown');
-    const options = document.getElementById('currencyOptions');
-    
-    if (!dropdown.contains(event.target) && options.style.display === 'block') {
-        options.style.display = 'none';
-    }
-});
 
 // Инициализация графика профита по месяцам
 function initMonthlyProfitChart() {
@@ -1458,7 +1187,7 @@ function initMonthlyProfitChart() {
                     displayColors: false,
                     callbacks: {
                         label: function(context) {
-                            return formatCurrency(context.parsed.y);
+                            return '$' + context.parsed.y.toLocaleString();
                         }
                     }
                 }
@@ -1483,7 +1212,7 @@ function initMonthlyProfitChart() {
                     },
                     ticks: { 
                         color: 'rgba(255, 255, 255, 0.5)',
-                        callback: value => formatCurrency(value),
+                        callback: value => '$' + value.toLocaleString(),
                         font: {
                             size: 10
                         }
@@ -1513,12 +1242,10 @@ function getMonthlyProfitData() {
             monthlyProfit[monthYear] = 0;
         }
         
-        const amount = convertCurrency(t.amount);
-        
         if (t.type === 'income') {
-            monthlyProfit[monthYear] += amount;
+            monthlyProfit[monthYear] += t.amount;
         } else {
-            monthlyProfit[monthYear] -= amount;
+            monthlyProfit[monthYear] -= t.amount;
         }
     });
     
@@ -1581,11 +1308,10 @@ function calculateProfitForPeriod(transactions) {
     let expense = 0;
     
     transactions.forEach(t => {
-        const amount = convertCurrency(t.amount);
         if (t.type === 'income') {
-            income += amount;
+            income += t.amount;
         } else {
-            expense += amount;
+            expense += t.amount;
         }
     });
     
@@ -1741,10 +1467,10 @@ function updateMainStats() {
     const monthProfitElement = document.getElementById('monthProfit');
     const totalBalanceElement = document.getElementById('totalBalance');
     
-    animateValue(dayProfitElement, 0, dayProfit, 1000, getCurrencySymbol(currentCurrency));
-    animateValue(weekProfitElement, 0, weekProfit, 1000, getCurrencySymbol(currentCurrency));
-    animateValue(monthProfitElement, 0, monthProfit, 1000, getCurrencySymbol(currentCurrency));
-    animateValue(totalBalanceElement, 0, totalProfit, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(dayProfitElement, 0, dayProfit, 1000, '$');
+    animateValue(weekProfitElement, 0, weekProfit, 1000, '$');
+    animateValue(monthProfitElement, 0, monthProfit, 1000, '$');
+    animateValue(totalBalanceElement, 0, totalProfit, 1000, '$');
     
     // Устанавливаем классы для стилизации
     dayProfitElement.className = dayProfit >= 0 ? 'positive' : 'negative';
@@ -1755,12 +1481,12 @@ function updateMainStats() {
     // Рассчитываем средний профит на сделку
     const totalDeals = transactions.length;
     const avgProfit = totalDeals > 0 ? totalProfit / totalDeals : 0;
-    animateValue(document.getElementById('avgProfit'), 0, avgProfit, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(document.getElementById('avgProfit'), 0, avgProfit, 1000, '$');
     
     // Рассчитываем средний дневной заработок
     const uniqueDays = new Set(transactions.map(t => t.date.split('T')[0]));
     const avgDailyProfit = uniqueDays.size > 0 ? totalProfit / uniqueDays.size : 0;
-    animateValue(document.getElementById('avgDailyProfit'), 0, avgDailyProfit, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(document.getElementById('avgDailyProfit'), 0, avgDailyProfit, 1000, '$');
     
     // Рассчитываем процент успешных сделок
     const successfulDeals = transactions.filter(t => t.type === 'income').length;
@@ -1802,10 +1528,11 @@ function updateDealsStats() {
     const monthTransactions = transactions.filter(t => new Date(t.date) >= monthAgo);
     
     // Обновляем элементы на странице
-    animateValue(document.getElementById('dayDeals'), 0, dayTransactions.length, 1000);
-    animateValue(document.getElementById('weekDeals'), 0, weekTransactions.length, 1000);
-    animateValue(document.getElementById('monthDeals'), 0, monthTransactions.length, 1000);
-    animateValue(document.getElementById('totalDeals'), 0, transactions.length, 1000);
+animateValue(document.getElementById('dayDeals'), 0, dayTransactions.length, 1000);
+animateValue(document.getElementById('weekDeals'), 0, weekTransactions.length, 1000);
+animateValue(document.getElementById('monthDeals'), 0, monthTransactions.length, 1000);
+animateValue(document.getElementById('totalDeals'), 0, transactions.length, 1000);
+
 }
 
 // Функция для обновления статистики по размерам сделок
@@ -1813,22 +1540,22 @@ function updateDealSizeStats() {
     // Рассчитываем средний размер сделки
     let totalAmount = 0;
     transactions.forEach(t => {
-        totalAmount += convertCurrency(t.amount);
+        totalAmount += t.amount;
     });
     
     const avgDealSize = transactions.length > 0 ? totalAmount / transactions.length : 0;
-    animateValue(document.getElementById('avgDealSize'), 0, avgDealSize, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(document.getElementById('avgDealSize'), 0, avgDealSize, 1000, '$');
     
     // Находим самую большую сделку
     let maxDeal = 0;
     transactions.forEach(t => {
-        const amount = convertCurrency(t.amount);
+        const amount = t.amount;
         if (amount > maxDeal) {
             maxDeal = amount;
         }
     });
     
-    animateValue(document.getElementById('maxDealSize'), 0, maxDeal, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(document.getElementById('maxDealSize'), 0, maxDeal, 1000, '$');
     
     // Рассчитываем средний оборот за месяц
     const now = new Date();
@@ -1839,14 +1566,14 @@ function updateDealSizeStats() {
     let monthlyTurnover = 0;
     
     monthTransactions.forEach(t => {
-        monthlyTurnover += convertCurrency(t.amount);
+        monthlyTurnover += t.amount;
     });
     
-    animateValue(document.getElementById('avgMonthlyTurnover'), 0, monthlyTurnover, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(document.getElementById('avgMonthlyTurnover'), 0, monthlyTurnover, 1000, '$');
     
     // Рассчитываем чистую прибыль за месяц
     const monthlyProfit = calculateProfitForPeriod(monthTransactions);
-    animateValue(document.getElementById('netMonthlyProfit'), 0, monthlyProfit, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(document.getElementById('netMonthlyProfit'), 0, monthlyProfit, 1000, '$');
     
     // Устанавливаем класс для стилизации
     document.getElementById('netMonthlyProfit').className = monthlyProfit >= 0 ? 'positive' : 'negative';
@@ -1866,7 +1593,7 @@ function updateBestWorstDeals() {
     let worstMonthDeal = { amount: Infinity, description: '-', date: '-' };
     
     monthTransactions.forEach(t => {
-        const amount = convertCurrency(t.amount);
+        const amount = t.amount;
         if (t.type === 'income' && amount > bestMonthDeal.amount) {
             bestMonthDeal = { amount, description: t.description, date: t.date };
         }
@@ -1878,12 +1605,12 @@ function updateBestWorstDeals() {
     
     // Обновляем элементы на странице
     if (bestMonthDeal.description !== '-') {
-        document.getElementById('bestMonthDeal').textContent = formatCurrency(bestMonthDeal.amount);
+        document.getElementById('bestMonthDeal').textContent = '$' + bestMonthDeal.amount.toLocaleString();
         document.getElementById('bestMonthDealInfo').textContent = `${bestMonthDeal.description} (${new Date(bestMonthDeal.date).toLocaleDateString()})`;
     }
     
     if (worstMonthDeal.description !== '-') {
-        document.getElementById('worstMonthDeal').textContent = formatCurrency(worstMonthDeal.amount);
+        document.getElementById('worstMonthDeal').textContent = '$' + worstMonthDeal.amount.toLocaleString();
         document.getElementById('worstMonthDealInfo').textContent = `${worstMonthDeal.description} (${new Date(worstMonthDeal.date).toLocaleDateString()})`;
     }
     
@@ -1892,7 +1619,7 @@ function updateBestWorstDeals() {
     let minProfit = { amount: Infinity, description: '-', date: '-' };
     
     transactions.forEach(t => {
-        const amount = convertCurrency(t.amount);
+        const amount = t.amount;
         if (t.type === 'income' && amount > maxProfit.amount) {
             maxProfit = { amount, description: t.description, date: t.date };
         }
@@ -1904,12 +1631,12 @@ function updateBestWorstDeals() {
     
     // Обновляем элементы на странице
     if (maxProfit.description !== '-') {
-        document.getElementById('maxProfit').textContent = formatCurrency(maxProfit.amount);
+        document.getElementById('maxProfit').textContent = '$' + maxProfit.amount.toLocaleString();
         document.getElementById('maxProfitInfo').textContent = `${maxProfit.description} (${new Date(maxProfit.date).toLocaleDateString()})`;
     }
     
     if (minProfit.description !== '-') {
-        document.getElementById('minProfit').textContent = formatCurrency(minProfit.amount);
+        document.getElementById('minProfit').textContent = '$' + minProfit.amount.toLocaleString();
         document.getElementById('minProfitInfo').textContent = `${minProfit.description} (${new Date(minProfit.date).toLocaleDateString()})`;
     }
 }
@@ -1919,13 +1646,13 @@ function updateTopDeals() {
     // Получаем топ-5 прибыльных сделок
     const profitableDeals = [...transactions]
         .filter(t => t.type === 'income')
-        .sort((a, b) => convertCurrency(b.amount) - convertCurrency(a.amount))
+        .sort((a, b) => b.amount - a.amount)
         .slice(0, 5);
     
     // Получаем топ-5 убыточных сделок
     const lossDeals = [...transactions]
         .filter(t => t.type === 'expense')
-        .sort((a, b) => convertCurrency(b.amount) - convertCurrency(a.amount))
+        .sort((a, b) => b.amount - a.amount)
         .slice(0, 5);
     
     // Обновляем таблицы
@@ -1936,7 +1663,7 @@ function updateTopDeals() {
         <tr>
             <td>${deal.description}</td>
             <td>${new Date(deal.date).toLocaleDateString()}</td>
-            <td class="amount-positive">${formatCurrency(convertCurrency(deal.amount))}</td>
+            <td class="amount-positive">$${deal.amount.toLocaleString()}</td>
         </tr>
     `).join('');
     
@@ -1957,7 +1684,7 @@ function updateTopDeals() {
         <tr>
             <td>${deal.description}</td>
             <td>${new Date(deal.date).toLocaleDateString()}</td>
-            <td class="amount-negative">${formatCurrency(convertCurrency(deal.amount))}</td>
+            <td class="amount-negative">$${deal.amount.toLocaleString()}</td>
         </tr>
     `).join('');
     
@@ -1993,11 +1720,10 @@ function updateSkinStats() {
             
             skinStats[skinName].deals++;
             
-            const amount = convertCurrency(t.amount);
             if (t.type === 'income') {
-                skinStats[skinName].profit += amount;
+                skinStats[skinName].profit += t.amount;
             } else {
-                skinStats[skinName].profit -= amount;
+                skinStats[skinName].profit -= t.amount;
             }
         }
     });
@@ -2017,7 +1743,7 @@ function updateSkinStats() {
         <tr>
             <td>${name}</td>
             <td>${stats.deals}</td>
-            <td class="amount-positive">${formatCurrency(stats.profit)}</td>
+            <td class="amount-positive">$${stats.profit.toLocaleString()}</td>
         </tr>
     `).join('');
     
@@ -2038,7 +1764,7 @@ function updateSkinStats() {
         <tr>
             <td>${name}</td>
             <td>${stats.deals}</td>
-            <td class="amount-negative">${formatCurrency(stats.profit)}</td>
+            <td class="amount-negative">$${Math.abs(stats.profit).toLocaleString()}</td>
         </tr>
     `).join('');
     
@@ -2116,11 +1842,11 @@ function updateCategoryStats(skinStats) {
             <div class="category-stats">
                 <div class="category-stat-item">
                     <h4>Общий профит</h4>
-                    <p class="${stats.profit >= 0 ? 'amount-positive' : 'amount-negative'}">${formatCurrency(stats.profit)}</p>
+                    <p class="${stats.profit >= 0 ? 'amount-positive' : 'amount-negative'}">$${Math.abs(stats.profit).toLocaleString()}</p>
                 </div>
                 <div class="category-stat-item">
                     <h4>Средний профит</h4>
-                    <p class="${avgProfit >= 0 ? 'amount-positive' : 'amount-negative'}">${formatCurrency(avgProfit)}</p>
+                    <p class="${avgProfit >= 0 ? 'amount-positive' : 'amount-negative'}">$${Math.abs(avgProfit).toLocaleString()}</p>
                 </div>
                 <div class="category-stat-item">
                     <h4>Успешных сделок</h4>
@@ -2128,7 +1854,7 @@ function updateCategoryStats(skinStats) {
                 </div>
                 <div class="category-stat-item">
                     <h4>Средний размер</h4>
-                    <p>${formatCurrency(avgDealSize)}</p>
+                    <p>$${avgDealSize.toLocaleString()}</p>
                 </div>
                 <div class="category-stat-item">
                     <h4>Лучшая сделка</h4>
@@ -2196,11 +1922,11 @@ function updateQuarterlyStats() {
     const yearProfit = calculateProfitForPeriod(yearTransactions);
     
     // Обновляем элементы на странице
-    animateValue(document.getElementById('q1Profit'), 0, q1Profit, 1000, getCurrencySymbol(currentCurrency));
-    animateValue(document.getElementById('q2Profit'), 0, q2Profit, 1000, getCurrencySymbol(currentCurrency));
-    animateValue(document.getElementById('q3Profit'), 0, q3Profit, 1000, getCurrencySymbol(currentCurrency));
-    animateValue(document.getElementById('q4Profit'), 0, q4Profit, 1000, getCurrencySymbol(currentCurrency));
-    animateValue(document.getElementById('yearProfit'), 0, yearProfit, 1000, getCurrencySymbol(currentCurrency));
+    animateValue(document.getElementById('q1Profit'), 0, q1Profit, 1000, '$');
+    animateValue(document.getElementById('q2Profit'), 0, q2Profit, 1000, '$');
+    animateValue(document.getElementById('q3Profit'), 0, q3Profit, 1000, '$');
+    animateValue(document.getElementById('q4Profit'), 0, q4Profit, 1000, '$');
+    animateValue(document.getElementById('yearProfit'), 0, yearProfit, 1000, '$');
     
     // Устанавливаем классы для стилизации
     document.getElementById('q1Profit').className = q1Profit >= 0 ? 'positive' : 'negative';
@@ -2233,7 +1959,6 @@ function exportStats() {
     // Собираем все статистические данные
     const stats = {
         date: new Date().toISOString(),
-        currency: currentCurrency,
         mainStats: {
             dayProfit: document.getElementById('dayProfit').textContent,
             weekProfit: document.getElementById('weekProfit').textContent,
@@ -2358,7 +2083,7 @@ function updateChartColors() {
                 grid: { color: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
                 ticks: { 
                     color: isDarkTheme ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)',
-                    callback: value => formatCurrency(value)
+                    callback: value => '$' + value.toLocaleString()
                 }
             }
         },
@@ -2414,21 +2139,19 @@ function initGlowCursor() {
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
-    // Загружаем курсы валют
-    fetchExchangeRates().then(() => {
-        // Инициализируем график
-        initMonthlyProfitChart();
-        
-        // Обновляем всю статистику
-        updateAllStats();
-        
-        // Инициализируем эффект свечения курсора
-        initGlowCursor();
-        
-        // Показываем уведомление
-        showNotification('Статистика успешно загружена', 'success');
-    });
+    // Инициализируем график
+    initMonthlyProfitChart();
+    
+    // Обновляем всю статистику
+    updateAllStats();
+    
+    // Инициализируем эффект свечения курсора
+    initGlowCursor();
+    
+    // Показываем уведомление
+    showNotification('Статистика успешно загружена', 'success');
 });
 </script>
 </body>
 </html>
+
