@@ -135,6 +135,46 @@
     --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
 }
 
+:root.pink-theme {
+    --bg-primary: #1a0f1f;
+    --bg-secondary: #2d1535;
+    --bg-tertiary: #3d1d47;
+    --bg-card: linear-gradient(145deg, #2d1535, #3d1d47);
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-hover: rgba(255, 255, 255, 0.08);
+    
+    --accent-primary: #ff69b4;
+    --accent-primary-hover: #ff1493;
+    --accent-primary-glow: rgba(255, 105, 180, 0.5);
+    --accent-secondary: #ff69b4;
+    --accent-tertiary: #ff1493;
+    --accent-quaternary: #ff69b4;
+    
+    --gradient-primary: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    --gradient-secondary: linear-gradient(135deg, var(--accent-tertiary) 0%, var(--accent-quaternary) 100%);
+    --gradient-text: linear-gradient(135deg, #fff 0%, #ffb7e5 100%);
+    
+    --text-primary: rgba(255, 255, 255, 0.95);
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-tertiary: rgba(255, 255, 255, 0.5);
+    
+    --positive: #ff69b4;
+    --positive-light: rgba(255, 105, 180, 0.2);
+    --negative: #ef4444;
+    --negative-light: rgba(239, 68, 68, 0.2);
+    --warning: #f59e0b;
+    --info: #3b82f6;
+    
+    --border: rgba(255, 255, 255, 0.1);
+    --border-hover: rgba(255, 255, 255, 0.2);
+    
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+    --shadow-glow: 0 0 20px var(--accent-primary-glow);
+    --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -166,6 +206,13 @@ body::before {
         radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
     z-index: -1;
     animation: gradientMove 20s ease-in-out infinite alternate;
+}
+
+.pink-theme body::before {
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(236, 72, 153, 0.08) 0%, transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(244, 114, 182, 0.08) 0%, transparent 30%),
+        radial-gradient(circle at 50% 50%, rgba(192, 38, 211, 0.05) 0%, transparent 50%);
 }
 
 @keyframes gradientMove {
@@ -248,6 +295,18 @@ small {
     transition: opacity 0.5s ease;
 }
 
+.pink-theme .card::before {
+    background: linear-gradient(
+        135deg, 
+        transparent 0%, 
+        transparent 20%, 
+        rgba(236, 72, 153, 0.05) 40%, 
+        rgba(244, 114, 182, 0.05) 60%, 
+        rgba(192, 38, 211, 0.05) 80%, 
+        transparent 100%
+    );
+}
+
 .card:hover::before {
     opacity: 1;
     animation: cardGradient 3s linear infinite;
@@ -296,6 +355,13 @@ small {
     background-size: 200% 200%;
     animation: gradientText 5s ease infinite;
     text-shadow: 0 0 30px var(--accent-primary-glow);
+}
+
+.pink-theme .header-card h1 {
+    background: linear-gradient(135deg, #fff 0%, var(--accent-primary) 50%, var(--accent-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 @keyframes gradientText {
@@ -398,6 +464,10 @@ small {
     box-shadow: 0 0 15px var(--accent-primary-glow);
 }
 
+.pink-theme .achievement-card.unlocked {
+    background: linear-gradient(145deg, rgba(236, 72, 153, 0.1), rgba(244, 114, 182, 0.1));
+}
+
 .achievement-card.unlocked::after {
     content: '';
     position: absolute;
@@ -409,6 +479,11 @@ small {
         radial-gradient(circle at center, rgba(79, 70, 229, 0.2) 0%, transparent 70%);
     z-index: -1;
     animation: pulseGlow 3s ease-in-out infinite alternate;
+}
+
+.pink-theme .achievement-card.unlocked::after {
+    background: 
+        radial-gradient(circle at center, rgba(236, 72, 153, 0.2) 0%, transparent 70%);
 }
 
 @keyframes pulseGlow {
@@ -583,6 +658,59 @@ small {
     z-index: 1;
 }
 
+.theme-menu {
+    position: fixed;
+    top: calc(var(--spacing-xl) + 60px);
+    left: var(--spacing-xl);
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+    padding: var(--spacing-sm);
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    min-width: 150px;
+}
+
+.theme-menu.active {
+    display: flex;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.theme-option {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.theme-option:hover {
+    background: var(--glass-hover);
+}
+
+.theme-option.active {
+    background: var(--accent-primary);
+    color: white;
+}
+
+.theme-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .nav-bar {
     position: fixed;
     top: var(--spacing-xl);
@@ -716,6 +844,38 @@ small {
     box-shadow: 0 0 10px var(--accent-primary-glow);
 }
 
+.cherry-blossom {
+    position: fixed;
+    width: 15px;
+    height: 15px;
+    background-image: radial-gradient(circle at 30% 30%, white 0%, var(--accent-tertiary) 100%);
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.7;
+    filter: blur(0.5px);
+    animation: fallDown 10s linear forwards;
+    display: none;
+}
+
+.pink-theme .cherry-blossom {
+    display: block;
+}
+
+@keyframes fallDown {
+    0% {
+        transform: translateY(-100px) rotate(0deg) scale(0.6);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px)) rotate(360deg) scale(0.6);
+        opacity: 0;
+    }
+}
+
 @keyframes sparkleAnimation {
     0% { transform: scale(0); opacity: 0; }
     50% { transform: scale(1); opacity: 1; }
@@ -774,6 +934,12 @@ small {
         bottom: var(--spacing-xl);
         right: var(--spacing-xl);
         flex-direction: row;
+    }
+    
+    .theme-menu {
+        top: auto;
+        bottom: calc(var(--spacing-xl) + 60px);
+        left: var(--spacing-xl);
     }
 }
 
@@ -882,7 +1048,7 @@ small {
 <body>
 <div class="glow-cursor"></div>
 
-<div class="theme-toggle" onclick="toggleTheme()">
+<div class="theme-toggle" onclick="toggleThemeMenu()">
 <svg viewBox="0 0 24 24" id="theme-icon">
     <path id="moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
     <circle id="sun" cx="12" cy="12" r="5" style="display:none;"/>
@@ -894,7 +1060,29 @@ small {
     <line id="sun-ray-6" x1="21" y1="12" x2="23" y2="12" style="display:none;"/>
     <line id="sun-ray-7" x1="4.22" y1="19.78" x2="5.64" y2="18.36" style="display:none;"/>
     <line id="sun-ray-8" x1="18.36" y1="5.64" x2="19.78" y2="4.22" style="display:none;"/>
+    <path id="cherry" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" style="display:none;"/>
 </svg>
+</div>
+
+<div class="theme-menu" id="theme-menu">
+    <div class="theme-option" data-theme="dark">
+        <div class="theme-icon">
+            <ion-icon name="moon-outline"></ion-icon>
+        </div>
+        <span>Темная тема</span>
+    </div>
+    <div class="theme-option" data-theme="light">
+        <div class="theme-icon">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </div>
+        <span>Светлая тема</span>
+    </div>
+    <div class="theme-option" data-theme="pink">
+        <div class="theme-icon">
+            <ion-icon name="flower-outline"></ion-icon>
+        </div>
+        <span>Розовая тема</span>
+    </div>
 </div>
 
 <div class="nav-bar">
@@ -1476,6 +1664,7 @@ function initPage() {
     // Создаем эффекты
     createParticles();
     createStars();
+    createCherryBlossoms();
     initGlowCursor();
     
     // Загружаем данные пользователя
@@ -1486,6 +1675,9 @@ function initPage() {
     
     // Добавляем обработчики для фильтров
     setupFilters();
+    
+    // Устанавливаем активную тему
+    setActiveThemeOption();
 }
 
 // Функция для загрузки данных пользователя из localStorage
@@ -1843,7 +2035,7 @@ function setupFilters() {
     });
 }
 
-// Fix the filterAchievements function to correctly show/hide headers when filtering
+// Функция для фильтрации достижений
 function filterAchievements(filter) {
     const headers = document.querySelectorAll('.achievements-header');
     const containers = document.querySelectorAll('.achievements-container');
@@ -1874,10 +2066,7 @@ function filterAchievements(filter) {
     }
 }
 
-// Remove the getHeaderIndex function since we're now using a direct mapping
-// This function was causing the issue by always returning 1 for 'special'
-
-// Update the formatCurrency function to properly round numbers and avoid floating point issues
+// Функция для форматирования валюты
 function formatCurrency(amount) {
     // Round to 2 decimal places to avoid floating point issues
     amount = Math.round(amount * 100) / 100;
@@ -1972,10 +2161,12 @@ function initGlowCursor() {
             target.classList.contains('card') ||
             target.classList.contains('achievement-card') ||
             target.classList.contains('filter-btn') ||
+            target.classList.contains('theme-option') ||
             target.closest('.btn') ||
             target.closest('.card') ||
             target.closest('.achievement-card') ||
-            target.closest('.filter-btn');
+            target.closest('.filter-btn') ||
+            target.closest('.theme-option');
         
         if (isInteractive) {
             cursor.style.transform = 'scale(1.5)';
@@ -2038,35 +2229,187 @@ function createStars() {
     }
 }
 
-// Функция для переключения темы
-function toggleTheme() {
-    const root = document.documentElement;
-    const currentTheme = root.classList.contains('light-theme') ? 'dark' : 'light';
-    root.classList.toggle('light-theme');
+// Функция для создания лепестков сакуры (для розовой темы)
+function createCherryBlossoms() {
+    const blossomContainer = document.createElement('div');
+    blossomContainer.className = 'cherry-blossom-container';
+    document.body.appendChild(blossomContainer);
 
-    const tl = gsap.timeline();
-
-    if (currentTheme === 'light') {
-        // Анимация от солнца к луне
-        tl.to("#sun, #sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray-8", {duration: 0.3, opacity: 0})
-          .to("#moon", {duration: 0.5, morphSVG: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z", ease: "power2.inOut"}, "-=0.3");
-    } else {
-        // Анимация от луны к солнцу
-        tl.to("#moon", {duration: 0.5, morphSVG: "M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z", ease: "power2.inOut"})
-          .to("#sun", {duration: 0.1, opacity: 1})
-          .to("#sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray-8", {duration: 0.3, opacity: 1, stagger: 0.05}, "-=0.1");
+    // Создаем начальные лепестки
+    for (let i = 0; i < 20; i++) {
+        createCherryBlossom();
     }
 
+    // Продолжаем создавать новые лепестки с интервалом
+    setInterval(createCherryBlossom, 300);
+
+    function createCherryBlossom() {
+        const blossom = document.createElement('div');
+        blossom.className = 'cherry-blossom';
+        
+        // Случайное положение по горизонтали
+        blossom.style.left = `${Math.random() * 100}vw`;
+        
+        // Случайный размер
+        const size = Math.random() * 10 + 10;
+        blossom.style.width = `${size}px`;
+        blossom.style.height = `${size}px`;
+        
+        // Случайная скорость падения
+        const duration = Math.random() * 10 + 5;
+        blossom.style.animationDuration = `${duration}s`;
+        
+        // Случайное вращение
+        blossom.style.transform = `rotate(${Math.random() * 360}deg)`;
+        
+        document.body.appendChild(blossom);
+        
+        // Удаляем лепесток после завершения анимации
+        setTimeout(() => {
+            blossom.remove();
+        }, duration * 1000);
+    }
+}
+
+// Функция для отображения меню выбора темы
+function toggleThemeMenu() {
+    const themeMenu = document.getElementById('theme-menu');
+    themeMenu.classList.toggle('active');
+    
+    // Если меню открыто, добавляем обработчик для закрытия при клике вне меню
+    if (themeMenu.classList.contains('active')) {
+        setTimeout(() => {
+            document.addEventListener('click', closeThemeMenuOnClickOutside);
+        }, 10);
+        
+        // Создаем эффект искр
+        createSparklesAround(document.querySelector('.theme-toggle'), 10);
+    }
+}
+
+// Функция для закрытия меню при клике вне его
+function closeThemeMenuOnClickOutside(event) {
+    const themeMenu = document.getElementById('theme-menu');
+    const themeToggle = document.querySelector('.theme-toggle');
+    
+    if (!themeMenu.contains(event.target) && !themeToggle.contains(event.target)) {
+        themeMenu.classList.remove('active');
+        document.removeEventListener('click', closeThemeMenuOnClickOutside);
+    }
+}
+
+// Функция для установки активной темы в меню
+function setActiveThemeOption() {
+    const root = document.documentElement;
+    let currentTheme = 'dark'; // По умолчанию темная тема
+    
+    if (root.classList.contains('light-theme')) {
+        currentTheme = 'light';
+    } else if (root.classList.contains('pink-theme')) {
+        currentTheme = 'pink';
+    }
+    
+    // Удаляем активный класс со всех опций
+    document.querySelectorAll('.theme-option').forEach(option => {
+        option.classList.remove('active');
+    });
+    
+    // Добавляем активный класс на текущую тему
+    const activeOption = document.querySelector(`.theme-option[data-theme="${currentTheme}"]`);
+    if (activeOption) {
+        activeOption.classList.add('active');
+    }
+    
+    // Добавляем обработчики для опций темы
+    document.querySelectorAll('.theme-option').forEach(option => {
+        option.addEventListener('click', function() {
+            const theme = this.dataset.theme;
+            setTheme(theme);
+            
+            // Закрываем меню
+            document.getElementById('theme-menu').classList.remove('active');
+            document.removeEventListener('click', closeThemeMenuOnClickOutside);
+            
+            // Создаем эффект искр
+            createSparklesAround(this, 10);
+        });
+    });
+}
+
+// Функция для установки темы
+function setTheme(theme) {
+    const root = document.documentElement;
+    const themeIcon = document.getElementById('theme-icon');
+    
+    // Удаляем все классы тем
+    root.classList.remove('light-theme', 'pink-theme');
+    
+    // Устанавливаем выбранную тему
+    if (theme === 'light') {
+        root.classList.add('light-theme');
+        updateThemeIcon('light');
+    } else if (theme === 'pink') {
+        root.classList.add('pink-theme');
+        updateThemeIcon('pink');
+    } else {
+        // Темная тема (по умолчанию)
+        updateThemeIcon('dark');
+    }
+    
+    // Сохраняем выбранную тему в localStorage
+    localStorage.setItem('selectedTheme', theme);
+    
+    // Обновляем активную опцию в меню
+    setActiveThemeOption();
+    
     // Создаем эффект вспышки при смене темы
+    createThemeChangeFlash(theme);
+}
+
+// Функция для обновления иконки темы
+function updateThemeIcon(theme) {
+    const moon = document.getElementById('moon');
+    const sun = document.getElementById('sun');
+    const sunRays = document.querySelectorAll('[id^="sun-ray-"]');
+    const cherry = document.getElementById('cherry');
+    
+    // Скрываем все элементы
+    moon.style.display = 'none';
+    sun.style.display = 'none';
+    cherry.style.display = 'none';
+    sunRays.forEach(ray => ray.style.display = 'none');
+    
+    // Показываем нужные элементы в зависимости от темы
+    if (theme === 'light') {
+        sun.style.display = 'block';
+        sunRays.forEach(ray => ray.style.display = 'block');
+    } else if (theme === 'pink') {
+        cherry.style.display = 'block';
+    } else {
+        moon.style.display = 'block';
+    }
+}
+
+// Функция для создания эффекта вспышки при смене темы
+function createThemeChangeFlash(theme) {
     const flash = document.createElement('div');
     flash.style.position = 'fixed';
     flash.style.top = '0';
     flash.style.left = '0';
     flash.style.width = '100%';
     flash.style.height = '100%';
-    flash.style.backgroundColor = currentTheme === 'light' ? 'rgba(15, 23, 42, 0.2)' : 'rgba(255, 255, 255, 0.2)';
     flash.style.zIndex = '9998';
     flash.style.pointerEvents = 'none';
+    
+    // Цвет вспышки в зависимости от темы
+    if (theme === 'light') {
+        flash.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+    } else if (theme === 'pink') {
+        flash.style.backgroundColor = 'rgba(236, 72, 153, 0.2)';
+    } else {
+        flash.style.backgroundColor = 'rgba(15, 23, 42, 0.2)';
+    }
+    
     document.body.appendChild(flash);
     
     gsap.to(flash, {
@@ -2076,14 +2419,143 @@ function toggleTheme() {
             flash.remove();
         }
     });
-    
-    // Создаем эффект искр при смене темы
-    createSparklesAround(document.querySelector('.theme-toggle'), 20);
+}
+
+// Функция для загрузки сохраненной темы
+function loadSavedTheme() {
+    const savedTheme = localStorage.getItem('selectedTheme');
+    if (savedTheme) {
+        setTheme(savedTheme);
+    }
 }
 
 // Инициализация страницы при загрузке
-document.addEventListener('DOMContentLoaded', initPage);
+document.addEventListener('DOMContentLoaded', () => {
+    initPage();
+    loadSavedTheme();
+    
+    // Добавляем обработчики для опций темы
+    document.querySelectorAll('.theme-option').forEach(option => {
+        option.addEventListener('click', function() {
+            const theme = this.dataset.theme;
+            setTheme(theme);
+        });
+    });
+});
+
+// Функция для переключения темы
+function toggleTheme() {
+    const root = document.documentElement;
+    const currentTheme = root.classList.contains('light-theme') ? 'light' : 
+                        root.classList.contains('pink-theme') ? 'pink' : 'dark';
+    let nextTheme;
+    
+    // Определяем следующую тему
+    switch(currentTheme) {
+        case 'dark':
+            nextTheme = 'light';
+            break;
+        case 'light':
+            nextTheme = 'pink';
+            break;
+        case 'pink':
+            nextTheme = 'dark';
+            break;
+    }
+    
+    // Создаем эффект перехода
+    const transition = document.createElement('div');
+    transition.className = 'theme-transition';
+    document.body.appendChild(transition);
+    
+    // Анимируем переход
+    requestAnimationFrame(() => {
+        transition.style.opacity = '1';
+        
+        setTimeout(() => {
+            // Удаляем все классы тем
+            root.classList.remove('light-theme', 'pink-theme');
+            
+            // Добавляем новую тему
+            if (nextTheme === 'light') {
+                root.classList.add('light-theme');
+            } else if (nextTheme === 'pink') {
+                root.classList.add('pink-theme');
+            }
+            
+            // Обновляем иконку
+            const moonPath = document.getElementById('moon');
+            const sunElements = document.querySelectorAll('#sun, #sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray-8');
+            const heartPath = document.getElementById('heart');
+            
+            moonPath.style.display = 'none';
+            sunElements.forEach(el => el.style.display = 'none');
+            heartPath.style.display = 'none';
+            
+            switch(nextTheme) {
+                case 'dark':
+                    moonPath.style.display = 'block';
+                    break;
+                case 'light':
+                    sunElements.forEach(el => el.style.display = 'block');
+                    break;
+                case 'pink':
+                    heartPath.style.display = 'block';
+                    break;
+            }
+            
+            // Плавно убираем эффект перехода
+            setTimeout(() => {
+                transition.style.opacity = '0';
+                setTimeout(() => transition.remove(), 300);
+            }, 50);
+        }, 150);
+    });
+    
+    // Сохраняем выбранную тему
+    localStorage.setItem('theme', nextTheme);
+}
+
+// Функция для инициализации темы при загрузке
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const root = document.documentElement;
+    
+    // Удаляем все классы тем
+    root.classList.remove('light-theme', 'pink-theme');
+    
+    // Устанавливаем сохраненную тему или тему по умолчанию
+    if (savedTheme) {
+        if (savedTheme === 'light') {
+            root.classList.add('light-theme');
+        } else if (savedTheme === 'pink') {
+            root.classList.add('pink-theme');
+        }
+    } else if (!prefersDark) {
+        root.classList.add('light-theme');
+    }
+    
+    // Обновляем иконку
+    const moonPath = document.getElementById('moon');
+    const sunElements = document.querySelectorAll('#sun, #sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray-8');
+    const heartPath = document.getElementById('heart');
+    
+    moonPath.style.display = 'none';
+    sunElements.forEach(el => el.style.display = 'none');
+    heartPath.style.display = 'none';
+    
+    if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+        sunElements.forEach(el => el.style.display = 'block');
+    } else if (savedTheme === 'pink') {
+        heartPath.style.display = 'block';
+    } else {
+        moonPath.style.display = 'block';
+    }
+}
+
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', initTheme);
 </script>
 </body>
 </html>
-

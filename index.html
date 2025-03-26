@@ -124,6 +124,47 @@
         --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
     }
 
+    /* Pink Japanese Theme */
+    :root.pink-theme {
+        --bg-primary: #1a0f1f;
+        --bg-secondary: #2d1535;
+        --bg-tertiary: #3d1d47;
+        --bg-card: linear-gradient(145deg, #2d1535, #3d1d47);
+        --glass: rgba(255, 255, 255, 0.05);
+        --glass-hover: rgba(255, 255, 255, 0.08);
+        
+        --accent-primary: #ff69b4;
+        --accent-primary-hover: #ff1493;
+        --accent-primary-glow: rgba(255, 105, 180, 0.5);
+        --accent-secondary: #ff69b4;
+        --accent-tertiary: #ff1493;
+        --accent-quaternary: #ff69b4;
+        
+        --gradient-primary: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+        --gradient-secondary: linear-gradient(135deg, var(--accent-tertiary) 0%, var(--accent-quaternary) 100%);
+        --gradient-text: linear-gradient(135deg, #fff 0%, #ffb7e5 100%);
+        
+        --text-primary: rgba(255, 255, 255, 0.95);
+        --text-secondary: rgba(255, 255, 255, 0.7);
+        --text-tertiary: rgba(255, 255, 255, 0.5);
+        
+        --positive: #ff69b4;
+        --positive-light: rgba(255, 105, 180, 0.2);
+        --negative: #ef4444;
+        --negative-light: rgba(239, 68, 68, 0.2);
+        --warning: #f59e0b;
+        --info: #3b82f6;
+        
+        --border: rgba(255, 255, 255, 0.1);
+        --border-hover: rgba(255, 255, 255, 0.2);
+        
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+        --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+        --shadow-glow: 0 0 20px var(--accent-primary-glow);
+        --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+    }
+
     * {
         margin: 0;
         padding: 0;
@@ -155,6 +196,13 @@
             radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
         z-index: -1;
         animation: gradientMove 20s ease-in-out infinite alternate;
+    }
+
+    .pink-theme body::before {
+        background: 
+            radial-gradient(circle at 10% 20%, rgba(236, 72, 153, 0.08) 0%, transparent 30%),
+            radial-gradient(circle at 90% 80%, rgba(244, 114, 182, 0.08) 0%, transparent 30%),
+            radial-gradient(circle at 50% 50%, rgba(192, 38, 211, 0.05) 0%, transparent 50%);
     }
 
     @keyframes gradientMove {
@@ -237,6 +285,18 @@
         transition: opacity 0.5s ease;
     }
 
+    .pink-theme .card::before {
+        background: linear-gradient(
+            135deg, 
+            transparent 0%, 
+            transparent 20%, 
+            rgba(236, 72, 153, 0.05) 40%, 
+            rgba(244, 114, 182, 0.05) 60%, 
+            rgba(192, 38, 211, 0.05) 80%, 
+            transparent 100%
+        );
+    }
+
     .card:hover::before {
         opacity: 1;
         animation: cardGradient 3s linear infinite;
@@ -284,6 +344,13 @@
         background-size: 200% 200%;
         animation: gradientText 5s ease infinite;
         text-shadow: 0 0 30px var(--accent-primary-glow);
+    }
+
+    .pink-theme .balance-card h1 {
+        background: linear-gradient(135deg, #fff 0%, var(--accent-primary) 50%, var(--accent-secondary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
     @keyframes gradientText {
@@ -370,6 +437,10 @@
         animation: pulseGlow 3s ease-in-out infinite alternate;
     }
 
+    .pink-theme .chart-glow {
+        background: linear-gradient(0deg, rgba(236, 72, 153, 0.1) 0%, transparent 100%);
+    }
+
     @keyframes pulseGlow {
         0% { opacity: 0.3; }
         100% { opacity: 0.7; }
@@ -419,6 +490,10 @@
         background: radial-gradient(circle, rgba(79, 70, 229, 0.2) 0%, transparent 70%);
         opacity: 0;
         transition: opacity 0.5s ease;
+    }
+
+    .pink-theme .calendar-day::before {
+        background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%);
     }
 
     .calendar-day:hover {
@@ -647,6 +722,10 @@
         background-size: 200% 200%;
     }
 
+    .pink-theme .btn-primary {
+        box-shadow: 0 4px 6px rgba(236, 72, 153, 0.25);
+    }
+
     .btn-primary:hover {
         background-position: right center;
         transform: translateY(-4px);
@@ -655,6 +734,13 @@
             0 4px 6px -2px rgba(79, 70, 229, 0.2),
             0 0 10px var(--accent-primary-glow);
         animation: gradientShift 3s ease infinite;
+    }
+
+    .pink-theme .btn-primary:hover {
+        box-shadow: 
+            0 10px 15px -3px rgba(236, 72, 153, 0.3),
+            0 4px 6px -2px rgba(236, 72, 153, 0.2),
+            0 0 10px var(--accent-primary-glow);
     }
 
     @keyframes gradientShift {
@@ -861,6 +947,7 @@
         visibility: visible;
     }
 
+    /* Theme toggle styles */
     .theme-toggle {
         position: fixed;
         top: var(--spacing-xl);
@@ -913,6 +1000,73 @@
         stroke-linejoin: round;
         position: relative;
         z-index: 1;
+    }
+
+    /* Theme transition effect */
+    .theme-transition {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .theme-menu {
+        position: fixed;
+        top: calc(var(--spacing-xl) + 60px);
+        left: var(--spacing-xl);
+        background: var(--bg-card);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border);
+        padding: var(--spacing-sm);
+        z-index: 100;
+        display: none;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        min-width: 150px;
+    }
+
+    .theme-menu.active {
+        display: flex;
+        animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .theme-option {
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: var(--transition-fast);
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+    }
+
+    .theme-option:hover {
+        background: var(--glass-hover);
+    }
+
+    .theme-option.active {
+        background: var(--accent-primary);
+        color: white;
+    }
+
+    .theme-icon {
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .switch-view {
@@ -1115,87 +1269,6 @@
         padding-right: var(--spacing-xl);
     }
 
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-md);
-    }
-
-    .stats-item {
-        background: var(--bg-tertiary);
-        padding: var(--spacing-lg);
-        border-radius: var(--radius-md);
-        text-align: center;
-        border: 1px solid var(--border);
-        transition: var(--transition-normal);
-        position: relative;
-        overflow: hidden;
-        box-shadow: var(--shadow-sm);
-    }
-
-    .stats-item::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, transparent 70%);
-        opacity: 0;
-        transition: opacity 0.5s ease;
-    }
-
-    .stats-item:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-md);
-        border-color: var(--border-hover);
-    }
-
-    .stats-item:hover::before {
-        opacity: 1;
-        animation: rotateGradient 10s linear infinite;
-    }
-
-    .stats-item h3 {
-        margin-bottom: var(--spacing-sm);
-        color: var(--text-secondary);
-    }
-
-    .stats-item p {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: var(--spacing-xs);
-        color: var(--text-primary);
-        background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        opacity: 0;
-        transform: translateY(10px);
-        animation: fadeInUp 0.5s forwards 0.2s;
-    }
-
-    @keyframes fadeInUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .stats-item p.positive {
-        background: linear-gradient(135deg, var(--positive) 0%, #34d399 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .stats-item p.negative {
-        background: linear-gradient(135deg, var(--negative) 0%, #f87171 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
     .telegram-buttons {
         display: flex;
         justify-content: center;
@@ -1206,6 +1279,7 @@
     .telegram-button {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: var(--spacing-sm);
         padding: var(--spacing-md) var(--spacing-lg);
         background: var(--bg-tertiary);
@@ -1217,6 +1291,7 @@
         position: relative;
         overflow: hidden;
         font-weight: 500;
+        width: 180px;
     }
 
     .telegram-button::before {
@@ -1329,11 +1404,6 @@
         margin-bottom: 0;
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
     /* Custom scrollbar */
     ::-webkit-scrollbar {
         width: 8px;
@@ -1368,6 +1438,34 @@
     @keyframes pulse {
         0%, 100% { transform: scale(1); }
         50% { transform: scale(1.05); }
+    }
+
+    /* Notification styles */
+    .notification {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 12px 24px;
+        border-radius: var(--radius-md);
+        color: white;
+        font-weight: 500;
+        z-index: 9999;
+        opacity: 0;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-md);
+    }
+
+    .notification.success {
+        background: linear-gradient(135deg, var(--positive), #34d399);
+    }
+
+    .notification.error {
+        background: linear-gradient(135deg, var(--negative), #f87171);
+    }
+
+    .notification.info {
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
     }
 
     /* Particle effects */
@@ -1409,6 +1507,39 @@
         box-shadow: 0 0 10px var(--accent-primary-glow);
     }
 
+    /* Cherry blossom petals for pink theme */
+    .cherry-blossom {
+        position: fixed;
+        width: 15px;
+        height: 15px;
+        background-image: radial-gradient(circle at 30% 30%, white 0%, var(--accent-tertiary) 100%);
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.7;
+        filter: blur(0.5px);
+        animation: fallDown 10s linear forwards;
+        display: none;
+    }
+
+    .pink-theme .cherry-blossom {
+        display: block;
+    }
+
+    @keyframes fallDown {
+        0% {
+            transform: translateY(-100px) rotate(0deg) scale(0.6);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.7;
+        }
+        100% {
+            transform: translateY(calc(100vh + 100px)) rotate(360deg) scale(0.6);
+            opacity: 0;
+        }
+    }
+
     @keyframes sparkleAnimation {
         0% { transform: scale(0); opacity: 0; }
         50% { transform: scale(1); opacity: 1; }
@@ -1435,10 +1566,6 @@
             gap: var(--spacing-md);
         }
 
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-
         .telegram-buttons {
             flex-direction: column;
         }
@@ -1453,6 +1580,12 @@
         .add-btn {
             bottom: var(--spacing-xl);
             right: calc(var(--spacing-xl) + 60px + var(--spacing-md));
+        }
+        
+        .theme-menu {
+            top: auto;
+            bottom: calc(var(--spacing-xl) + 60px);
+            left: var(--spacing-xl);
         }
     }
 
@@ -1480,190 +1613,319 @@
         animation: pulse 3s ease-in-out infinite;
     }
 
-    /* Notification styles */
-    .notification {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 12px 24px;
-        border-radius: var(--radius-md);
-        color: white;
-        font-weight: 500;
-        z-index: 9999;
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+}
+
+.stats-item {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    text-align: center;
+    border: 1px solid var(--border);
+    transition: var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.stats-item::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.pink-theme .stats-item::before {
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%);
+}
+
+.stats-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-hover);
+}
+
+.stats-item:hover::before {
+    opacity: 1;
+    animation: rotateGradient 10s linear infinite;
+}
+
+.stats-item h3 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-secondary);
+}
+
+.stats-item p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUp 0.5s forwards 0.2s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stats-item p.positive {
+    background: linear-gradient(135deg, var(--positive) 0%, #34d399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stats-item p.negative {
+    background: linear-gradient(135deg, var(--negative) 0%, #f87171 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Theme Toggle and Menu Styles */
+.theme-toggle {
+    position: fixed;
+    top: var(--spacing-xl);
+    left: var(--spacing-xl);
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background: var(--bg-card);
+    color: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    border: 1px solid var(--border);
+    z-index: 100;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.theme-toggle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-4px);
+    color: white;
+    box-shadow: var(--shadow-glow);
+}
+
+.theme-toggle:hover::before {
+    opacity: 1;
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    position: relative;
+    z-index: 1;
+}
+
+.theme-menu {
+    position: fixed;
+    top: calc(var(--spacing-xl) + 60px);
+    left: var(--spacing-xl);
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+    padding: var(--spacing-sm);
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    min-width: 150px;
+}
+
+.theme-menu.active {
+    display: flex;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.theme-option {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.theme-option:hover {
+    background: var(--glass-hover);
+}
+
+.theme-option.active {
+    background: var(--accent-primary);
+    color: white;
+}
+
+.theme-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Effects */
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+    filter: blur(0.5px);
+    box-shadow: 0 0 10px var(--accent-primary-glow);
+}
+
+.glow-cursor {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-primary-glow) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    mix-blend-mode: screen;
+}
+
+@keyframes sparkleAnimation {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+/* Cherry Blossoms (Pink Theme) */
+.cherry-blossom {
+    position: fixed;
+    width: 15px;
+    height: 15px;
+    background-image: radial-gradient(circle at 30% 30%, white 0%, var(--accent-tertiary) 100%);
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.7;
+    filter: blur(0.5px);
+    animation: fallDown 10s linear forwards;
+    display: none;
+}
+
+.pink-theme .cherry-blossom {
+    display: block;
+}
+
+@keyframes fallDown {
+    0% {
+        transform: translateY(-100px) rotate(0deg) scale(0.6);
         opacity: 0;
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow-md);
     }
+    10% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px)) rotate(360deg) scale(0.6);
+        opacity: 0;
+    }
+}
 
-    .notification.success {
-        background: linear-gradient(135deg, var(--positive), #34d399);
+/* Media Queries */
+@media (max-width: 768px) {
+    .theme-toggle {
+        top: auto;
+        bottom: var(--spacing-xl);
+        left: var(--spacing-xl);
     }
-
-    .notification.error {
-        background: linear-gradient(135deg, var(--negative), #f87171);
+    
+    .theme-menu {
+        top: auto;
+        bottom: calc(var(--spacing-xl) + 60px);
+        left: var(--spacing-xl);
     }
-
-    .notification.info {
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-    }
-
-    /* Дополнительные стили для расширенной статистики */
-    .advanced-stats {
-        display: none;
-        margin-top: var(--spacing-xl);
-        animation: fadeIn 0.5s ease;
-    }
-
-    .advanced-stats-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-lg);
-        margin-bottom: var(--spacing-xl);
-    }
-
-    .advanced-stats-card {
-        background: var(--bg-tertiary);
-        border-radius: var(--radius-md);
-        padding: var(--spacing-lg);
-        border: 1px solid var(--border);
-        box-shadow: var(--shadow-sm);
-        transition: var(--transition-normal);
-    }
-
-    .advanced-stats-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-md);
-        border-color: var(--border-hover);
-    }
-
-    .advanced-stats-card h3 {
-        margin-bottom: var(--spacing-md);
-        font-size: 1.1rem;
-        color: var(--text-primary);
-        position: relative;
-        display: inline-block;
-    }
-
-    .advanced-stats-card h3::after {
-        content: '';
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        width: 50px;
-        height: 2px;
-        background: var(--gradient-primary);
-    }
-
-    .monthly-profit-chart {
-        height: 300px;
-        margin-bottom: var(--spacing-xl);
-    }
-
-    .transaction-rank-list {
-        list-style: none;
-        padding: 0;
-    }
-
-    .transaction-rank-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: var(--spacing-md);
-        border-bottom: 1px solid var(--border);
-        transition: var(--transition-normal);
-    }
-
-    .transaction-rank-item:last-child {
-        border-bottom: none;
-    }
-
-    .transaction-rank-item:hover {
-        background: var(--glass);
-        transform: translateX(5px);
-    }
-
-    .transaction-rank-info {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-xs);
-    }
-
-    .transaction-rank-name {
-        font-weight: 600;
-    }
-
-    .transaction-rank-date {
-        font-size: 0.8rem;
-        color: var(--text-tertiary);
-    }
-
-    .transaction-rank-amount {
-        font-weight: 700;
-    }
-
-    .transaction-rank-amount.positive {
-        color: var(--positive);
-    }
-
-    .transaction-rank-amount.negative {
-        color: var(--negative);
-    }
-
-    .best-day-card {
-        grid-column: span 2;
-    }
-
-    .best-day-info {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: var(--spacing-md);
-    }
-
-    .best-day-date {
-        font-size: 1.2rem;
-        font-weight: 600;
-    }
-
-    .best-day-amount {
-        font-size: 1.5rem;
-        font-weight: 700;
-    }
-
-    .best-day-amount.positive {
-        color: var(--positive);
-    }
-
-    .best-day-amount.negative {
-        color: var(--negative);
-    }
-
-    .tab-buttons {
-        display: flex;
-        justify-content: center;
-        gap: var(--spacing-md);
-        margin-top: var(--spacing-lg);
-        margin-bottom: var(--spacing-lg);
-    }
+}
 </style>
 </head>
 <body>
 <div class="glow-cursor"></div>
 
 <div class="theme-toggle" onclick="toggleTheme()">
-<svg viewBox="0 0 24 24" id="theme-icon">
-    <path id="moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    <circle id="sun" cx="12" cy="12" r="5" style="display:none;"/>
-    <line id="sun-ray-1" x1="12" y1="1" x2="12" y2="3" style="display:none;"/>
-    <line id="sun-ray-2" x1="12" y1="21" x2="12" y2="23" style="display:none;"/>
-    <line id="sun-ray-3" x1="4.22" y1="4.22" x2="5.64" y2="5.64" style="display:none;"/>
-    <line id="sun-ray-4" x1="18.36" y1="18.36" x2="19.78" y2="19.78" style="display:none;"/>
-    <line id="sun-ray-5" x1="1" y1="12" x2="3" y2="12" style="display:none;"/>
-    <line id="sun-ray-6" x1="21" y1="12" x2="23" y2="12" style="display:none;"/>
-    <line id="sun-ray-7" x1="4.22" y1="19.78" x2="5.64" y2="18.36" style="display:none;"/>
-    <line id="sun-ray-8" x1="18.36" y1="5.64" x2="19.78" y2="4.22" style="display:none;"/>
-</svg>
+    <svg viewBox="0 0 24 24" id="theme-icon">
+        <path id="moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        <circle id="sun" cx="12" cy="12" r="5" style="display:none;"/>
+        <line id="sun-ray-1" x1="12" y1="1" x2="12" y2="3" style="display:none;"/>
+        <line id="sun-ray-2" x1="12" y1="21" x2="12" y2="23" style="display:none;"/>
+        <line id="sun-ray-3" x1="4.22" y1="4.22" x2="5.64" y2="5.64" style="display:none;"/>
+        <line id="sun-ray-4" x1="18.36" y1="18.36" x2="19.78" y2="19.78" style="display:none;"/>
+        <line id="sun-ray-5" x1="1" y1="12" x2="3" y2="12" style="display:none;"/>
+        <line id="sun-ray-6" x1="21" y1="12" x2="23" y2="12" style="display:none;"/>
+        <line id="sun-ray-7" x1="4.22" y1="19.78" x2="5.64" y2="18.36" style="display:none;"/>
+        <line id="sun-ray-8" x1="18.36" y1="5.64" x2="19.78" y2="4.22" style="display:none;"/>
+        <path id="heart" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" style="display:none;"/>
+    </svg>
+</div>
+
+<div class="theme-menu" id="theme-menu">
+    <div class="theme-option" data-theme="dark">
+        <div class="theme-icon">
+            <ion-icon name="moon-outline"></ion-icon>
+        </div>
+        <span>Темная тема</span>
+    </div>
+    <div class="theme-option" data-theme="light">
+        <div class="theme-icon">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </div>
+        <span>Светлая тема</span>
+    </div>
+    <div class="theme-option" data-theme="pink">
+        <div class="theme-icon">
+            <ion-icon name="flower-outline"></ion-icon>
+        </div>
+        <span>Розовая тема</span>
+    </div>
 </div>
 
 <div class="nav-bar">
@@ -1715,11 +1977,11 @@
         Показать статистику
     </button>
     <div class="telegram-buttons">
-        <a href="https://t.me/res661" target="_blank" class="telegram-button" rel="noreferrer">
+        <a href="https://t.me/+BwTh8OyJmC0wN2Vi" target="_blank" class="telegram-button" rel="noreferrer">
             <ion-icon name="paper-plane-outline"></ion-icon>
             <span>Telegram 1</span>
         </a>
-        <a href="https://t.me/slavniytrade" target="_blank" class="telegram-button" rel="noreferrer">
+        <a href="https://t.me/+UxvIvNPO4-kxMmI6" target="_blank" class="telegram-button" rel="noreferrer">
             <ion-icon name="paper-plane-outline"></ion-icon>
             <span>Telegram 2</span>
         </a>
@@ -1853,6 +2115,17 @@
 </div>
 </div>
 
+<!-- Confirm Modal -->
+<div id="confirmModal" class="confirm-modal">
+<div class="confirm-modal-content">
+    <p>Выйти без изменений?</p>
+    <div class="confirm-buttons">
+        <button onclick="confirmCloseModal(true)" class="btn btn-primary">Да</button>
+        <button onclick="confirmCloseModal(false)" class="btn btn-secondary">Нет</button>
+    </div>
+</div>
+</div>
+
 <!-- Stats Modal -->
 <div id="statsModal" class="modal">
 <div class="modal-content">
@@ -1888,71 +2161,9 @@
                 <small id="totalDeals">0 сделок</small>
             </div>
         </div>
-        
-        <div class="tab-buttons">
-            <button class="btn btn-primary" onclick="showAdvancedStats()">
-                <ion-icon name="analytics-outline"></ion-icon>
-                Дополнительная статистика
-            </button>
-        </div>
-        
-        <div id="advancedStats" class="advanced-stats">
-            <div class="monthly-profit-chart">
-                <canvas id="monthlyProfitChart"></canvas>
-            </div>
-            
-            <div class="advanced-stats-grid">
-                <div class="advanced-stats-card">
-                    <h3>Топ-5 прибыльных сделок</h3>
-                    <ul class="transaction-rank-list" id="topProfitableDeals">
-                        <!-- Будет заполнено динамически -->
-                    </ul>
-                </div>
-                
-                <div class="advanced-stats-card">
-                    <h3>Топ-5 убыточных сделок</h3>
-                    <ul class="transaction-rank-list" id="topLossDeals">
-                        <!-- Будет заполнено динамически -->
-                    </ul>
-                </div>
-                
-                <div class="advanced-stats-card best-day-card">
-                    <h3>Лучший день</h3>
-                    <div class="best-day-info" id="bestDayInfo">
-                        <!-- Будет заполнено динамически -->
-                    </div>
-                </div>
-                
-                <div class="advanced-stats-card best-day-card">
-                    <h3>Худший день</h3>
-                    <div class="best-day-info" id="worstDayInfo">
-                        <!-- Будет заполнено динамически -->
-                    </div>
-                </div>
-                
-                <div class="advanced-stats-card best-day-card">
-                    <h3>Средний дневной заработок</h3>
-                    <div class="best-day-info">
-                        <span class="best-day-date">За выбранный период</span>
-                        <span class="best-day-amount" id="averageDailyProfit">$0</span>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="modal-footer">
         <button onclick="closeStatsModal()" class="btn btn-primary">Закрыть</button>
-    </div>
-</div>
-</div>
-
-<!-- Confirm Modal -->
-<div id="confirmModal" class="confirm-modal">
-<div class="confirm-modal-content">
-    <p>Выйти без изменений?</p>
-    <div class="confirm-buttons">
-        <button onclick="confirmCloseModal(true)" class="btn btn-primary">Да</button>
-        <button onclick="confirmCloseModal(false)" class="btn btn-secondary">Нет</button>
     </div>
 </div>
 </div>
@@ -1963,7 +2174,6 @@
 <script>
 let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 let chart;
-let monthlyProfitChart;
 let currentPeriod = 'all';
 let lastCalculatedProfit = 0;
 let currentDate = new Date();
@@ -2067,313 +2277,6 @@ function initChart() {
             }
         }
     });
-}
-
-function initMonthlyProfitChart() {
-    if (!document.getElementById('monthlyProfitChart')) return;
-    
-    const ctx = document.getElementById('monthlyProfitChart').getContext('2d');
-    
-    // Получаем данные по месяцам
-    const monthlyData = getMonthlyProfitData();
-    
-    // Создаем градиенты для положительных и отрицательных значений
-    const positiveGradient = ctx.createLinearGradient(0, 0, 0, 400);
-    positiveGradient.addColorStop(0, 'rgba(16, 185, 129, 0.7)');
-    positiveGradient.addColorStop(1, 'rgba(16, 185, 129, 0.1)');
-    
-    const negativeGradient = ctx.createLinearGradient(0, 0, 0, 400);
-    negativeGradient.addColorStop(0, 'rgba(239, 68, 68, 0.7)');
-    negativeGradient.addColorStop(1, 'rgba(239, 68, 68, 0.1)');
-    
-    monthlyProfitChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: monthlyData.labels,
-            datasets: [{
-                label: 'Прибыль по месяцам',
-                data: monthlyData.data,
-                backgroundColor: function(context) {
-                    const value = context.dataset.data[context.dataIndex];
-                    return value >= 0 ? positiveGradient : negativeGradient;
-                },
-                borderColor: function(context) {
-                    const value = context.dataset.data[context.dataIndex];
-                    return value >= 0 ? 'rgba(16, 185, 129, 1)' : 'rgba(239, 68, 68, 1)';
-                },
-                borderWidth: 1,
-                borderRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                    bodyColor: '#fff',
-                    borderColor: 'rgba(255, 255, 255, 0.1)',
-                    borderWidth: 1,
-                    padding: 12,
-                    displayColors: false,
-                    callbacks: {
-                        label: function(context) {
-                            return '$' + context.parsed.y.toLocaleString();
-                        }
-                    }
-                }
-            },
-            scales: {
-                x: { 
-                    grid: { 
-                        color: 'rgba(255, 255, 255, 0.05)',
-                        drawBorder: false
-                    },
-                    ticks: { 
-                        color: 'rgba(255, 255, 255, 0.5)',
-                        font: {
-                            size: 10
-                        }
-                    }
-                },
-                y: { 
-                    grid: { 
-                        color: 'rgba(255, 255, 255, 0.05)',
-                        drawBorder: false
-                    },
-                    ticks: { 
-                        color: 'rgba(255, 255, 255, 0.5)',
-                        callback: value => '$' + value.toLocaleString(),
-                        font: {
-                            size: 10
-                        }
-                    }
-                }
-            },
-            animation: {
-                duration: 1500,
-                easing: 'easeOutQuart'
-            }
-        }
-    });
-}
-
-function getMonthlyProfitData() {
-    // Создаем объект для хранения данных по месяцам
-    const monthlyProfit = {};
-    const monthNames = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
-    
-    // Обрабатываем все транзакции
-    transactions.forEach(t => {
-        const date = new Date(t.date);
-        const monthYear = `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
-        
-        if (!monthlyProfit[monthYear]) {
-            monthlyProfit[monthYear] = 0;
-        }
-        
-        if (t.type === 'income') {
-            monthlyProfit[monthYear] += t.amount;
-        } else {
-            monthlyProfit[monthYear] -= t.amount;
-        }
-    });
-    
-    // Сортируем месяцы хронологически
-    const sortedMonths = Object.keys(monthlyProfit).sort((a, b) => {
-        const [monthA, yearA] = a.split(' ');
-        const [monthB, yearB] = b.split(' ');
-        
-        if (yearA !== yearB) {
-            return parseInt(yearA) - parseInt(yearB);
-        }
-        
-        return monthNames.indexOf(monthA) - monthNames.indexOf(monthB);
-    });
-    
-    return {
-        labels: sortedMonths,
-        data: sortedMonths.map(month => monthlyProfit[month])
-    };
-}
-
-function updateTopDeals() {
-    // Получаем топ-5 прибыльных сделок
-    const profitableDeals = [...transactions]
-        .filter(t => t.type === 'income')
-        .sort((a, b) => b.amount - a.amount)
-        .slice(0, 5);
-    
-    // Получаем топ-5 убыточных сделок
-    const lossDeals = [...transactions]
-        .filter(t => t.type === 'expense')
-        .sort((a, b) => b.amount - a.amount)
-        .slice(0, 5);
-    
-    // Обновляем списки
-    const profitableList = document.getElementById('topProfitableDeals');
-    const lossList = document.getElementById('topLossDeals');
-    
-    if (profitableList) {
-        profitableList.innerHTML = profitableDeals.map(deal => `
-            <li class="transaction-rank-item">
-                <div class="transaction-rank-info">
-                    <span class="transaction-rank-name">${deal.description}</span>
-                    <span class="transaction-rank-date">${new Date(deal.date).toLocaleDateString()}</span>
-                </div>
-                <span class="transaction-rank-amount positive">+$${deal.amount.toLocaleString()}</span>
-            </li>
-        `).join('');
-        
-        // Если сделок меньше 5, добавляем пустые элементы
-        if (profitableDeals.length < 5) {
-            for (let i = profitableDeals.length; i < 5; i++) {
-                profitableList.innerHTML += `
-                    <li class="transaction-rank-item">
-                        <div class="transaction-rank-info">
-                            <span class="transaction-rank-name">Нет данных</span>
-                            <span class="transaction-rank-date">-</span>
-                        </div>
-                        <span class="transaction-rank-amount">-</span>
-                    </li>
-                `;
-            }
-        }
-    }
-    
-    if (lossList) {
-        lossList.innerHTML = lossDeals.map(deal => `
-            <li class="transaction-rank-item">
-                <div class="transaction-rank-info">
-                    <span class="transaction-rank-name">${deal.description}</span>
-                    <span class="transaction-rank-date">${new Date(deal.date).toLocaleDateString()}</span>
-                </div>
-                <span class="transaction-rank-amount negative">-$${deal.amount.toLocaleString()}</span>
-            </li>
-        `).join('');
-        
-        // Если сделок меньше 5, добавляем пустые элементы
-        if (lossDeals.length < 5) {
-            for (let i = lossDeals.length; i < 5; i++) {
-                lossList.innerHTML += `
-                    <li class="transaction-rank-item">
-                        <div class="transaction-rank-info">
-                            <span class="transaction-rank-name">Нет данных</span>
-                            <span class="transaction-rank-date">-</span>
-                        </div>
-                        <span class="transaction-rank-amount">-</span>
-                    </li>
-                `;
-            }
-        }
-    }
-}
-
-function updateBestWorstDays() {
-    // Группируем транзакции по дням
-    const dailyProfits = {};
-    
-    transactions.forEach(t => {
-        if (!dailyProfits[t.date]) {
-            dailyProfits[t.date] = 0;
-        }
-        
-        if (t.type === 'income') {
-            dailyProfits[t.date] += t.amount;
-        } else {
-            dailyProfits[t.date] -= t.amount;
-        }
-    });
-    
-    // Находим лучший и худший дни
-    let bestDay = { date: null, profit: -Infinity };
-    let worstDay = { date: null, profit: Infinity };
-    
-    Object.entries(dailyProfits).forEach(([date, profit]) => {
-        if (profit > bestDay.profit) {
-            bestDay = { date, profit };
-        }
-        
-        if (profit < worstDay.profit) {
-            worstDay = { date, profit };
-        }
-    });
-    
-    // Обновляем информацию
-    const bestDayInfo = document.getElementById('bestDayInfo');
-    const worstDayInfo = document.getElementById('worstDayInfo');
-    
-    if (bestDayInfo && bestDay.date) {
-        bestDayInfo.innerHTML = `
-            <span class="best-day-date">${new Date(bestDay.date).toLocaleDateString()}</span>
-            <span class="best-day-amount positive">+$${bestDay.profit.toLocaleString()}</span>
-        `;
-    } else if (bestDayInfo) {
-        bestDayInfo.innerHTML = `
-            <span class="best-day-date">Нет данных</span>
-            <span class="best-day-amount">-</span>
-        `;
-    }
-    
-    if (worstDayInfo && worstDay.date) {
-        worstDayInfo.innerHTML = `
-            <span class="best-day-date">${new Date(worstDay.date).toLocaleDateString()}</span>
-            <span class="best-day-amount negative">-$${Math.abs(worstDay.profit).toLocaleString()}</span>
-        `;
-    } else if (worstDayInfo) {
-        worstDayInfo.innerHTML = `
-            <span class="best-day-date">Нет данных</span>
-            <span class="best-day-amount">-</span>
-        `;
-    }
-    
-    // Рассчитываем средний дневной заработок
-    const averageDailyProfitElement = document.getElementById('averageDailyProfit');
-    if (averageDailyProfitElement) {
-        const days = Object.keys(dailyProfits).length;
-        const totalProfit = Object.values(dailyProfits).reduce((sum, profit) => sum + profit, 0);
-        const averageProfit = days > 0 ? totalProfit / days : 0;
-        
-        averageDailyProfitElement.textContent = '$' + averageProfit.toLocaleString(undefined, {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 2
-        });
-        averageDailyProfitElement.className = averageProfit >= 0 ? 'best-day-amount positive' : 'best-day-amount negative';
-    }
-}
-
-function showAdvancedStats() {
-    const advancedStats = document.getElementById('advancedStats');
-    if (advancedStats) {
-        advancedStats.style.display = 'block';
-        
-        // Инициализируем график, если он еще не создан
-        if (!monthlyProfitChart) {
-            initMonthlyProfitChart();
-        } else {
-            // Обновляем данные графика
-            const monthlyData = getMonthlyProfitData();
-            monthlyProfitChart.data.labels = monthlyData.labels;
-            monthlyProfitChart.data.datasets[0].data = monthlyData.data;
-            monthlyProfitChart.update();
-        }
-        
-        // Обновляем топ сделок
-        updateTopDeals();
-        
-        // Обновляем лучший/худший дни
-        updateBestWorstDays();
-        
-        // Анимируем появление
-        gsap.fromTo(advancedStats, 
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.7)" }
-        );
-        
-        // Создаем эффект искр
-        createSparklesAround(document.querySelector('.tab-buttons .btn-primary'), 10);
-    }
 }
 
 function updateBalance() {
@@ -3070,34 +2973,139 @@ function createSparklesAround(element, count = 10) {
     }
 }
 
-function toggleTheme() {
-    const root = document.documentElement;
-    const currentTheme = root.classList.contains('light-theme') ? 'dark' : 'light';
-    root.classList.toggle('light-theme');
-
-    const tl = gsap.timeline();
-
-    if (currentTheme === 'light') {
-        // Анимация от солнца к луне
-        tl.to("#sun, #sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray  #sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray-8", {duration: 0.3, opacity: 0})
-          .to("#moon", {duration: 0.5, morphSVG: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z", ease: "power2.inOut"}, "-=0.3");
-    } else {
-        // Анимация от луны к солнцу
-        tl.to("#moon", {duration: 0.5, morphSVG: "M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z", ease: "power2.inOut"})
-          .to("#sun", {duration: 0.1, opacity: 1})
-          .to("#sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray-8", {duration: 0.3, opacity: 1, stagger: 0.05}, "-=0.1");
+function toggleThemeMenu() {
+    const themeMenu = document.getElementById('theme-menu');
+    themeMenu.classList.toggle('active');
+    
+    // Если меню открыто, добавляем обработчик для закрытия при клике вне меню
+    if (themeMenu.classList.contains('active')) {
+        setTimeout(() => {
+            document.addEventListener('click', closeThemeMenuOnClickOutside);
+        }, 10);
+        
+        // Создаем эффект искр
+        createSparklesAround(document.querySelector('.theme-toggle'), 10);
     }
+}
 
+// Функция для закрытия меню при клике вне его
+function closeThemeMenuOnClickOutside(event) {
+    const themeMenu = document.getElementById('theme-menu');
+    const themeToggle = document.querySelector('.theme-toggle');
+    
+    if (!themeMenu.contains(event.target) && !themeToggle.contains(event.target)) {
+        themeMenu.classList.remove('active');
+        document.removeEventListener('click', closeThemeMenuOnClickOutside);
+    }
+}
+
+// Функция для установки активной темы в меню
+function setActiveThemeOption() {
+    const root = document.documentElement;
+    let currentTheme = 'dark'; // По умолчанию темная тема
+    
+    if (root.classList.contains('light-theme')) {
+        currentTheme = 'light';
+    } else if (root.classList.contains('pink-theme')) {
+        currentTheme = 'pink';
+    }
+    
+    // Удаляем активный класс со всех опций
+    document.querySelectorAll('.theme-option').forEach(option => {
+        option.classList.remove('active');
+    });
+    
+    // Добавляем активный класс на текущую тему
+    const activeOption = document.querySelector(`.theme-option[data-theme="${currentTheme}"]`);
+    if (activeOption) {
+        activeOption.classList.add('active');
+    }
+}
+
+// Функция для установки темы
+function setTheme(theme) {
+    const root = document.documentElement;
+    const themeIcon = document.getElementById('theme-icon');
+    
+    // Удаляем все классы тем
+    root.classList.remove('light-theme', 'pink-theme');
+    
+    // Устанавливаем выбранную тему
+    if (theme === 'light') {
+        root.classList.add('light-theme');
+        updateThemeIcon('light');
+    } else if (theme === 'pink') {
+        root.classList.add('pink-theme');
+        updateThemeIcon('pink');
+    } else {
+        // Темная тема (по умолчанию)
+        updateThemeIcon('dark');
+    }
+    
+    // Сохраняем выбранную тему в localStorage
+    localStorage.setItem('selectedTheme', theme);
+    
+    // Обновляем активную опцию в меню
+    setActiveThemeOption();
+    
     // Создаем эффект вспышки при смене темы
+    createThemeChangeFlash(theme);
+    
+    // Update chart colors
+    updateChartColors();
+    
+    // Create or remove cherry blossoms based on theme
+    if (theme === 'pink') {
+        createCherryBlossoms();
+    } else {
+        removeCherryBlossoms();
+    }
+}
+
+// Функция для обновления иконки темы
+function updateThemeIcon(theme) {
+    const moon = document.getElementById('moon');
+    const sun = document.getElementById('sun');
+    const sunRays = document.querySelectorAll('[id^="sun-ray-"]');
+    const cherry = document.getElementById('cherry');
+    
+    // Скрываем все элементы
+    moon.style.display = 'none';
+    sun.style.display = 'none';
+    cherry.style.display = 'none';
+    sunRays.forEach(ray => ray.style.display = 'none');
+    
+    // Показываем нужные элементы в зависимости от темы
+    if (theme === 'light') {
+        sun.style.display = 'block';
+        sunRays.forEach(ray => ray.style.display = 'block');
+    } else if (theme === 'pink') {
+        cherry.style.display = 'block';
+    } else {
+        moon.style.display = 'block';
+    }
+}
+
+// Функция для создания эффекта вспышки при смене темы
+function createThemeChangeFlash(theme) {
     const flash = document.createElement('div');
     flash.style.position = 'fixed';
     flash.style.top = '0';
     flash.style.left = '0';
     flash.style.width = '100%';
     flash.style.height = '100%';
-    flash.style.backgroundColor = currentTheme === 'light' ? 'rgba(15, 23, 42, 0.2)' : 'rgba(255, 255, 255, 0.2)';
     flash.style.zIndex = '9998';
     flash.style.pointerEvents = 'none';
+    
+    // Цвет вспышки в зависимости от темы
+    if (theme === 'light') {
+        flash.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+    } else if (theme === 'pink') {
+        flash.style.backgroundColor = 'rgba(236, 72, 153, 0.2)';
+    } else {
+        flash.style.backgroundColor = 'rgba(15, 23, 42, 0.2)';
+    }
+    
     document.body.appendChild(flash);
     
     gsap.to(flash, {
@@ -3107,56 +3115,140 @@ function toggleTheme() {
             flash.remove();
         }
     });
-    
-    // Создаем эффект искр при смене темы
-    createSparklesAround(document.querySelector('.theme-toggle'), 20);
-
-    // Обновляем цвета графика
-    updateChartColors();
 }
 
+// Function to update chart colors
 function updateChartColors() {
     const root = document.documentElement;
-    const isDarkTheme = !root.classList.contains('light-theme');
-
-    const newChartOptions = {
-        scales: {
-            x: { 
-                grid: { color: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
-                ticks: { color: isDarkTheme ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)' }
+    const isDarkTheme = !root.classList.contains('light-theme') && !root.classList.contains('pink-theme');
+    const isPinkTheme = root.classList.contains('pink-theme');
+    
+    let primaryColor = '#4f46e5'; // Default color for dark theme
+    
+    if (isPinkTheme) {
+        primaryColor = '#ec4899'; // Pink color for pink theme
+    }
+    
+    // Update chart colors
+    if (chart) {
+        chart.data.datasets[0].borderColor = primaryColor;
+        chart.data.datasets[0].pointBackgroundColor = primaryColor;
+        chart.data.datasets[0].pointHoverBackgroundColor = primaryColor;
+        
+        // Update gradient
+        const ctx = document.getElementById('mainChart').getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        
+        if (isPinkTheme) {
+            gradient.addColorStop(0, 'rgba(236, 72, 153, 0.3)');
+            gradient.addColorStop(0.5, 'rgba(244, 114, 182, 0.15)');
+            gradient.addColorStop(1, 'rgba(192, 38, 211, 0.05)');
+        } else {
+            gradient.addColorStop(0, 'rgba(79, 70, 229, 0.3)');
+            gradient.addColorStop(0.5, 'rgba(139, 92, 246, 0.15)');
+            gradient.addColorStop(1, 'rgba(236, 72, 153, 0.05)');
+        }
+        
+        chart.data.datasets[0].backgroundColor = gradient;
+        
+        // Update grid and text colors
+        const newChartOptions = {
+            scales: {
+                x: { 
+                    grid: { color: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
+                    ticks: { color: isDarkTheme ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)' }
+                },
+                y: { 
+                    grid: { color: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
+                    ticks: { 
+                        color: isDarkTheme ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)',
+                        callback: value => '$' + value.toLocaleString()
+                    }
+                }
             },
-            y: { 
-                grid: { color: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
-                ticks: { 
-                    color: isDarkTheme ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)',
-                    callback: value => '$' + value.toLocaleString()
+            plugins: {
+                tooltip: {
+                    backgroundColor: isDarkTheme ? 'rgba(15,23,42,0.9)' : 'rgba(248,250,252,0.9)',
+                    bodyColor: isDarkTheme ? '#fff' : '#000',
+                    borderColor: isDarkTheme ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
                 }
             }
-        },
-        plugins: {
-            tooltip: {
-                backgroundColor: isDarkTheme ? 'rgba(15,23,42,0.9)' : 'rgba(248,250,252,0.9)',
-                bodyColor: isDarkTheme ? '#fff' : '#000',
-                borderColor: isDarkTheme ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
-            }
-        }
-    };
+        };
+        
+        chart.options.scales.x.grid.color = newChartOptions.scales.x.grid.color;
+        chart.options.scales.x.ticks.color = newChartOptions.scales.x.ticks.color;
+        chart.options.scales.y.grid.color = newChartOptions.scales.y.grid.color;
+        chart.options.scales.y.ticks.color = newChartOptions.scales.y.ticks.color;
+        chart.options.plugins.tooltip = newChartOptions.plugins.tooltip;
+        chart.update();
+    }
+}
 
-    chart.options.scales.x.grid.color = newChartOptions.scales.x.grid.color;
-    chart.options.scales.x.ticks.color = newChartOptions.scales.x.ticks.color;
-    chart.options.scales.y.grid.color = newChartOptions.scales.y.grid.color;
-    chart.options.scales.y.ticks.color = newChartOptions.scales.y.ticks.color;
-    chart.options.plugins.tooltip = newChartOptions.plugins.tooltip;
-    chart.update();
+// Function to create cherry blossoms
+function createCherryBlossoms() {
+    // Remove existing blossoms
+    removeCherryBlossoms();
     
-    // Обновляем цвета месячного графика, если он существует
-    if (monthlyProfitChart) {
-        monthlyProfitChart.options.scales.x.grid.color = newChartOptions.scales.x.grid.color;
-        monthlyProfitChart.options.scales.x.ticks.color = newChartOptions.scales.x.ticks.color;
-        monthlyProfitChart.options.scales.y.grid.color = newChartOptions.scales.y.grid.color;
-        monthlyProfitChart.options.scales.y.ticks.color = newChartOptions.scales.y.ticks.color;
-        monthlyProfitChart.options.plugins.tooltip = newChartOptions.plugins.tooltip;
-        monthlyProfitChart.update();
+    // Create new blossoms
+    for (let i = 0; i < 30; i++) {
+        createCherryBlossom();
+    }
+    
+    // Continue creating new blossoms at intervals
+    window.cherryBlossomInterval = setInterval(createCherryBlossom, 500);
+}
+
+function createCherryBlossom() {
+    const blossom = document.createElement('div');
+    blossom.className = 'cherry-blossom';
+    
+    // Random horizontal position
+    blossom.style.left = `${Math.random() * 100}vw`;
+    
+    // Random size
+    const size = Math.random() * 10 + 10;
+    blossom.style.width = `${size}px`;
+    blossom.style.height = `${size}px`;
+    
+    // Random fall speed
+    const duration = Math.random() * 10 + 5;
+    blossom.style.animationDuration = `${duration}s`;
+    
+    // Random rotation
+    blossom.style.transform = `rotate(${Math.random() * 360}deg)`;
+    
+    document.body.appendChild(blossom);
+    
+    // Remove blossom after animation completes
+    setTimeout(() => {
+        if (blossom && blossom.parentNode) {
+            blossom.remove();
+        }
+    }, duration * 1000);
+}
+
+// Function to remove cherry blossoms
+function removeCherryBlossoms() {
+    // Clear interval for creating blossoms
+    if (window.cherryBlossomInterval) {
+        clearInterval(window.cherryBlossomInterval);
+    }
+    
+    // Remove all existing blossoms
+    const blossoms = document.querySelectorAll('.cherry-blossom');
+    blossoms.forEach(blossom => {
+        blossom.remove();
+    });
+}
+
+// Function to load saved theme
+function loadSavedTheme() {
+    const savedTheme = localStorage.getItem('selectedTheme');
+    if (savedTheme) {
+        setTheme(savedTheme);
+    } else {
+        // Set pink theme by default as requested
+        setTheme('pink');
     }
 }
 
@@ -3222,17 +3314,17 @@ function renderCalendar() {
     const calendarGrid = document.getElementById('calendarGrid');
     const currentMonthElement = document.getElementById('currentMonth');
 
-    // Очищаем текущий календарь
+    // Clear current calendar
     calendarGrid.innerHTML = '';
 
-    // Устанавливаем текущий месяц и год
+    // Set current month and year
     currentMonthElement.textContent = currentDate.toLocaleString('default', { month: 'long', year: 'numeric' });
 
-    // Получаем первый день месяца
+    // Get first and last day of month
     const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
     const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
 
-    // Добавляем дни недели
+    // Add weekday headers
     const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
     weekdays.forEach(day => {
         const dayElement = document.createElement('div');
@@ -3241,14 +3333,14 @@ function renderCalendar() {
         calendarGrid.appendChild(dayElement);
     });
 
-    // Добавляем пустые ячейки до первого дня месяца
+    // Add empty cells before first day of month
     for (let i = 0; i < (firstDay.getDay() || 7) - 1; i++) {
         const emptyDay = document.createElement('div');
         emptyDay.className = 'calendar-day';
         calendarGrid.appendChild(emptyDay);
     }
 
-    // Добавляем дни месяца с анимацией
+    // Add days of month with animation
     for (let i = 1; i <= lastDay.getDate(); i++) {
         const dayElement = document.createElement('div');
         dayElement.className = 'calendar-day';
@@ -3288,7 +3380,7 @@ function renderCalendar() {
             dayElement.classList.add('today');
         }
         
-        // Добавляем обработчик клика для фильтрации транзакций по дате
+        // Add click handler to filter transactions by date
         dayElement.addEventListener('click', function() {
             const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
             document.getElementById('searchDate').value = selectedDate.toISOString().split('T')[0];
@@ -3301,7 +3393,7 @@ function renderCalendar() {
         
         calendarGrid.appendChild(dayElement);
         
-        // Анимируем появление дня с задержкой
+        // Animate day appearance with delay
         gsap.to(dayElement, {
             opacity: 1,
             scale: 1,
@@ -3315,7 +3407,7 @@ function renderCalendar() {
 function changeMonth(delta) {
     currentDate.setMonth(currentDate.getMonth() + delta);
     
-    // Анимируем смену месяца
+    // Animate month change
     const calendarGrid = document.getElementById('calendarGrid');
     const currentMonthElement = document.getElementById('currentMonth');
     
@@ -3333,7 +3425,7 @@ function changeMonth(delta) {
         }
     });
     
-    // Анимируем заголовок месяца
+    // Animate month title
     gsap.to(currentMonthElement, {
         opacity: 0,
         y: delta > 0 ? -20 : 20,
@@ -3348,107 +3440,7 @@ function changeMonth(delta) {
     });
 }
 
-function openStatsModal() {
-    document.getElementById('statsModal').style.display = 'block';
-    
-    // Анимируем появление модального окна
-    const modalContent = document.querySelector('#statsModal .modal-content');
-    gsap.fromTo(modalContent, 
-        { opacity: 0, y: 20, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.7)" }
-    );
-    
-    updateStats();
-    
-    // Скрываем расширенную статистику при открытии
-    const advancedStats = document.getElementById('advancedStats');
-    if (advancedStats) {
-        advancedStats.style.display = 'none';
-    }
-    
-    // Create sparkles effect
-    createSparklesAround(document.querySelector('.btn-primary.btn-large'), 15);
-}
-
-function closeStatsModal() {
-    const modal = document.getElementById('statsModal');
-    const modalContent = modal.querySelector('.modal-content');
-    
-    // Анимируем исчезновение модального окна
-    gsap.to(modalContent, {
-        opacity: 0,
-        y: 20,
-        scale: 0.95,
-        duration: 0.3,
-        ease: "power2.in",
-        onComplete: () => {
-            modal.style.display = 'none';
-        }
-    });
-}
-
-function updateStats() {
-    const now = new Date();
-    const today = now.toISOString().split('T')[0];
-    
-    const yesterday = new Date(now);
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdayStr = yesterday.toISOString().split('T')[0];
-    
-    const weekAgo = new Date(now);
-    weekAgo.setDate(weekAgo.getDate() - 7);
-    
-    const monthAgo = new Date(now);
-    monthAgo.setMonth(monthAgo.getMonth() - 1);
-
-    const todayStats = calculateStats(transactions.filter(t => t.date === today));
-    const yesterdayStats = calculateStats(transactions.filter(t => t.date === yesterdayStr));
-    const weekStats = calculateStats(transactions.filter(t => new Date(t.date) >= weekAgo));
-    const monthStats = calculateStats(transactions.filter(t => new Date(t.date) >= monthAgo));
-    const totalStats = calculateStats(transactions);
-
-    // Анимируем обновление статистики
-    animateValue(document.getElementById('todayEarnings'), 0, todayStats.earnings, 1000, '$');
-    document.getElementById('todayDeals').textContent = `${todayStats.deals} сделок`;
-    
-    animateValue(document.getElementById('yesterdayEarnings'), 0, yesterdayStats.earnings, 1000, '$');
-    document.getElementById('yesterdayDeals').textContent = `${yesterdayStats.deals} сделок`;
-    
-    animateValue(document.getElementById('weekEarnings'), 0, weekStats.earnings, 1000, '$');
-    document.getElementById('weekDeals').textContent = `${weekStats.deals} сделок`;
-    
-    animateValue(document.getElementById('monthEarnings'), 0, monthStats.earnings, 1000, '$');
-    document.getElementById('monthDeals').textContent = `${monthStats.deals} сделок`;
-    
-    animateValue(document.getElementById('totalEarnings'), 0, totalStats.earnings, 1000, '$');
-    document.getElementById('totalDeals').textContent = `${totalStats.deals} сделок`;
-    
-    // Добавляем классы для стилизации положительных/отрицательных значений
-    document.getElementById('todayEarnings').className = todayStats.earnings >= 0 ? 'positive' : 'negative';
-    document.getElementById('yesterdayEarnings').className = yesterdayStats.earnings >= 0 ? 'positive' : 'negative';
-    document.getElementById('weekEarnings').className = weekStats.earnings >= 0 ? 'positive' : 'negative';
-    document.getElementById('monthEarnings').className = monthStats.earnings >= 0 ? 'positive' : 'negative';
-    document.getElementById('totalEarnings').className = totalStats.earnings >= 0 ? 'positive' : 'negative';
-}
-
-function calculateStats(transactions) {
-    let income = 0;
-    let expense = 0;
-    
-    transactions.forEach(t => {
-        if (t.type === 'income') {
-            income += t.amount;
-        } else {
-            expense += t.amount;
-        }
-    });
-    
-    const earnings = income - expense;
-    const deals = transactions.length;
-    return { earnings, deals };
-}
-
-// Функция для отслеживания движения мыши и создания эффекта свечения курсора
+// Initialize glow cursor
 function initGlowCursor() {
     const cursor = document.querySelector('.glow-cursor');
     
@@ -3457,7 +3449,7 @@ function initGlowCursor() {
         cursor.style.top = `${e.clientY - 15}px`;
         cursor.style.opacity = '1';
         
-        // Проверяем, находится ли курсор над интерактивным элементом
+        // Check if cursor is over an interactive element
         const target = e.target;
         const isInteractive = 
             target.tagName === 'BUTTON' || 
@@ -3466,10 +3458,12 @@ function initGlowCursor() {
             target.classList.contains('card') ||
             target.classList.contains('transaction-item') ||
             target.classList.contains('calendar-day') ||
+            target.classList.contains('theme-option') ||
             target.closest('.btn') ||
             target.closest('.card') ||
             target.closest('.transaction-item') ||
-            target.closest('.calendar-day');
+            target.closest('.calendar-day') ||
+            target.closest('.theme-option');
         
         if (isInteractive) {
             cursor.style.transform = 'scale(1.5)';
@@ -3530,26 +3524,239 @@ function createStars() {
     }
 }
 
-// Запускаем инициализацию при загрузке страницы
+function openStatsModal() {
+    document.getElementById('statsModal').style.display = 'block';
+    
+    // Animate modal appearance
+    const modalContent = document.querySelector('#statsModal .modal-content');
+    gsap.fromTo(modalContent, 
+        { opacity: 0, y: 20, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.7)" }
+    );
+    
+    updateStats();
+    
+    // Create sparkles effect
+    createSparklesAround(document.querySelector('.btn-primary.btn-large'), 15);
+}
+
+function closeStatsModal() {
+    const modal = document.getElementById('statsModal');
+    const modalContent = modal.querySelector('.modal-content');
+    
+    // Animate modal disappearance
+    gsap.to(modalContent, {
+        opacity: 0,
+        y: 20,
+        scale: 0.95,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+function updateStats() {
+    const now = new Date();
+    const today = now.toISOString().split('T')[0];
+    
+    const yesterday = new Date(now);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    
+    const weekAgo = new Date(now);
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    
+    const monthAgo = new Date(now);
+    monthAgo.setMonth(monthAgo.getMonth() - 1);
+
+    const todayStats = calculateStats(transactions.filter(t => t.date === today));
+    const yesterdayStats = calculateStats(transactions.filter(t => t.date === yesterdayStr));
+    const weekStats = calculateStats(transactions.filter(t => new Date(t.date) >= weekAgo));
+    const monthStats = calculateStats(transactions.filter(t => new Date(t.date) >= monthAgo));
+    const totalStats = calculateStats(transactions);
+
+    // Animate stats update
+    animateValue(document.getElementById('todayEarnings'), 0, todayStats.earnings, 1000, '$');
+    document.getElementById('todayDeals').textContent = `${todayStats.deals} сделок`;
+    
+    animateValue(document.getElementById('yesterdayEarnings'), 0, yesterdayStats.earnings, 1000, '$');
+    document.getElementById('yesterdayDeals').textContent = `${yesterdayStats.deals} сделок`;
+    
+    animateValue(document.getElementById('weekEarnings'), 0, weekStats.earnings, 1000, '$');
+    document.getElementById('weekDeals').textContent = `${weekStats.deals} сделок`;
+    
+    animateValue(document.getElementById('monthEarnings'), 0, monthStats.earnings, 1000, '$');
+    document.getElementById('monthDeals').textContent = `${monthStats.deals} сделок`;
+    
+    animateValue(document.getElementById('totalEarnings'), 0, totalStats.earnings, 1000, '$');
+    document.getElementById('totalDeals').textContent = `${totalStats.deals} сделок`;
+    
+    // Add classes for styling positive/negative values
+    document.getElementById('todayEarnings').className = todayStats.earnings >= 0 ? 'positive' : 'negative';
+    document.getElementById('yesterdayEarnings').className = yesterdayStats.earnings >= 0 ? 'positive' : 'negative';
+    document.getElementById('weekEarnings').className = weekStats.earnings >= 0 ? 'positive' : 'negative';
+    document.getElementById('monthEarnings').className = monthStats.earnings >= 0 ? 'positive' : 'negative';
+    document.getElementById('totalEarnings').className = totalStats.earnings >= 0 ? 'positive' : 'negative';
+}
+
+function calculateStats(transactions) {
+    let income = 0;
+    let expense = 0;
+    
+    transactions.forEach(t => {
+        if (t.type === 'income') {
+            income += t.amount;
+        } else {
+            expense += t.amount;
+        }
+    });
+    
+    const earnings = income - expense;
+    const deals = transactions.length;
+    return { earnings, deals };
+}
+
+// Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Устанавливаем текущую дату по умолчанию
+    // Set current date as default
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('date').value = today;
     document.getElementById('advancedDate').value = today;
     
-    // Инициализируем график и обновляем UI
+    // Initialize chart and update UI
     initChart();
     updateUI();
     
-    // Создаем визуальные эффекты
+    // Create visual effects
     createParticles();
     createStars();
     initGlowCursor();
     
-    // Скрываем левую кнопку переключения вида
+    // Hide left view switch button
     document.querySelector('.switch-view.left').style.display = 'none';
+    
+    // Load saved theme (or set pink theme by default)
+    loadSavedTheme();
+    
+    // Set active theme in menu
+    setActiveThemeOption();
 });
+
+// Функция для переключения темы
+function toggleTheme() {
+    const root = document.documentElement;
+    const currentTheme = root.classList.contains('light-theme') ? 'light' : 
+                        root.classList.contains('pink-theme') ? 'pink' : 'dark';
+    let nextTheme;
+    
+    // Определяем следующую тему
+    switch(currentTheme) {
+        case 'dark':
+            nextTheme = 'light';
+            break;
+        case 'light':
+            nextTheme = 'pink';
+            break;
+        case 'pink':
+            nextTheme = 'dark';
+            break;
+    }
+    
+    // Создаем эффект перехода
+    const transition = document.createElement('div');
+    transition.className = 'theme-transition';
+    document.body.appendChild(transition);
+    
+    // Анимируем переход
+    requestAnimationFrame(() => {
+        transition.style.opacity = '1';
+        
+        setTimeout(() => {
+            // Удаляем все классы тем
+            root.classList.remove('light-theme', 'pink-theme');
+            
+            // Добавляем новую тему
+            if (nextTheme === 'light') {
+                root.classList.add('light-theme');
+            } else if (nextTheme === 'pink') {
+                root.classList.add('pink-theme');
+            }
+            
+            // Обновляем иконку
+            const moonPath = document.getElementById('moon');
+            const sunElements = document.querySelectorAll('#sun, #sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray-8');
+            const heartPath = document.getElementById('heart');
+            
+            moonPath.style.display = 'none';
+            sunElements.forEach(el => el.style.display = 'none');
+            heartPath.style.display = 'none';
+            
+            switch(nextTheme) {
+                case 'dark':
+                    moonPath.style.display = 'block';
+                    break;
+                case 'light':
+                    sunElements.forEach(el => el.style.display = 'block');
+                    break;
+                case 'pink':
+                    heartPath.style.display = 'block';
+                    break;
+            }
+            
+            // Плавно убираем эффект перехода
+            setTimeout(() => {
+                transition.style.opacity = '0';
+                setTimeout(() => transition.remove(), 300);
+            }, 50);
+        }, 150);
+    });
+    
+    // Сохраняем выбранную тему
+    localStorage.setItem('theme', nextTheme);
+}
+
+// Функция для инициализации темы при загрузке
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const root = document.documentElement;
+    
+    // Удаляем все классы тем
+    root.classList.remove('light-theme', 'pink-theme');
+    
+    // Устанавливаем сохраненную тему или тему по умолчанию
+    if (savedTheme) {
+        if (savedTheme === 'light') {
+            root.classList.add('light-theme');
+        } else if (savedTheme === 'pink') {
+            root.classList.add('pink-theme');
+        }
+    } else if (!prefersDark) {
+        root.classList.add('light-theme');
+    }
+    
+    // Обновляем иконку
+    const moonPath = document.getElementById('moon');
+    const sunElements = document.querySelectorAll('#sun, #sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray-8');
+    const heartPath = document.getElementById('heart');
+    
+    moonPath.style.display = 'none';
+    sunElements.forEach(el => el.style.display = 'none');
+    heartPath.style.display = 'none';
+    
+    if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+        sunElements.forEach(el => el.style.display = 'block');
+    } else if (savedTheme === 'pink') {
+        heartPath.style.display = 'block';
+    } else {
+        moonPath.style.display = 'block';
+    }
+}
+
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', initTheme);
 </script>
 </body>
 </html>
-

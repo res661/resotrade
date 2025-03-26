@@ -124,6 +124,46 @@
         --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
     }
 
+    :root.pink-theme {
+        --bg-primary: #1a0f1f;
+        --bg-secondary: #2d1535;
+        --bg-tertiary: #3d1d47;
+        --bg-card: linear-gradient(145deg, #2d1535, #3d1d47);
+        --glass: rgba(255, 255, 255, 0.05);
+        --glass-hover: rgba(255, 255, 255, 0.08);
+        
+        --accent-primary: #ff69b4;
+        --accent-primary-hover: #ff1493;
+        --accent-primary-glow: rgba(255, 105, 180, 0.5);
+        --accent-secondary: #ff69b4;
+        --accent-tertiary: #ff1493;
+        --accent-quaternary: #ff69b4;
+        
+        --gradient-primary: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+        --gradient-secondary: linear-gradient(135deg, var(--accent-tertiary) 0%, var(--accent-quaternary) 100%);
+        --gradient-text: linear-gradient(135deg, #fff 0%, #ffb7e5 100%);
+        
+        --text-primary: rgba(255, 255, 255, 0.95);
+        --text-secondary: rgba(255, 255, 255, 0.7);
+        --text-tertiary: rgba(255, 255, 255, 0.5);
+        
+        --positive: #ff69b4;
+        --positive-light: rgba(255, 105, 180, 0.2);
+        --negative: #ef4444;
+        --negative-light: rgba(239, 68, 68, 0.2);
+        --warning: #f59e0b;
+        --info: #3b82f6;
+        
+        --border: rgba(255, 255, 255, 0.1);
+        --border-hover: rgba(255, 255, 255, 0.2);
+        
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+        --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+        --shadow-glow: 0 0 20px var(--accent-primary-glow);
+        --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+    }
+
     * {
         margin: 0;
         padding: 0;
@@ -491,6 +531,7 @@
         box-shadow: 0 4px 6px rgba(79, 70, 229, 0.25);
     }
 
+    /* Theme toggle styles */
     .theme-toggle {
         position: fixed;
         top: var(--spacing-xl);
@@ -543,6 +584,20 @@
         stroke-linejoin: round;
         position: relative;
         z-index: 1;
+    }
+
+    /* Theme transition effect */
+    .theme-transition {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
 
     .nav-bar {
@@ -862,6 +917,7 @@
     <line id="sun-ray-6" x1="21" y1="12" x2="23" y2="12" style="display:none;"/>
     <line id="sun-ray-7" x1="4.22" y1="19.78" x2="5.64" y2="18.36" style="display:none;"/>
     <line id="sun-ray-8" x1="18.36" y1="5.64" x2="19.78" y2="4.22" style="display:none;"/>
+    <path id="heart" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" style="display:none;"/>
 </svg>
 </div>
 
@@ -891,13 +947,6 @@
         <div class="card-glow"></div>
         <h1>Детальная статистика</h1>
         <p>Полный анализ ваших сделок и финансовых показателей</p>
-    </div>
-
-    <div class="period-selector">
-        <button class="btn btn-secondary" onclick="changePeriod('day')">День</button>
-        <button class="btn btn-secondary" onclick="changePeriod('week')">Неделя</button>
-        <button class="btn btn-secondary" onclick="changePeriod('month')">Месяц</button>
-        <button class="btn btn-secondary btn-active" onclick="changePeriod('all')">Все время</button>
     </div>
 
     <!-- Основные показатели -->
@@ -2023,47 +2072,118 @@ function updateAllStats() {
 // Функция для переключения темы
 function toggleTheme() {
     const root = document.documentElement;
-    const currentTheme = root.classList.contains('light-theme') ? 'dark' : 'light';
-    root.classList.toggle('light-theme');
-
-    const tl = gsap.timeline();
-
-    if (currentTheme === 'light') {
-        // Анимация от солнца к луне
-        tl.to("#sun, #sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray-8", {duration: 0.3, opacity: 0})
-          .to("#moon", {duration: 0.5, morphSVG: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z", ease: "power2.inOut"}, "-=0.3");
-    } else {
-        // Анимация от луны к солнцу
-        tl.to("#moon", {duration: 0.5, morphSVG: "M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z", ease: "power2.inOut"})
-          .to("#sun", {duration: 0.1, opacity: 1})
-          .to("#sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray-8", {duration: 0.3, opacity: 1, stagger: 0.05}, "-=0.1");
-    }
-
-    // Создаем эффект вспышки при смене темы
-    const flash = document.createElement('div');
-    flash.style.position = 'fixed';
-    flash.style.top = '0';
-    flash.style.left = '0';
-    flash.style.width = '100%';
-    flash.style.height = '100%';
-    flash.style.backgroundColor = currentTheme === 'light' ? 'rgba(15, 23, 42, 0.2)' : 'rgba(255, 255, 255, 0.2)';
-    flash.style.zIndex = '9998';
-    flash.style.pointerEvents = 'none';
-    document.body.appendChild(flash);
+    const currentTheme = root.classList.contains('light-theme') ? 'light' : 
+                        root.classList.contains('pink-theme') ? 'pink' : 'dark';
+    let nextTheme;
     
-    gsap.to(flash, {
-        opacity: 0,
-        duration: 0.5,
-        onComplete: () => {
-            flash.remove();
-        }
+    // Определяем следующую тему
+    switch(currentTheme) {
+        case 'dark':
+            nextTheme = 'light';
+            break;
+        case 'light':
+            nextTheme = 'pink';
+            break;
+        case 'pink':
+            nextTheme = 'dark';
+            break;
+    }
+    
+    // Создаем эффект перехода
+    const transition = document.createElement('div');
+    transition.className = 'theme-transition';
+    document.body.appendChild(transition);
+    
+    // Анимируем переход
+    requestAnimationFrame(() => {
+        transition.style.opacity = '1';
+        
+        setTimeout(() => {
+            // Удаляем все классы тем
+            root.classList.remove('light-theme', 'pink-theme');
+            
+            // Добавляем новую тему
+            if (nextTheme === 'light') {
+                root.classList.add('light-theme');
+            } else if (nextTheme === 'pink') {
+                root.classList.add('pink-theme');
+            }
+            
+            // Обновляем иконку
+            const moonPath = document.getElementById('moon');
+            const sunElements = document.querySelectorAll('#sun, #sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray-8');
+            const heartPath = document.getElementById('heart');
+            
+            moonPath.style.display = 'none';
+            sunElements.forEach(el => el.style.display = 'none');
+            heartPath.style.display = 'none';
+            
+            switch(nextTheme) {
+                case 'dark':
+                    moonPath.style.display = 'block';
+                    break;
+                case 'light':
+                    sunElements.forEach(el => el.style.display = 'block');
+                    break;
+                case 'pink':
+                    heartPath.style.display = 'block';
+                    break;
+            }
+            
+            // Обновляем цвета графика
+            updateChartColors();
+            
+            // Плавно убираем эффект перехода
+            setTimeout(() => {
+                transition.style.opacity = '0';
+                setTimeout(() => transition.remove(), 300);
+            }, 50);
+        }, 150);
     });
     
-    // Создаем эффект искр при смене темы
-    createSparklesAround(document.querySelector('.theme-toggle'), 20);
+    // Создаем эффект искр
+    createSparklesAround(document.querySelector('.theme-toggle'), 15);
+    
+    // Сохраняем выбранную тему
+    localStorage.setItem('theme', nextTheme);
+}
 
-    // Обновляем цвета графика
-    updateChartColors();
+// Функция для инициализации темы при загрузке
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const root = document.documentElement;
+    
+    // Удаляем все классы тем
+    root.classList.remove('light-theme', 'pink-theme');
+    
+    // Устанавливаем сохраненную тему или тему по умолчанию
+    if (savedTheme) {
+        if (savedTheme === 'light') {
+            root.classList.add('light-theme');
+        } else if (savedTheme === 'pink') {
+            root.classList.add('pink-theme');
+        }
+    } else if (!prefersDark) {
+        root.classList.add('light-theme');
+    }
+    
+    // Обновляем иконку
+    const moonPath = document.getElementById('moon');
+    const sunElements = document.querySelectorAll('#sun, #sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray-8');
+    const heartPath = document.getElementById('heart');
+    
+    moonPath.style.display = 'none';
+    sunElements.forEach(el => el.style.display = 'none');
+    heartPath.style.display = 'none';
+    
+    if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+        sunElements.forEach(el => el.style.display = 'block');
+    } else if (savedTheme === 'pink') {
+        heartPath.style.display = 'block';
+    } else {
+        moonPath.style.display = 'block';
+    }
 }
 
 // Функция для обновления цветов графика при смене темы
@@ -2071,27 +2191,39 @@ function updateChartColors() {
     if (!monthlyProfitChart) return;
     
     const root = document.documentElement;
-    const isDarkTheme = !root.classList.contains('light-theme');
+    const isDarkTheme = !root.classList.contains('light-theme') && !root.classList.contains('pink-theme');
+    const isPinkTheme = root.classList.contains('pink-theme');
 
     const newChartOptions = {
         scales: {
             x: { 
-                grid: { color: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
-                ticks: { color: isDarkTheme ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)' }
+                grid: { 
+                    color: isDarkTheme ? 'rgba(255,255,255,0.05)' : 
+                           isPinkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' 
+                },
+                ticks: { 
+                    color: isDarkTheme ? 'rgba(255,255,255,0.5)' : 
+                           isPinkTheme ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)' 
+                }
             },
             y: { 
-                grid: { color: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' },
+                grid: { 
+                    color: isDarkTheme ? 'rgba(255,255,255,0.05)' : 
+                           isPinkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' 
+                },
                 ticks: { 
-                    color: isDarkTheme ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)',
+                    color: isDarkTheme ? 'rgba(255,255,255,0.5)' : 
+                           isPinkTheme ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)',
                     callback: value => '$' + value.toLocaleString()
                 }
             }
         },
         plugins: {
             tooltip: {
-                backgroundColor: isDarkTheme ? 'rgba(15,23,42,0.9)' : 'rgba(248,250,252,0.9)',
-                bodyColor: isDarkTheme ? '#fff' : '#000',
-                borderColor: isDarkTheme ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                backgroundColor: isDarkTheme ? 'rgba(15,23,42,0.9)' : 
+                                isPinkTheme ? 'rgba(26,26,46,0.9)' : 'rgba(248,250,252,0.9)',
+                bodyColor: isDarkTheme || isPinkTheme ? '#fff' : '#000',
+                borderColor: isDarkTheme || isPinkTheme ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
             }
         }
     };
@@ -2139,6 +2271,9 @@ function initGlowCursor() {
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
+    // Инициализируем тему
+    initTheme();
+    
     // Инициализируем график
     initMonthlyProfitChart();
     
