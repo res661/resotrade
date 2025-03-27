@@ -1048,7 +1048,7 @@ small {
 <body>
 <div class="glow-cursor"></div>
 
-<div class="theme-toggle" onclick="toggleThemeMenu()">
+<div class="theme-toggle" onclick="toggleTheme()">
 <svg viewBox="0 0 24 24" id="theme-icon">
     <path id="moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
     <circle id="sun" cx="12" cy="12" r="5" style="display:none;"/>
@@ -1060,29 +1060,8 @@ small {
     <line id="sun-ray-6" x1="21" y1="12" x2="23" y2="12" style="display:none;"/>
     <line id="sun-ray-7" x1="4.22" y1="19.78" x2="5.64" y2="18.36" style="display:none;"/>
     <line id="sun-ray-8" x1="18.36" y1="5.64" x2="19.78" y2="4.22" style="display:none;"/>
-    <path id="cherry" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" style="display:none;"/>
+    <path id="heart" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" style="display:none;"/>
 </svg>
-</div>
-
-<div class="theme-menu" id="theme-menu">
-    <div class="theme-option" data-theme="dark">
-        <div class="theme-icon">
-            <ion-icon name="moon-outline"></ion-icon>
-        </div>
-        <span>Темная тема</span>
-    </div>
-    <div class="theme-option" data-theme="light">
-        <div class="theme-icon">
-            <ion-icon name="sunny-outline"></ion-icon>
-        </div>
-        <span>Светлая тема</span>
-    </div>
-    <div class="theme-option" data-theme="pink">
-        <div class="theme-icon">
-            <ion-icon name="flower-outline"></ion-icon>
-        </div>
-        <span>Розовая тема</span>
-    </div>
 </div>
 
 <div class="nav-bar">
@@ -2371,12 +2350,12 @@ function updateThemeIcon(theme) {
     const moon = document.getElementById('moon');
     const sun = document.getElementById('sun');
     const sunRays = document.querySelectorAll('[id^="sun-ray-"]');
-    const cherry = document.getElementById('cherry');
+    const heart = document.getElementById('heart');
     
     // Скрываем все элементы
     moon.style.display = 'none';
     sun.style.display = 'none';
-    cherry.style.display = 'none';
+    heart.style.display = 'none';
     sunRays.forEach(ray => ray.style.display = 'none');
     
     // Показываем нужные элементы в зависимости от темы
@@ -2384,7 +2363,7 @@ function updateThemeIcon(theme) {
         sun.style.display = 'block';
         sunRays.forEach(ray => ray.style.display = 'block');
     } else if (theme === 'pink') {
-        cherry.style.display = 'block';
+        heart.style.display = 'block';
     } else {
         moon.style.display = 'block';
     }
@@ -2465,7 +2444,15 @@ function toggleTheme() {
     
     // Создаем эффект перехода
     const transition = document.createElement('div');
-    transition.className = 'theme-transition';
+    transition.style.position = 'fixed';
+    transition.style.top = '0';
+    transition.style.left = '0';
+    transition.style.width = '100%';
+    transition.style.height = '100%';
+    transition.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+    transition.style.zIndex = '9999';
+    transition.style.opacity = '0';
+    transition.style.transition = 'opacity 0.3s ease';
     document.body.appendChild(transition);
     
     // Анимируем переход
@@ -2484,25 +2471,7 @@ function toggleTheme() {
             }
             
             // Обновляем иконку
-            const moonPath = document.getElementById('moon');
-            const sunElements = document.querySelectorAll('#sun, #sun-ray-1, #sun-ray-2, #sun-ray-3, #sun-ray-4, #sun-ray-5, #sun-ray-6, #sun-ray-7, #sun-ray-8');
-            const heartPath = document.getElementById('heart');
-            
-            moonPath.style.display = 'none';
-            sunElements.forEach(el => el.style.display = 'none');
-            heartPath.style.display = 'none';
-            
-            switch(nextTheme) {
-                case 'dark':
-                    moonPath.style.display = 'block';
-                    break;
-                case 'light':
-                    sunElements.forEach(el => el.style.display = 'block');
-                    break;
-                case 'pink':
-                    heartPath.style.display = 'block';
-                    break;
-            }
+            updateThemeIcon(nextTheme);
             
             // Плавно убираем эффект перехода
             setTimeout(() => {
@@ -2513,7 +2482,10 @@ function toggleTheme() {
     });
     
     // Сохраняем выбранную тему
-    localStorage.setItem('theme', nextTheme);
+    localStorage.setItem('selectedTheme', nextTheme);
+    
+    // Создаем эффект искр при смене темы
+    createSparklesAround(document.querySelector('.theme-toggle'), 10);
 }
 
 // Функция для инициализации темы при загрузке
