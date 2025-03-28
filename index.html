@@ -93,16 +93,23 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: var(--font-sans);
         }
 
         body {
             background: var(--bg-primary);
             color: var(--text-primary);
-            font-family: var(--font-sans);
             min-height: 100vh;
-            padding: var(--spacing-lg);
+            padding: var(--spacing-xl);
+            overflow: hidden;
+            position: relative;
+            transition: background-color 0.5s ease;
             line-height: 1.5;
-            transition: var(--transition-normal);
+            height: 100vh;
+        }
+
+        html {
+            overflow: hidden;
         }
 
         body::before {
