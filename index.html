@@ -40,7 +40,7 @@
             --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.3);
             --shadow-glow: 0 0 20px var(--accent-primary-glow);
             
-            --font-sans: 'Poppins', system-ui, -apple-system;
+            --font-sans: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
             --font-display: 'Montserrat', var(--font-sans);
             
             --spacing-xs: 0.5rem;
@@ -60,6 +60,30 @@
             --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             --transition-elastic: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
             --transition-spring: all 0.8s cubic-bezier(0.18, 1.25, 0.4, 1.25);
+        }
+
+        /* Стили для полосы прокрутки */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary-hover);
+        }
+
+        /* Firefox */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-primary) var(--bg-secondary);
         }
 
         .light-theme {
@@ -720,6 +744,55 @@
             .card-svg-icon {
                 width: 24px;
                 height: 24px;
+            }
+        }
+
+        /* Универсальные стили для прокрутки */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(79, 70, 229, 0.3) transparent;
+        }
+
+        body {
+            overflow-y: scroll;
+        }
+
+        /* Webkit (Chrome, Safari, новый Edge) */
+        ::-webkit-scrollbar {
+            width: 3px;
+            height: 3px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(79, 70, 229, 0.3);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(79, 70, 229, 0.5);
+        }
+
+        /* Firefox */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(79, 70, 229, 0.3) transparent;
+        }
+
+        /* IE и Edge (старые версии) */
+        * {
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+        /* Мобильные устройства */
+        @media (max-width: 768px) {
+            ::-webkit-scrollbar {
+                width: 2px;
+                height: 2px;
             }
         }
     </style>
