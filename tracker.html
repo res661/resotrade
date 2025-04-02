@@ -4138,29 +4138,40 @@
         }
         
         // Удаляем функцию forceUpdateAllTransactionPercents полностью
-        
+
         document.addEventListener('DOMContentLoaded', () => {
-            // РАДИКАЛЬНОЕ РЕШЕНИЕ: Очистить проценты у всех транзакций
+            // ПОЛНОЕ РЕШЕНИЕ: Пересчитать проценты для всех транзакций на основе фактических данных
             const storedTransactions = localStorage.getItem('transactions');
             if (storedTransactions) {
                 try {
                     const parsedTransactions = JSON.parse(storedTransactions);
                     let needsUpdate = false;
                     
-                    // Удаляем все profitPercent из всех транзакций, кроме тех,
-                    // что имеют все данные для расчета (buyPrice, sellPrice)
+                    // Проверяем все транзакции
                     parsedTransactions.forEach(transaction => {
-                        if (!transaction.buyPrice || !transaction.sellPrice) {
-                            if (transaction.profitPercent) {
-                                delete transaction.profitPercent;
+                        // Если есть данные о покупке и продаже, рассчитываем процент прибыли
+                        if (transaction.buyPrice && transaction.sellPrice) {
+                            const profit = transaction.type === 'income' ? transaction.amount : -transaction.amount;
+                            const profitPercent = ((profit / transaction.buyPrice) * 100).toFixed(2);
+                            
+                            // Обновляем процент только если он не существует или равен 10/5 (автоматические значения)
+                            if (!transaction.profitPercent || 
+                                transaction.profitPercent === 10 || 
+                                transaction.profitPercent === 5) {
+                                transaction.profitPercent = Math.abs(parseFloat(profitPercent));
                                 needsUpdate = true;
                             }
+                        } 
+                        // Если нет данных для расчета, но есть процент 10 или 5, удаляем его
+                        else if (transaction.profitPercent === 10 || transaction.profitPercent === 5) {
+                            delete transaction.profitPercent;
+                            needsUpdate = true;
                         }
                     });
                     
                     if (needsUpdate) {
                         localStorage.setItem('transactions', JSON.stringify(parsedTransactions));
-                        console.log('Принудительно удалены проценты у всех транзакций без buyPrice и sellPrice');
+                        console.log('Пересчитаны проценты для всех транзакций на основе фактических данных');
                     }
                 } catch (e) {
                     console.error('Ошибка при обработке транзакций:', e);
