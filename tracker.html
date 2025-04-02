@@ -4108,6 +4108,9 @@
             
             // Проверяем все транзакции
             transactions.forEach(transaction => {
+                // Проверяем есть ли описание сделки и содержит ли оно тему скина
+                const hasThemeInfo = transaction.description && (transaction.description.includes('прибыль:') || transaction.description.includes('убыток:'));
+                
                 // Если есть данные о покупке и продаже, проверяем/обновляем процент прибыли
                 if (transaction.buyPrice && transaction.sellPrice) {
                     // Вычисляем процент прибыли/убытка
@@ -4117,6 +4120,15 @@
                     // Добавляем или обновляем profitPercent в транзакции
                     transaction.profitPercent = Math.abs(parseFloat(profitPercent));
                     needsUpdate = true;
+                }
+                // Если есть информация о теме в описании, но нет данных о ценах, пытаемся извлечь процент
+                else if (hasThemeInfo && !transaction.profitPercent) {
+                    // Ищем значение в скобках после суммы, которое должно содержать процент
+                    const match = transaction.description.match(/\$[\d,.]+ \(([\d.]+)%\)/);
+                    if (match && match[1]) {
+                        transaction.profitPercent = parseFloat(match[1]);
+                        needsUpdate = true;
+                    }
                 }
             });
             
@@ -4128,11 +4140,57 @@
                 renderTransactions();
             }
         }
+        
+        // Для транзакций, которые уже отображаются, но нужно принудительно добавить процент
+        function forceUpdateAllTransactionPercents() {
+            let needsUpdate = false;
+            
+            // Экспортируем текущие транзакции в консоль для отладки
+            console.log('Current transactions:', JSON.parse(JSON.stringify(transactions)));
+            
+            // Проходим по всем транзакциям
+            transactions.forEach(transaction => {
+                // Если это старая сделка, которая должна иметь процент, но его нет
+                if (transaction.amount > 0) {
+                    // Ищем значение процента в описании (если есть)
+                    let extractedPercent = null;
+                    
+                    if (transaction.description) {
+                        // Ищем значение в скобках с процентом
+                        const percentMatch = transaction.description.match(/\(.*?([\d.]+)%\)/);
+                        if (percentMatch && percentMatch[1]) {
+                            extractedPercent = parseFloat(percentMatch[1]);
+                        }
+                    }
+                    
+                    // Если нашли процент в описании, используем его
+                    if (extractedPercent !== null) {
+                        transaction.profitPercent = extractedPercent;
+                        needsUpdate = true;
+                    }
+                    // Иначе устанавливаем примерный процент (10% для дохода, 5% для расхода)
+                    else if (!transaction.profitPercent) {
+                        transaction.profitPercent = transaction.type === 'income' ? 10 : 5;
+                        needsUpdate = true;
+                    }
+                }
+            });
+            
+            // Если были изменения, сохраняем и обновляем интерфейс
+            if (needsUpdate) {
+                localStorage.setItem('transactions', JSON.stringify(transactions));
+                console.log('All transactions updated with profit percentages');
+                renderTransactions();
+            }
+            
+            return needsUpdate;
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             initializeChart();
             updateTransactionsList();
             updateLegacyTransactions(); // Добавляем вызов функции здесь
+            forceUpdateAllTransactionPercents(); // Принудительно добавляем проценты ко всем сделкам
             updateStats();
             initializeParticles();
             initializeStars();
