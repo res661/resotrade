@@ -2023,30 +2023,6 @@
         opacity: 0;
         pointer-events: none;
     }
-
-    function updateLegacyTransactions() {
-        let needsUpdate = false;
-        
-        // Проверяем все транзакции
-        transactions.forEach(transaction => {
-            // Если есть данные о покупке и продаже, но нет процента прибыли
-            if (transaction.buyPrice && transaction.sellPrice && !transaction.profitPercent) {
-                // Вычисляем процент прибыли/убытка
-                const profit = transaction.type === 'income' ? transaction.amount : -transaction.amount;
-                const profitPercent = ((profit / transaction.buyPrice) * 100).toFixed(2);
-                
-                // Добавляем profitPercent в транзакцию
-                transaction.profitPercent = Math.abs(parseFloat(profitPercent));
-                needsUpdate = true;
-            }
-        });
-        
-        // Если были изменения, сохраняем обновленные транзакции
-        if (needsUpdate) {
-            localStorage.setItem('transactions', JSON.stringify(transactions));
-            console.log('Legacy transactions updated with profit percentages');
-        }
-    }
 </style>
 </head>
 <body>
