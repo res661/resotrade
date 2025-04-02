@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neon Finance Dashboard</title>
+<title>RESOTRADE - Финансовый трекер</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<!-- <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MorphSVGPlugin.min.js"></script>
@@ -541,17 +541,20 @@
     .search-container {
         grid-column: span 12;
         display: flex;
+        flex-wrap: wrap;
         gap: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
     }
 
     .search-input {
         background: var(--bg-secondary);
         border: 1px solid var(--border);
         color: var(--text-primary);
-        padding: var(--spacing-md) var(--spacing-lg);
-        border-radius: var(--radius-full);
-        font-size: 1rem;
-        width: 100%;
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-radius: var(--radius-md);
+        font-size: 0.95rem;
+        flex: 1;
+        min-width: 150px;
         transition: var(--transition-normal);
         outline: none;
         box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -634,6 +637,33 @@
         font-weight: 600;
         font-size: 1.1rem;
         position: relative;
+    }
+
+    .profit-percent {
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-left: 4px;
+        opacity: 0.85;
+        display: inline-block;
+        vertical-align: middle;
+        background: var(--glass);
+        padding: 1px 6px;
+        border-radius: var(--radius-full);
+        transition: var(--transition-normal);
+    }
+
+    .transaction-item:hover .profit-percent {
+        opacity: 1;
+        background: var(--glass-hover);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .amount-positive .profit-percent {
+        color: var(--positive);
+    }
+
+    .amount-negative .profit-percent {
+        color: var(--negative);
     }
 
     .amount-positive {
@@ -1330,39 +1360,37 @@
     .confirm-modal {
         display: none;
         position: fixed;
-        z-index: 1002;
-        left: 0;
         top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(8px);
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 10000;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
     }
 
     .confirm-modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         background: var(--bg-card);
-        margin: 15% auto;
-        padding: var(--spacing-xl);
-        border: 1px solid var(--border);
-        width: 90%;
-        max-width: 400px;
-        border-radius: var(--radius-xl);
-        text-align: center;
+        padding: var(--spacing-lg) var(--spacing-xl);
+        border-radius: var(--radius-lg);
+        min-width: 300px;
         box-shadow: var(--shadow-lg);
-        animation: modalAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        position: relative;
-        overflow: hidden;
+        text-align: center;
+        border: 1px solid var(--border);
     }
 
-    .confirm-modal-content::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: var(--gradient-primary);
+    .confirm-modal-content h3 {
+        margin-bottom: var(--spacing-md);
+        background: var(--gradient-text);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
     }
 
     .confirm-buttons {
@@ -2040,7 +2068,10 @@
     <div class="nav-bar">
         <div class="nav-icon-wrapper">
             <div class="nav-icon" onclick="window.location.href='index.html'">
-                <ion-icon name="home-outline"></ion-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
             </div>
             <div class="nav-tooltip">Главная</div>
         </div>
@@ -2056,7 +2087,11 @@
         </div>
         <div class="nav-icon-wrapper">
             <div class="nav-icon" onclick="document.getElementById('fileInput').click()">
-                <ion-icon name="cloud-upload-outline"></ion-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
             </div>
             <div class="nav-tooltip">Импорт</div>
         </div>
@@ -2074,16 +2109,26 @@
             <button class="btn btn-secondary btn-active" onclick="changePeriod('all')">Все</button>
         </div>
         <button class="btn btn-primary btn-large" onclick="openStatsModal()">
-            <ion-icon name="stats-chart-outline"></ion-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
             Показать статистику
         </button>
         <div class="telegram-buttons">
             <a href="https://t.me/+BwTh8OyJmC0wN2Vi" target="_blank" class="telegram-button" rel="noreferrer">
-                <ion-icon name="paper-plane-outline"></ion-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
                 <span>Telegram 1</span>
             </a>
             <a href="https://t.me/+UxvIvNPO4-kxMmI6" target="_blank" class="telegram-button" rel="noreferrer">
-                <ion-icon name="paper-plane-outline"></ion-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
                 <span>Telegram 2</span>
             </a>
         </div>
@@ -2115,11 +2160,15 @@
         <div class="card-glow"></div>
         <div class="calendar-nav">
             <button class="btn btn-secondary" onclick="changeMonth(-1)">
-                <ion-icon name="chevron-back-outline"></ion-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
             </button>
             <h2 id="currentMonth"></h2>
             <button class="btn btn-secondary" onclick="changeMonth(1)">
-                <ion-icon name="chevron-forward-outline"></ion-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
             </button>
         </div>
         <div class="calendar-grid" id="calendarGrid"></div>
@@ -2130,6 +2179,16 @@
 
     <div class="search-container">
         <input type="date" id="searchDate" class="search-input" onchange="filterTransactions()" placeholder="Поиск по дате">
+        <input type="text" id="searchName" class="search-input" onkeyup="filterTransactions()" placeholder="Поиск по названию">
+        <input type="number" id="searchAmount" class="search-input" onkeyup="filterTransactions()" placeholder="Поиск по сумме">
+        <select id="sortOrder" class="search-input" onchange="filterTransactions()">
+            <option value="newest">Сначала новые</option>
+            <option value="oldest">Сначала старые</option>
+            <option value="highest">Высокая сумма</option>
+            <option value="lowest">Низкая сумма</option>
+            <option value="profitable">Прибыльные сделки</option>
+            <option value="unprofitable">Убыточные сделки</option>
+        </select>
     </div>
 
     <div class="transactions-list" id="transactions"></div>
@@ -2271,6 +2330,18 @@
 
     <!-- Hidden file input -->
     <input type="file" id="fileInput" style="display:none" onchange="importTransactions(event)">
+    
+    <!-- Модальное окно подтверждения удаления -->
+    <div id="deleteConfirmModal" class="confirm-modal">
+        <div class="confirm-modal-content">
+            <h3>Подтвердите действие</h3>
+            <p>Вы уверены, что хотите удалить эту транзакцию?</p>
+            <div class="confirm-buttons">
+                <button id="deleteConfirmButton" class="btn btn-primary">OK</button>
+                <button onclick="closeDeleteConfirmModal()" class="btn btn-secondary">Отмена</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Инициализация графика
@@ -2332,6 +2403,7 @@
         let lastCalculatedProfit = 0;
         let currentDate = new Date();
         let editingTransactionIndex = null;
+        let currentDeletingIndex = null;
         let hasChanges = false;
         let sparkles = [];
 
@@ -2490,12 +2562,19 @@
                     <div class="transaction-actions">
                         <span class="transaction-amount ${t.type === 'income' ? 'amount-positive' : 'amount-negative'}">
                             ${t.type === 'income' ? '+' : '-'}$${t.amount.toLocaleString()}
+                            ${t.profitPercent ? `<span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${t.profitPercent}%)</span>` : ''}
                         </span>
                         <button onclick="editTransaction(${i})" class="btn btn-secondary btn-icon">
-                            <ion-icon name="create-outline"></ion-icon>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
                         </button>
                         <button onclick="confirmDelete(${i})" class="btn btn-secondary btn-icon">
-                            <ion-icon name="trash-outline"></ion-icon>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -2554,6 +2633,7 @@
             
             const fee = sell * (percent / 100);
             const profit = sell - buy - fee;
+            const profitPercent = ((profit / buy) * 100).toFixed(2);
             lastCalculatedProfit = profit;
 
             const resultHTML = `
@@ -2561,7 +2641,7 @@
                 <p><strong>Цена покупки:</strong> $${buy.toLocaleString()}</p>
                 <p><strong>Цена продажи:</strong> $${sell.toLocaleString()}</p>
                 <p><strong>Комиссия:</strong> $${fee.toLocaleString()} (${percent}%)</p>
-                <p><strong>Прибыль:</strong> <span class="${profit >= 0 ? 'positive-balance' : 'negative-balance'}">$${profit.toLocaleString()}</span></p>
+                <p><strong>${profit >= 0 ? 'Прибыль' : 'Убыток'}:</strong> <span class="${profit >= 0 ? 'positive-balance' : 'negative-balance'}">$${Math.abs(profit).toLocaleString()} (${Math.abs(profitPercent)}%)</span></p>
             `;
             
             const resultElement = document.getElementById('calculationResult');
@@ -2601,6 +2681,7 @@
             const sellPrice = parseFloat(document.getElementById('sellPrice').value);
             const percent = parseFloat(document.getElementById('profitPercentage').value);
             const date = document.getElementById('advancedDate').value || new Date().toISOString().split('T')[0];
+            const profitPercent = ((lastCalculatedProfit / buyPrice) * 100).toFixed(2);
 
             const transaction = {
                 type: lastCalculatedProfit >= 0 ? 'income' : 'expense',
@@ -2610,7 +2691,8 @@
                 theme: skinName,
                 buyPrice: buyPrice,
                 sellPrice: sellPrice,
-                commission: percent
+                commission: percent,
+                profitPercent: Math.abs(profitPercent)
             };
 
             if (editingTransactionIndex !== null) {
@@ -2786,9 +2868,42 @@
         }
 
         function confirmDelete(index) {
-            if (confirm('Вы уверены, что хотите удалить эту транзакцию?')) {
-                deleteTransaction(index);
-            }
+            // Сохраняем индекс транзакции для удаления
+            currentDeletingIndex = index;
+            
+            // Показываем модальное окно подтверждения
+            const modal = document.getElementById('deleteConfirmModal');
+            modal.style.display = 'block';
+            
+            // Анимация появления
+            const modalContent = modal.querySelector('.confirm-modal-content');
+            gsap.fromTo(modalContent, 
+                { opacity: 0, scale: 0.9 },
+                { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.7)" }
+            );
+            
+            // Добавляем обработчик для кнопки "OK"
+            document.getElementById('deleteConfirmButton').onclick = function() {
+                closeDeleteConfirmModal();
+                deleteTransaction(currentDeletingIndex);
+            };
+        }
+        
+        function closeDeleteConfirmModal() {
+            const modal = document.getElementById('deleteConfirmModal');
+            const modalContent = modal.querySelector('.confirm-modal-content');
+            
+            // Анимация исчезновения
+            gsap.to(modalContent, {
+                opacity: 0,
+                y: 20,
+                scale: 0.95,
+                duration: 0.2,
+                ease: "power2.in",
+                onComplete: () => {
+                    modal.style.display = 'none';
+                }
+            });
         }
 
         function deleteTransaction(index) {
@@ -2981,20 +3096,74 @@
 
         function filterTransactions() {
             const searchDate = document.getElementById('searchDate').value;
-            if (!searchDate) {
-                renderTransactions();
-                return;
+            const searchName = document.getElementById('searchName').value.toLowerCase();
+            const searchAmount = document.getElementById('searchAmount').value;
+            const sortOrder = document.getElementById('sortOrder').value;
+            
+            // Фильтрация по критериям
+            let filteredTransactions = [...transactions];
+            
+            if (searchDate) {
+                filteredTransactions = filteredTransactions.filter(t => t.date === searchDate);
             }
-
-            const filteredTransactions = transactions.filter(t => 
-                t.date === searchDate
-            );
+            
+            if (searchName) {
+                filteredTransactions = filteredTransactions.filter(t => 
+                    t.description && t.description.toLowerCase().includes(searchName)
+                );
+            }
+            
+            if (searchAmount) {
+                const amount = parseFloat(searchAmount);
+                filteredTransactions = filteredTransactions.filter(t => 
+                    t.amount === amount || 
+                    Math.abs(t.amount - amount) < 0.01 // Для неточного совпадения
+                );
+            }
+            
+            // Сортировка
+            switch (sortOrder) {
+                case 'newest':
+                    filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    break;
+                case 'oldest':
+                    filteredTransactions.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    break;
+                case 'highest':
+                    filteredTransactions.sort((a, b) => b.amount - a.amount);
+                    break;
+                case 'lowest':
+                    filteredTransactions.sort((a, b) => a.amount - b.amount);
+                    break;
+                case 'profitable':
+                    // Фильтрация только прибыльных сделок (income)
+                    filteredTransactions = filteredTransactions.filter(t => t.type === 'income');
+                    // Сортировка по проценту прибыли (если есть) или по сумме
+                    filteredTransactions.sort((a, b) => {
+                        if (a.profitPercent && b.profitPercent) {
+                            return parseFloat(b.profitPercent) - parseFloat(a.profitPercent);
+                        }
+                        return b.amount - a.amount;
+                    });
+                    break;
+                case 'unprofitable':
+                    // Фильтрация только убыточных сделок (expense)
+                    filteredTransactions = filteredTransactions.filter(t => t.type === 'expense');
+                    // Сортировка по проценту убытка (если есть) или по сумме
+                    filteredTransactions.sort((a, b) => {
+                        if (a.profitPercent && b.profitPercent) {
+                            return parseFloat(b.profitPercent) - parseFloat(a.profitPercent);
+                        }
+                        return b.amount - a.amount;
+                    });
+                    break;
+            }
             
             const container = document.getElementById('transactions');
             if (filteredTransactions.length === 0) {
                 container.innerHTML = `
                     <div class="transaction-item" style="justify-content: center; text-align: center;">
-                        <p>Нет транзакций на выбранную дату</p>
+                        <p>Нет транзакций по заданным критериям</p>
                     </div>
                 `;
                 return;
@@ -3009,12 +3178,19 @@
                     <div class="transaction-actions">
                         <span class="transaction-amount ${t.type === 'income' ? 'amount-positive' : 'amount-negative'}">
                             ${t.type === 'income' ? '+' : '-'}$${t.amount.toLocaleString()}
+                            ${t.profitPercent ? `<span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${t.profitPercent}%)</span>` : ''}
                         </span>
                         <button onclick="editTransaction(${transactions.indexOf(t)})" class="btn btn-secondary btn-icon">
-                            <ion-icon name="create-outline"></ion-icon>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
                         </button>
                         <button onclick="confirmDelete(${transactions.indexOf(t)})" class="btn btn-secondary btn-icon">
-                            <ion-icon name="trash-outline"></ion-icon>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -3030,9 +3206,6 @@
                     createSparklesAround(this, 5);
                 });
             });
-            
-            // Show notification
-            showNotification(`Найдено ${filteredTransactions.length} транзакций`, 'info');
         }
 
         function clearInputs() {
