@@ -4140,7 +4140,7 @@
         // Удаляем функцию forceUpdateAllTransactionPercents полностью
 
         document.addEventListener('DOMContentLoaded', () => {
-            // ПОЛНОЕ РЕШЕНИЕ: Пересчитать проценты для всех транзакций на основе фактических данных
+            // АВТОМАТИЧЕСКИЙ РАСЧЕТ: Пересчитать проценты для всех транзакций на основе реальных данных
             const storedTransactions = localStorage.getItem('transactions');
             if (storedTransactions) {
                 try {
@@ -4149,21 +4149,17 @@
                     
                     // Проверяем все транзакции
                     parsedTransactions.forEach(transaction => {
-                        // Если есть данные о покупке и продаже, рассчитываем процент прибыли
+                        // Если есть данные о покупке и продаже, ВСЕГДА рассчитываем процент прибыли
                         if (transaction.buyPrice && transaction.sellPrice) {
                             const profit = transaction.type === 'income' ? transaction.amount : -transaction.amount;
                             const profitPercent = ((profit / transaction.buyPrice) * 100).toFixed(2);
                             
-                            // Обновляем процент только если он не существует или равен 10/5 (автоматические значения)
-                            if (!transaction.profitPercent || 
-                                transaction.profitPercent === 10 || 
-                                transaction.profitPercent === 5) {
-                                transaction.profitPercent = Math.abs(parseFloat(profitPercent));
-                                needsUpdate = true;
-                            }
+                            // Всегда устанавливаем рассчитанный процент
+                            transaction.profitPercent = Math.abs(parseFloat(profitPercent));
+                            needsUpdate = true;
                         } 
-                        // Если нет данных для расчета, но есть процент 10 или 5, удаляем его
-                        else if (transaction.profitPercent === 10 || transaction.profitPercent === 5) {
+                        // Если нет данных для расчета, но есть процент, удаляем его
+                        else if (transaction.profitPercent) {
                             delete transaction.profitPercent;
                             needsUpdate = true;
                         }
@@ -4171,7 +4167,7 @@
                     
                     if (needsUpdate) {
                         localStorage.setItem('transactions', JSON.stringify(parsedTransactions));
-                        console.log('Пересчитаны проценты для всех транзакций на основе фактических данных');
+                        console.log('Автоматически пересчитаны проценты для всех транзакций');
                     }
                 } catch (e) {
                     console.error('Ошибка при обработке транзакций:', e);
