@@ -2554,8 +2554,10 @@
         function renderTransactions() {
             const container = document.getElementById('transactions');
             
-            // Убираем принудительное добавление процентов
             container.innerHTML = transactions.map((t, i) => {
+                // Показываем проценты только если есть данные о покупке и продаже
+                const showPercent = t.buyPrice && t.sellPrice && t.profitPercent;
+                
                 return `
                 <div class="transaction-item" data-index="${i}">
                     <div class="transaction-info">
@@ -2565,7 +2567,7 @@
                     <div class="transaction-actions">
                         <span class="transaction-amount ${t.type === 'income' ? 'amount-positive' : 'amount-negative'}">
                             ${t.type === 'income' ? '+' : '-'}$${t.amount.toLocaleString()}
-                            ${t.profitPercent ? `<span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${t.profitPercent}%)</span>` : ''}
+                            ${showPercent ? `<span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${t.profitPercent}%)</span>` : ''}
                         </span>
                         <button onclick="editTransaction(${i})" class="btn btn-secondary btn-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -3175,6 +3177,9 @@
             }
             
             container.innerHTML = filteredTransactions.map((t, i) => {
+                // Показываем проценты только если есть данные о покупке и продаже
+                const showPercent = t.buyPrice && t.sellPrice && t.profitPercent;
+                
                 return `
                 <div class="transaction-item" data-index="${transactions.indexOf(t)}">
                     <div class="transaction-info">
@@ -3184,7 +3189,7 @@
                     <div class="transaction-actions">
                         <span class="transaction-amount ${t.type === 'income' ? 'amount-positive' : 'amount-negative'}">
                             ${t.type === 'income' ? '+' : '-'}$${t.amount.toLocaleString()}
-                            ${t.profitPercent ? `<span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${t.profitPercent}%)</span>` : ''}
+                            ${showPercent ? `<span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${t.profitPercent}%)</span>` : ''}
                         </span>
                         <button onclick="editTransaction(${transactions.indexOf(t)})" class="btn btn-secondary btn-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
