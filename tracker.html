@@ -4135,9 +4135,35 @@
         // Удаляем функцию forceUpdateAllTransactionPercents полностью
         
         document.addEventListener('DOMContentLoaded', () => {
+            // РАДИКАЛЬНОЕ РЕШЕНИЕ: Очистить проценты у всех транзакций
+            const storedTransactions = localStorage.getItem('transactions');
+            if (storedTransactions) {
+                try {
+                    const parsedTransactions = JSON.parse(storedTransactions);
+                    let needsUpdate = false;
+                    
+                    // Удаляем все profitPercent из всех транзакций, кроме тех,
+                    // что имеют все данные для расчета (buyPrice, sellPrice)
+                    parsedTransactions.forEach(transaction => {
+                        if (!transaction.buyPrice || !transaction.sellPrice) {
+                            if (transaction.profitPercent) {
+                                delete transaction.profitPercent;
+                                needsUpdate = true;
+                            }
+                        }
+                    });
+                    
+                    if (needsUpdate) {
+                        localStorage.setItem('transactions', JSON.stringify(parsedTransactions));
+                        console.log('Принудительно удалены проценты у всех транзакций без buyPrice и sellPrice');
+                    }
+                } catch (e) {
+                    console.error('Ошибка при обработке транзакций:', e);
+                }
+            }
+            
             initializeChart();
             updateTransactionsList();
-            updateLegacyTransactions(); // Теперь эта функция только УДАЛЯЕТ проценты со старых сделок
             updateStats();
             initializeParticles();
             initializeStars();
