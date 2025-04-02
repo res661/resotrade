@@ -2611,9 +2611,8 @@
                 type: document.getElementById('type').value,
                 amount: amount,
                 description: document.getElementById('description').value || 'Без описания',
-                date: document.getElementById('date').value || new Date().toISOString().split('T')[0],
-                // Добавляем стандартный процент для всех транзакций
-                profitPercent: document.getElementById('type').value === 'income' ? 10 : 5
+                date: document.getElementById('date').value || new Date().toISOString().split('T')[0]
+                // Убираем стандартные проценты, пусть определяются только там, где они рассчитаны
             };
             
             if (editingTransactionIndex !== null) {
