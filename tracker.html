@@ -4108,22 +4108,24 @@
             
             // Проверяем все транзакции
             transactions.forEach(transaction => {
-                // Если есть данные о покупке и продаже, но нет процента прибыли
-                if (transaction.buyPrice && transaction.sellPrice && !transaction.profitPercent) {
+                // Если есть данные о покупке и продаже, проверяем/обновляем процент прибыли
+                if (transaction.buyPrice && transaction.sellPrice) {
                     // Вычисляем процент прибыли/убытка
                     const profit = transaction.type === 'income' ? transaction.amount : -transaction.amount;
                     const profitPercent = ((profit / transaction.buyPrice) * 100).toFixed(2);
                     
-                    // Добавляем profitPercent в транзакцию
+                    // Добавляем или обновляем profitPercent в транзакции
                     transaction.profitPercent = Math.abs(parseFloat(profitPercent));
                     needsUpdate = true;
                 }
             });
             
-            // Если были изменения, сохраняем обновленные транзакции
+            // Если были изменения, сохраняем обновленные транзакции и обновляем интерфейс
             if (needsUpdate) {
                 localStorage.setItem('transactions', JSON.stringify(transactions));
                 console.log('Legacy transactions updated with profit percentages');
+                // Обновляем отображение транзакций
+                renderTransactions();
             }
         }
 
