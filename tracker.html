@@ -2553,7 +2553,26 @@
 
         function renderTransactions() {
             const container = document.getElementById('transactions');
-            container.innerHTML = transactions.map((t, i) => `
+            container.innerHTML = transactions.map((t, i) => {
+                // Если у транзакции нет процента прибыли, добавляем его
+                if (!t.profitPercent && t.amount > 0) {
+                    // Проверяем наличие информации о покупке и продаже
+                    if (t.buyPrice && t.sellPrice) {
+                        const profit = t.type === 'income' ? t.amount : -t.amount;
+                        const profitPercent = ((profit / t.buyPrice) * 100).toFixed(2);
+                        t.profitPercent = Math.abs(parseFloat(profitPercent));
+                    } else {
+                        // Если нет информации о ценах, устанавливаем стандартный процент
+                        t.profitPercent = t.type === 'income' ? 10 : 5;
+                    }
+                    // Сохраняем изменения
+                    localStorage.setItem('transactions', JSON.stringify(transactions));
+                }
+                
+                // Всегда показываем процент, даже если он не был в данных
+                const showPercent = t.profitPercent || (t.type === 'income' ? 10 : 5);
+                
+                return `
                 <div class="transaction-item" data-index="${i}">
                     <div class="transaction-info">
                         <h4>${t.description}</h4>
@@ -2562,7 +2581,7 @@
                     <div class="transaction-actions">
                         <span class="transaction-amount ${t.type === 'income' ? 'amount-positive' : 'amount-negative'}">
                             ${t.type === 'income' ? '+' : '-'}$${t.amount.toLocaleString()}
-                            ${t.profitPercent ? `<span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${t.profitPercent}%)</span>` : ''}
+                            <span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${showPercent}%)</span>
                         </span>
                         <button onclick="editTransaction(${i})" class="btn btn-secondary btn-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2578,7 +2597,8 @@
                         </button>
                     </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
 
             // Add animation delay to each transaction item
             const items = document.querySelectorAll('.transaction-item');
@@ -3169,7 +3189,11 @@
                 return;
             }
             
-            container.innerHTML = filteredTransactions.map((t, i) => `
+            container.innerHTML = filteredTransactions.map((t, i) => {
+                // Если у транзакции нет процента прибыли, используем стандартный процент
+                const showPercent = t.profitPercent || (t.type === 'income' ? 10 : 5);
+                
+                return `
                 <div class="transaction-item" data-index="${transactions.indexOf(t)}">
                     <div class="transaction-info">
                         <h4>${t.description}</h4>
@@ -3178,7 +3202,7 @@
                     <div class="transaction-actions">
                         <span class="transaction-amount ${t.type === 'income' ? 'amount-positive' : 'amount-negative'}">
                             ${t.type === 'income' ? '+' : '-'}$${t.amount.toLocaleString()}
-                            ${t.profitPercent ? `<span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${t.profitPercent}%)</span>` : ''}
+                            <span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${showPercent}%)</span>
                         </span>
                         <button onclick="editTransaction(${transactions.indexOf(t)})" class="btn btn-secondary btn-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -3194,7 +3218,8 @@
                         </button>
                     </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
             
             // Add animation to filtered items
             const items = document.querySelectorAll('.transaction-item');
