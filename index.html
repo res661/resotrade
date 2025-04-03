@@ -795,6 +795,34 @@
                 height: 2px;
             }
         }
+
+        .new-badge {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 4px 8px rgba(255, 107, 107, 0.5);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
+            }
+        }
     </style>
 </head>
 <body>
@@ -814,6 +842,16 @@
                     </svg>
                 </div>
                 <h3 class="card-title">Финансовый трекер</h3>
+            </div>
+
+            <div class="card" onclick="window.location.href='cs2tools.html'">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="card-svg-icon">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 class="card-title">Инструменты CS2</h3>
+                <span class="new-badge">NEW</span>
             </div>
 
             <div class="card" onclick="window.location.href='invest.html'">
