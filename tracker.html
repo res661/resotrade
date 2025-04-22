@@ -9,6 +9,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MorphSVGPlugin.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -711,86 +712,42 @@
     }
 
     .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: var(--spacing-sm);
         padding: var(--spacing-sm) var(--spacing-md);
         border-radius: var(--radius-md);
-        font-weight: 600;
         cursor: pointer;
-        transition: var(--transition-normal);
+        font-weight: 500;
         border: none;
-        outline: none;
-        font-size: 0.875rem;
-        position: relative;
-        overflow: hidden;
-        letter-spacing: 0.5px;
-    }
-
-    .btn::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        transition: width 0.6s ease, height 0.6s ease;
-    }
-
-    .btn:hover::before {
-        width: 300%;
-        height: 300%;
+        transition: var(--transition-normal);
+        font-size: 1rem;
     }
 
     .btn-primary {
         background: var(--gradient-primary);
         color: white;
-        box-shadow: 0 4px 6px rgba(79, 70, 229, 0.25);
-        background-size: 200% 200%;
+        box-shadow: 0 0 10px var(--accent-primary-glow);
     }
-
-    .pink-theme .btn-primary {
-        box-shadow: 0 4px 6px rgba(236, 72, 153, 0.25);
-    }
-
-    .btn-primary:hover {
-        background-position: right center;
-        transform: translateY(-4px);
-        box-shadow: 
-            0 10px 15px -3px rgba(79, 70, 229, 0.3),
-            0 4px 6px -2px rgba(79, 70, 229, 0.2),
-            0 0 10px var(--accent-primary-glow);
-        animation: gradientShift 3s ease infinite;
-    }
-
-    .pink-theme .btn-primary:hover {
-        box-shadow: 
-            0 10px 15px -3px rgba(236, 72, 153, 0.3),
-            0 4px 6px -2px rgba(236, 72, 153, 0.2),
-            0 0 10px var(--accent-primary-glow);
-    }
-
-    @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
+    
     .btn-secondary {
-        background: var(--glass);
+        background: var(--bg-tertiary);
         color: var(--text-primary);
         border: 1px solid var(--border);
     }
-
-    .btn-secondary:hover {
-        background: var(--glass-hover);
+    
+    .btn-danger {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+    }
+    
+    .btn:hover {
         transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
-        border-color: var(--accent-primary);
+    }
+    
+    .btn:active {
+        transform: translateY(1px);
+    }
+    
+    .btn-primary:hover {
+        box-shadow: 0 0 15px var(--accent-primary-glow);
     }
 
     .btn-icon {
@@ -1368,6 +1325,7 @@
         z-index: 10000;
         backdrop-filter: blur(5px);
         -webkit-backdrop-filter: blur(5px);
+        animation: fadeIn 0.3s ease;
     }
 
     .confirm-modal-content {
@@ -1382,15 +1340,13 @@
         box-shadow: var(--shadow-lg);
         text-align: center;
         border: 1px solid var(--border);
+        animation: scaleIn 0.3s ease;
     }
 
     .confirm-modal-content h3 {
         margin-bottom: var(--spacing-md);
-        background: var(--gradient-text);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-fill-color: transparent;
+        color: var(--text-primary);
+        font-weight: 600;
     }
 
     .confirm-buttons {
@@ -1398,6 +1354,77 @@
         justify-content: center;
         gap: var(--spacing-md);
         margin-top: var(--spacing-lg);
+    }
+    
+    .confirm-buttons button {
+        animation: fadeInUp 0.3s ease forwards;
+        animation-delay: 0.1s;
+        opacity: 0;
+    }
+    
+    .confirm-buttons button:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .confirm-buttons .btn-primary {
+        background: var(--gradient-primary);
+        box-shadow: 0 0 10px var(--accent-primary-glow);
+        color: white;
+        font-weight: 600;
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .confirm-buttons .btn-secondary {
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+    }
+    
+    .confirm-buttons .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 15px var(--accent-primary-glow);
+    }
+    
+    .confirm-buttons .btn-primary:active {
+        transform: translateY(1px);
+        box-shadow: 0 0 5px var(--accent-primary-glow);
+    }
+    
+    .confirm-buttons .btn-secondary:hover {
+        background: var(--bg-secondary);
+        transform: translateY(-2px);
+    }
+    
+    .confirm-buttons .btn-secondary:active {
+        transform: translateY(1px);
+    }
+    
+    /* Стили для светлой темы */
+    .light-theme .confirm-buttons .btn-primary {
+        box-shadow: 0 2px 10px rgba(79, 70, 229, 0.4);
+    }
+    
+    .light-theme .confirm-buttons .btn-secondary {
+        background: #f1f5f9;
+        color: #334155;
+        border: 1px solid #cbd5e1;
+    }
+    
+    .light-theme .confirm-buttons .btn-secondary:hover {
+        background: #e2e8f0;
     }
 
     .calculation-result {
@@ -1467,6 +1494,16 @@
     @keyframes pulse {
         0%, 100% { transform: scale(1); }
         50% { transform: scale(1.05); }
+    }
+    
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+    
+    @keyframes scaleIn {
+        0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
     }
 
     /* Notification styles */
@@ -2023,6 +2060,254 @@
         opacity: 0;
         pointer-events: none;
     }
+
+    .achievement-progress {
+        margin-top: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        overflow: hidden;
+        height: 6px;
+    }
+    
+    .achievement-bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
+        box-shadow: 0 0 10px var(--accent-primary);
+        border-radius: 5px;
+        width: 0%;
+        transition: width 1s ease-in-out;
+    }
+
+    /* Стили для калькулятора прибыли */
+    .calculator-title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 1.4rem;
+        color: var(--accent-primary);
+        text-shadow: 0 0 8px var(--accent-primary-glow);
+    }
+    
+    .calculation-header {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: var(--text-primary);
+    }
+    
+    .sell-price-result {
+        font-size: 1.5rem;
+        margin: 15px 0;
+        text-align: center;
+        font-weight: bold;
+        color: var(--text-primary);
+    }
+    
+    .price-highlight {
+        color: var(--accent-primary);
+        text-shadow: 0 0 5px var(--accent-primary-glow);
+    }
+    
+    .calculation-details {
+        margin-top: 15px;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .calculation-details div {
+        margin: 5px 0;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .action-buttons {
+        position: fixed;
+        bottom: var(--spacing-xl);
+        right: var(--spacing-xl);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        z-index: 100;
+    }
+
+    .add-btn {
+        position: relative;
+        bottom: auto;
+        right: auto;
+    }
+
+    .myskins-btn {
+        width: 64px;
+        height: 64px;
+        border-radius: var(--radius-full);
+        background: var(--gradient-primary);
+        color: white;
+        font-size: 1.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition-normal);
+        border: none;
+        box-shadow: 
+            var(--shadow-lg), 
+            0 0 20px var(--accent-primary-glow);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .myskins-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gradient-secondary);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .myskins-btn:hover::before {
+        opacity: 1;
+    }
+
+    .myskins-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 
+            var(--shadow-lg), 
+            0 0 30px var(--accent-primary-glow);
+    }
+
+    .myskins-btn span {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Стили для списка скинов */
+    .my-skins-list {
+        margin-top: var(--spacing-md);
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .skin-item {
+        background: var(--bg-card);
+        border-radius: var(--radius-md);
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+        border: 1px solid var(--border);
+        transition: var(--transition-normal);
+        position: relative;
+    }
+
+    .skin-item:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+    }
+
+    .skin-item h3 {
+        margin: 0 0 var(--spacing-sm) 0;
+        font-size: 1.1rem;
+        color: var(--text-primary);
+    }
+
+    .skin-item p {
+        margin: var(--spacing-xs) 0;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    .skin-item .skin-actions {
+        display: flex;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-md);
+    }
+
+    .skin-item .skin-actions button {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.85rem;
+    }
+
+    .info-box {
+        background: rgba(79, 70, 229, 0.1);
+        border-left: 4px solid var(--accent-primary);
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+        border-radius: var(--radius-md);
+        position: relative;
+    }
+
+    .info-box p {
+        margin: var(--spacing-xs) 0;
+        color: var(--text-secondary);
+    }
+
+    .info-box button {
+        margin-top: var(--spacing-sm);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.8rem;
+    }
+
+    .calculation-result {
+        background: var(--bg-input);
+        border-radius: var(--radius-md);
+        padding: var(--spacing-md);
+        margin-top: var(--spacing-md);
+        border: 1px solid var(--border);
+    }
+
+    .info-toggle {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+        color: var(--accent-primary);
+        font-size: 0.9rem;
+        margin-bottom: var(--spacing-md);
+        transition: var(--transition-normal);
+        width: fit-content;
+    }
+    
+    .info-toggle:hover {
+        color: var(--accent-primary-hover);
+        text-decoration: underline;
+    }
+    
+    .info-toggle i {
+        font-size: 1rem;
+    }
+
+    /* Стили для розовой темы */
+    .pink-theme .confirm-buttons .btn-primary {
+        background: linear-gradient(135deg, #ff69b4, #ff1493);
+        box-shadow: 0 2px 10px rgba(255, 105, 180, 0.6);
+    }
+    
+    .pink-theme .confirm-buttons .btn-secondary {
+        background: #3d1d47;
+        color: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(255, 105, 180, 0.3);
+    }
+    
+    .pink-theme .confirm-buttons .btn-secondary:hover {
+        background: #2d1535;
+        border: 1px solid rgba(255, 105, 180, 0.5);
+    }
+    
+    .pink-theme .btn-primary {
+        background: linear-gradient(135deg, #ff69b4, #ff1493);
+        box-shadow: 0 0 10px rgba(255, 105, 180, 0.6);
+    }
+    
+    .pink-theme .btn-primary:hover {
+        box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+    }
+    
+    .pink-theme .btn-danger {
+        background: linear-gradient(135deg, #ff69b4, #ff1493);
+    }
 </style>
 </head>
 <body>
@@ -2193,9 +2478,14 @@
 
     <div class="transactions-list" id="transactions"></div>
 
+    <div class="action-buttons">
     <button class="add-btn" onclick="openModal()">
         <span>+</span>
     </button>
+        <button class="myskins-btn" onclick="openMySkinsModal()" title="Мои скины">
+            <span><i class="fas fa-cubes"></i></span>
+        </button>
+    </div>
     </div>
 
     <!-- Transaction Modal -->
@@ -2211,6 +2501,7 @@
                 <select id="transactionType" class="form-control" onchange="toggleTransactionFields()">
                     <option value="simple">Простая транзакция</option>
                     <option value="advanced">Расширенная сделка</option>
+                    <option value="calculator">Калькулятор прибыли</option>
                 </select>
             </div>
             
@@ -2265,6 +2556,23 @@
                 </div>
                 <button onclick="calculateProfit()" class="btn btn-secondary btn-large">Рассчитать</button>
                 <div id="calculationResult" class="calculation-result" style="display:none;"></div>
+            </div>
+            
+            <div id="calculatorFields" style="display:none;">
+                <div class="form-group">
+                    <label for="calcBuyPrice">Цена покупки ($):</label>
+                    <input type="number" id="calcBuyPrice" placeholder="Введите цену покупки" class="form-control" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="calcDesiredProfit">Желаемая прибыль ($):</label>
+                    <input type="number" id="calcDesiredProfit" placeholder="Введите желаемую прибыль" class="form-control" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="calcCommission">Комиссия (%):</label>
+                    <input type="number" id="calcCommission" placeholder="Комиссия в процентах" class="form-control" value="2" step="0.1">
+                </div>
+                <button onclick="calculateSellPrice()" class="btn btn-secondary btn-large">Рассчитать цену продажи</button>
+                <div id="sellPriceResult" class="calculation-result" style="display:none; margin-top: 20px;"></div>
             </div>
         </div>
         <div class="modal-footer">
@@ -2339,6 +2647,104 @@
             <div class="confirm-buttons">
                 <button id="deleteConfirmButton" class="btn btn-primary">OK</button>
                 <button onclick="closeDeleteConfirmModal()" class="btn btn-secondary">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно "Мои скины" -->
+    <div id="mySkinsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Мои скины</h2>
+                <span class="close" onclick="closeMySkinsModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="mySkinsInfo" class="info-box">
+                    <p>Здесь вы можете сохранять скины, которые купили, но ещё не продали. Когда продадите — просто добавьте цену продажи, и скин попадёт в статистику.</p>
+                    <p>Важно: все данные хранятся локально в вашем браузере. Если вы очистите кэш, куки или переустановите браузер — информация может быть утеряна!</p>
+                    <button class="btn btn-secondary btn-small" onclick="toggleMySkinsInfo()">Скрыть</button>
+                </div>
+                <div class="info-toggle" onclick="toggleMySkinsInfo()" style="display: none;">
+                    <i class="fas fa-info-circle"></i> Показать информацию
+                </div>
+                <div class="form-group">
+                    <button onclick="openAddSkinModal()" class="btn btn-primary">Добавить скин</button>
+                </div>
+                <div id="mySkinsListContainer" class="my-skins-list">
+                    <div id="mySkinsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно добавления скина -->
+    <div id="addSkinModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="addSkinModalTitle">Добавить скин</h2>
+                <span class="close" onclick="closeAddSkinModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newSkinName">Название скина</label>
+                    <input type="text" id="newSkinName" placeholder="Введите название скина" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="newSkinBuyPrice">Цена покупки ($)</label>
+                    <input type="number" id="newSkinBuyPrice" placeholder="Введите цену покупки" class="form-control" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="newSkinDate">Дата покупки</label>
+                    <input type="date" id="newSkinDate" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeAddSkinModal()" class="btn btn-secondary">Отмена</button>
+                <button onclick="saveSkin()" id="saveSkinBtn" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно добавления продажи -->
+    <div id="addSaleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Добавить продажу</h2>
+                <span class="close" onclick="closeAddSaleModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="saleModalSkinName">Название скина:</label>
+                    <input type="text" id="saleModalSkinName" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="saleModalBuyPrice">Цена покупки ($):</label>
+                    <input type="number" id="saleModalBuyPrice" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="saleModalSellPrice">Цена продажи ($):</label>
+                    <input type="number" id="saleModalSellPrice" placeholder="Введите цену продажи" class="form-control" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="saleModalCommission">Комиссия:</label>
+                    <select id="saleModalCommission" class="form-control">
+                        <option value="2">2%</option>
+                        <option value="2.5">2.5%</option>
+                        <option value="5">5%</option>
+                        <option value="10">10%</option>
+                        <option value="13">13%</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="saleModalDate">Дата продажи:</label>
+                    <input type="date" id="saleModalDate" class="form-control">
+                </div>
+                <button onclick="calculateSaleProfit()" class="btn btn-secondary btn-large">Рассчитать прибыль</button>
+                <div id="saleCalculationResult" class="calculation-result" style="display:none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeAddSaleModal()" class="btn btn-secondary">Отмена</button>
+                <button onclick="saveSale()" id="saveSaleBtn" class="btn btn-primary">Добавить сделку</button>
             </div>
         </div>
     </div>
@@ -2640,7 +3046,6 @@
             
             const fee = sell * (percent / 100);
             const profit = sell - buy - fee;
-            const profitPercent = ((profit / buy) * 100).toFixed(2);
             lastCalculatedProfit = profit;
 
             const resultHTML = `
@@ -2648,7 +3053,7 @@
                 <p><strong>Цена покупки:</strong> $${buy.toLocaleString()}</p>
                 <p><strong>Цена продажи:</strong> $${sell.toLocaleString()}</p>
                 <p><strong>Комиссия:</strong> $${fee.toLocaleString()} (${percent}%)</p>
-                <p><strong>${profit >= 0 ? 'Прибыль' : 'Убыток'}:</strong> <span class="${profit >= 0 ? 'positive-balance' : 'negative-balance'}">$${Math.abs(profit).toLocaleString()} (${Math.abs(profitPercent)}%)</span></p>
+                <p><strong>Прибыль:</strong> <span class="${profit >= 0 ? 'positive-balance' : 'negative-balance'}">$${profit.toLocaleString()}</span></p>
             `;
             
             const resultElement = document.getElementById('calculationResult');
@@ -2670,6 +3075,52 @@
             document.getElementById('addAdvancedTransactionBtn').style.display = 'block';
             document.getElementById('addTransactionBtn').style.display = 'none';
             hasChanges = true;
+            
+            // Create sparkles effect
+            createSparklesAround(resultElement, 15);
+            
+            // Прокручиваем к результату, чтобы он был виден
+            resultElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function calculateSellPrice() {
+            const buyPrice = parseFloat(document.getElementById('calcBuyPrice').value);
+            const desiredProfit = parseFloat(document.getElementById('calcDesiredProfit').value);
+            const commission = parseFloat(document.getElementById('calcCommission').value);
+            
+            if (isNaN(buyPrice) || isNaN(desiredProfit) || isNaN(commission)) {
+                alert('Пожалуйста, заполните все поля корректными числовыми значениями');
+                return;
+            }
+            
+            // Формула: sellPrice = (buyPrice + desiredProfit) / (1 - commission/100)
+            const sellPrice = (buyPrice + desiredProfit) / (1 - commission/100);
+            
+            const resultHTML = `
+                <div class="calculation-header">Результат расчета:</div>
+                <div class="sell-price-result">Нужно продать за: <span class="price-highlight">$${sellPrice.toFixed(2)}</span></div>
+                <div class="calculation-details">
+                    <div>Цена покупки: $${buyPrice.toFixed(2)}</div>
+                    <div>Желаемая прибыль: $${desiredProfit.toFixed(2)}</div>
+                    <div>Комиссия: ${commission}%</div>
+                </div>
+            `;
+            
+            const resultElement = document.getElementById('sellPriceResult');
+            resultElement.innerHTML = resultHTML;
+            resultElement.style.display = 'block';
+            
+            // Анимация появления результата
+            gsap.fromTo(resultElement, 
+                { y: -20, opacity: 0, scale: 0.95 },
+                { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }
+            );
+            
+            // Добавляем эффект свечения вокруг результата
+            gsap.to(resultElement, {
+                boxShadow: '0 0 20px var(--accent-primary-glow)',
+                duration: 0.5
+            });
             
             // Create sparkles effect
             createSparklesAround(resultElement, 15);
@@ -3240,11 +3691,13 @@
             const type = document.getElementById('transactionType').value;
             const simpleFields = document.getElementById('simpleTransactionFields');
             const advancedFields = document.getElementById('advancedTransactionFields');
+            const calculatorFields = document.getElementById('calculatorFields');
             const calculationResult = document.getElementById('calculationResult');
             
             if (type === 'simple') {
                 // Animate transition
                 gsap.to(advancedFields, { opacity: 0, height: 0, duration: 0.3, display: 'none' });
+                gsap.to(calculatorFields, { opacity: 0, height: 0, duration: 0.3, display: 'none' });
                 gsap.fromTo(simpleFields, 
                     { opacity: 0, height: 0 },
                     { opacity: 1, height: 'auto', duration: 0.3, display: 'block' }
@@ -3252,9 +3705,10 @@
                 
                 document.getElementById('addTransactionBtn').style.display = 'block';
                 document.getElementById('addAdvancedTransactionBtn').style.display = 'none';
-            } else {
+            } else if (type === 'advanced') {
                 // Animate transition
                 gsap.to(simpleFields, { opacity: 0, height: 0, duration: 0.3, display: 'none' });
+                gsap.to(calculatorFields, { opacity: 0, height: 0, duration: 0.3, display: 'none' });
                 gsap.fromTo(advancedFields, 
                     { opacity: 0, height: 0 },
                     { opacity: 1, height: 'auto', duration: 0.3, display: 'block' }
@@ -3267,6 +3721,17 @@
                     calculationResult.style.display = 'block';
                     document.getElementById('addAdvancedTransactionBtn').style.display = 'block';
                 }
+            } else if (type === 'calculator') {
+                // Animate transition
+                gsap.to(simpleFields, { opacity: 0, height: 0, duration: 0.3, display: 'none' });
+                gsap.to(advancedFields, { opacity: 0, height: 0, duration: 0.3, display: 'none' });
+                gsap.fromTo(calculatorFields, 
+                    { opacity: 0, height: 0 },
+                    { opacity: 1, height: 'auto', duration: 0.3, display: 'block' }
+                );
+                
+                document.getElementById('addTransactionBtn').style.display = 'none';
+                document.getElementById('addAdvancedTransactionBtn').style.display = 'none';
             }
         }
 
@@ -4182,7 +4647,285 @@
             initializeCherryBlossoms();
             initializeGlowCursor();
             initTheme();
+            
+            // Добавляем обработчик для кнопки подтверждения удаления скина
+            document.getElementById('deleteSkinConfirmButton').addEventListener('click', confirmDeleteSkin);
         });
+
+        // Функции для работы с Мои скины
+        let mySkins = JSON.parse(localStorage.getItem('mySkins')) || [];
+        let editingSkinIndex = null;
+        let currentSaleSkinIndex = null;
+        let lastCalculatedSaleProfit = 0;
+        let skinToDeleteIndex = null;
+        
+        function openMySkinsModal() {
+            document.getElementById('mySkinsModal').style.display = 'block';
+            updateMySkinsList();
+            
+            // Проверяем было ли инфо скрыто в последний раз
+            const infoBox = document.getElementById('mySkinsInfo');
+            const infoToggle = document.querySelector('.info-toggle');
+            
+            // По умолчанию показываем инфо блок при первом открытии
+            if (sessionStorage.getItem('mySkinsInfoState') === 'hidden') {
+                infoBox.style.display = 'none';
+                infoToggle.style.display = 'block';
+            } else {
+                infoBox.style.display = 'block';
+                infoToggle.style.display = 'none';
+            }
+            
+            // Создаем эффект искр вокруг кнопки
+            createSparklesAround(document.querySelector('.myskins-btn'), 15);
+        }
+        
+        function closeMySkinsModal() {
+            document.getElementById('mySkinsModal').style.display = 'none';
+        }
+        
+        function toggleMySkinsInfo() {
+            const mySkinsInfo = document.getElementById('mySkinsInfo');
+            const infoToggle = document.querySelector('.info-toggle');
+            
+            if (mySkinsInfo.style.display === 'none') {
+                mySkinsInfo.style.display = 'block';
+                infoToggle.style.display = 'none';
+                sessionStorage.setItem('mySkinsInfoState', 'visible');
+            } else {
+                mySkinsInfo.style.display = 'none';
+                infoToggle.style.display = 'block';
+                sessionStorage.setItem('mySkinsInfoState', 'hidden');
+            }
+        }
+        
+        function openAddSkinModal(index = null) {
+            editingSkinIndex = index;
+            document.getElementById('addSkinModalTitle').textContent = index !== null ? 'Редактировать скин' : 'Добавить скин';
+            
+            // Очищаем или заполняем поля формы
+            if (index !== null) {
+                const skin = mySkins[index];
+                document.getElementById('newSkinName').value = skin.name;
+                document.getElementById('newSkinBuyPrice').value = skin.buyPrice;
+                document.getElementById('newSkinDate').value = skin.date;
+            } else {
+                document.getElementById('newSkinName').value = '';
+                document.getElementById('newSkinBuyPrice').value = '';
+                document.getElementById('newSkinDate').value = new Date().toISOString().split('T')[0];
+            }
+            
+            document.getElementById('addSkinModal').style.display = 'block';
+        }
+        
+        function closeAddSkinModal() {
+            document.getElementById('addSkinModal').style.display = 'none';
+        }
+        
+        function saveSkin() {
+            const name = document.getElementById('newSkinName').value.trim();
+            const buyPrice = parseFloat(document.getElementById('newSkinBuyPrice').value);
+            const date = document.getElementById('newSkinDate').value || new Date().toISOString().split('T')[0];
+            
+            if (!name) {
+                showNotification('Введите название скина', 'error');
+                return;
+            }
+            
+            if (isNaN(buyPrice) || buyPrice <= 0) {
+                showNotification('Введите корректную цену покупки', 'error');
+                return;
+            }
+            
+            const skin = {
+                name,
+                buyPrice,
+                date
+            };
+            
+            if (editingSkinIndex !== null) {
+                mySkins[editingSkinIndex] = skin;
+                showNotification('Скин успешно обновлен', 'success');
+            } else {
+                mySkins.push(skin);
+                showNotification('Скин успешно добавлен', 'success');
+            }
+            
+            localStorage.setItem('mySkins', JSON.stringify(mySkins));
+            closeAddSkinModal();
+            updateMySkinsList();
+        }
+        
+        function updateMySkinsList() {
+            const container = document.getElementById('mySkinsList');
+            container.innerHTML = '';
+            
+            if (mySkins.length === 0) {
+                container.innerHTML = '<p class="text-center">У вас пока нет сохраненных скинов.</p>';
+                return;
+            }
+            
+            mySkins.forEach((skin, index) => {
+                const item = document.createElement('div');
+                item.className = 'skin-item';
+                
+                item.innerHTML = `
+                    <h3>${skin.name}</h3>
+                    <p>Цена покупки: $${skin.buyPrice.toLocaleString()}</p>
+                    <p>Дата покупки: ${formatDate(skin.date)}</p>
+                    <div class="skin-actions">
+                        <button class="btn btn-primary" onclick="openAddSaleModal(${index})">Добавить продажу</button>
+                        <button class="btn btn-secondary" onclick="openAddSkinModal(${index})">Редактировать</button>
+                        <button class="btn btn-danger" onclick="deleteSkin(${index})">Удалить</button>
+                    </div>
+                `;
+                
+                container.appendChild(item);
+            });
+        }
+        
+        function deleteSkin(index) {
+            skinToDeleteIndex = index;
+            document.getElementById('deleteSkinConfirmModal').style.display = 'block';
+        }
+        
+        function closeDeleteSkinConfirmModal() {
+            document.getElementById('deleteSkinConfirmModal').style.display = 'none';
+        }
+        
+        function confirmDeleteSkin() {
+            console.log('confirmDeleteSkin вызвана, skinToDeleteIndex =', skinToDeleteIndex);
+            if (skinToDeleteIndex !== null) {
+                mySkins.splice(skinToDeleteIndex, 1);
+                localStorage.setItem('mySkins', JSON.stringify(mySkins));
+                updateMySkinsList();
+                showNotification('Скин удален', 'success');
+                closeDeleteSkinConfirmModal();
+                skinToDeleteIndex = null;
+            }
+        }
+        
+        function openAddSaleModal(index) {
+            currentSaleSkinIndex = index;
+            const skin = mySkins[index];
+            
+            document.getElementById('saleModalSkinName').value = skin.name;
+            document.getElementById('saleModalBuyPrice').value = skin.buyPrice;
+            document.getElementById('saleModalSellPrice').value = '';
+            document.getElementById('saleModalDate').value = new Date().toISOString().split('T')[0];
+            
+            // Сбрасываем результат расчета
+            document.getElementById('saleCalculationResult').style.display = 'none';
+            lastCalculatedSaleProfit = 0;
+            
+            document.getElementById('addSaleModal').style.display = 'block';
+        }
+        
+        function closeAddSaleModal() {
+            document.getElementById('addSaleModal').style.display = 'none';
+        }
+        
+        function calculateSaleProfit() {
+            const buyPrice = parseFloat(document.getElementById('saleModalBuyPrice').value);
+            const sellPrice = parseFloat(document.getElementById('saleModalSellPrice').value);
+            const commission = parseFloat(document.getElementById('saleModalCommission').value);
+            
+            if (isNaN(sellPrice) || sellPrice <= 0) {
+                showNotification('Введите корректную цену продажи', 'error');
+                return;
+            }
+            
+            // Расчет прибыли с учетом комиссии
+            const commissionAmount = (sellPrice * commission) / 100;
+            const profit = sellPrice - buyPrice - commissionAmount;
+            const profitPercent = ((profit / buyPrice) * 100).toFixed(2);
+            
+            lastCalculatedSaleProfit = profit;
+            
+            // Отображаем результат расчета
+            const resultElement = document.getElementById('saleCalculationResult');
+            resultElement.style.display = 'block';
+            
+            if (profit > 0) {
+                resultElement.innerHTML = `
+                    <p style="color: var(--success)"><strong>Прибыль: $${profit.toLocaleString()} (${profitPercent}%)</strong></p>
+                    <p>Комиссия: $${commissionAmount.toLocaleString()} (${commission}%)</p>
+                `;
+                resultElement.style.borderLeft = '4px solid var(--success)';
+            } else {
+                resultElement.innerHTML = `
+                    <p style="color: var(--danger)"><strong>Убыток: $${Math.abs(profit).toLocaleString()} (${profitPercent}%)</strong></p>
+                    <p>Комиссия: $${commissionAmount.toLocaleString()} (${commission}%)</p>
+                `;
+                resultElement.style.borderLeft = '4px solid var(--danger)';
+            }
+        }
+        
+        function saveSale() {
+            if (lastCalculatedSaleProfit === 0 && !confirm('Прибыль равна 0. Вы уверены, что хотите добавить эту сделку?')) {
+                return;
+            }
+            
+            const skin = mySkins[currentSaleSkinIndex];
+            const skinName = skin.name;
+            const buyPrice = parseFloat(document.getElementById('saleModalBuyPrice').value);
+            const sellPrice = parseFloat(document.getElementById('saleModalSellPrice').value);
+            const commission = parseFloat(document.getElementById('saleModalCommission').value);
+            const date = document.getElementById('saleModalDate').value || new Date().toISOString().split('T')[0];
+            const profitPercent = ((lastCalculatedSaleProfit / buyPrice) * 100).toFixed(2);
+            
+            if (isNaN(sellPrice) || sellPrice <= 0) {
+                showNotification('Введите корректную цену продажи', 'error');
+                return;
+            }
+            
+            // Создаем транзакцию для добавления в основной список
+            const transaction = {
+                type: lastCalculatedSaleProfit >= 0 ? 'income' : 'expense',
+                amount: Math.abs(lastCalculatedSaleProfit),
+                description: `${skinName} (${lastCalculatedSaleProfit >= 0 ? 'прибыль' : 'убыток'}: $${Math.abs(lastCalculatedSaleProfit).toLocaleString()})`,
+                date: date,
+                theme: skinName,
+                buyPrice: buyPrice,
+                sellPrice: sellPrice,
+                commission: commission,
+                profitPercent: Math.abs(profitPercent)
+            };
+            
+            // Добавляем транзакцию в основной список
+            transactions.push(transaction);
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+            
+            // Удаляем скин из списка Мои скины
+            mySkins.splice(currentSaleSkinIndex, 1);
+            localStorage.setItem('mySkins', JSON.stringify(mySkins));
+            
+            // Обновляем интерфейс
+            updateUI();
+            closeAddSaleModal();
+            updateMySkinsList();
+            
+            // Показываем уведомление
+            showNotification('Сделка успешно добавлена', 'success');
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString();
+        }
     </script>
+    
+    <!-- Модальное окно подтверждения удаления скина -->
+    <div id="deleteSkinConfirmModal" class="confirm-modal">
+        <div class="confirm-modal-content">
+            <h3>Подтвердите действие</h3>
+            <p>Вы уверены, что хотите удалить этот скин?</p>
+            <div class="confirm-buttons">
+                <button onclick="confirmDeleteSkin()" class="btn btn-primary">OK</button>
+                <button onclick="closeDeleteSkinConfirmModal()" class="btn btn-secondary">Отмена</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+
