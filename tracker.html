@@ -2484,7 +2484,7 @@
     </button>
         <button class="myskins-btn" onclick="openMySkinsModal()" title="Мои скины">
             <span><i class="fas fa-cubes"></i></span>
-        </button>
+    </button>
     </div>
     </div>
 
@@ -3130,6 +3130,12 @@
         }
 
         function addAdvancedTransaction() {
+            // Если прибыль еще не рассчитана или равна 0, автоматически вызываем расчет
+            if (lastCalculatedProfit === undefined || lastCalculatedProfit === 0) {
+                calculateProfit();
+            }
+
+            // Если после автоматического расчета прибыль все еще равна 0, запросим подтверждение
             if (lastCalculatedProfit === 0 && !confirm('Прибыль равна 0. Вы уверены, что хотите добавить эту сделку?')) {
                 return;
             }
@@ -4605,51 +4611,26 @@
         // Удаляем функцию forceUpdateAllTransactionPercents полностью
 
         document.addEventListener('DOMContentLoaded', () => {
-            // АВТОМАТИЧЕСКИЙ РАСЧЕТ: Пересчитать проценты для всех транзакций на основе реальных данных
+            // Получаем транзакции из localStorage
             const storedTransactions = localStorage.getItem('transactions');
             if (storedTransactions) {
                 try {
-                    const parsedTransactions = JSON.parse(storedTransactions);
-                    let needsUpdate = false;
-                    
-                    // Проверяем все транзакции
-                    parsedTransactions.forEach(transaction => {
-                        // Если есть данные о покупке и продаже, ВСЕГДА рассчитываем процент прибыли
-                        if (transaction.buyPrice && transaction.sellPrice) {
-                            const profit = transaction.type === 'income' ? transaction.amount : -transaction.amount;
-                            const profitPercent = ((profit / transaction.buyPrice) * 100).toFixed(2);
-                            
-                            // Всегда устанавливаем рассчитанный процент
-                            transaction.profitPercent = Math.abs(parseFloat(profitPercent));
-                            needsUpdate = true;
-                        } 
-                        // Если нет данных для расчета, но есть процент, удаляем его
-                        else if (transaction.profitPercent) {
-                            delete transaction.profitPercent;
-                            needsUpdate = true;
-                        }
-                    });
-                    
-                    if (needsUpdate) {
-                        localStorage.setItem('transactions', JSON.stringify(parsedTransactions));
-                        console.log('Автоматически пересчитаны проценты для всех транзакций');
-                    }
+                    transactions = JSON.parse(storedTransactions);
                 } catch (e) {
-                    console.error('Ошибка при обработке транзакций:', e);
+                    console.error('Ошибка при парсинге транзакций:', e);
                 }
             }
             
-            initializeChart();
-            updateTransactionsList();
-            updateStats();
-            initializeParticles();
-            initializeStars();
-            initializeCherryBlossoms();
-            initializeGlowCursor();
-            initTheme();
+            // Привязываем события автоматического расчета
+            bindAutoCalculateEvents();
             
-            // Добавляем обработчик для кнопки подтверждения удаления скина
-            document.getElementById('deleteSkinConfirmButton').addEventListener('click', confirmDeleteSkin);
+            updateLegacyTransactions();
+            updateUI();
+            initParticles();
+            initStats();
+            
+            // Загружаем предпочтения темы
+            loadThemePreference();
         });
 
         // Функции для работы с Мои скины
@@ -4818,7 +4799,26 @@
             document.getElementById('saleCalculationResult').style.display = 'none';
             lastCalculatedSaleProfit = 0;
             
+            // Добавляем автоматический расчет при вводе цены продажи
+            const sellPriceInput = document.getElementById('saleModalSellPrice');
+            
+            // Удаляем предыдущий обработчик, если он был
+            sellPriceInput.removeEventListener('input', autoCalculateSaleProfit);
+            
+            // Добавляем новый обработчик
+            sellPriceInput.addEventListener('input', autoCalculateSaleProfit);
+            
             document.getElementById('addSaleModal').style.display = 'block';
+        }
+        
+        // Функция для автоматического расчета прибыли при вводе цены продажи
+        function autoCalculateSaleProfit() {
+            const sellPrice = parseFloat(this.value);
+            const buyPrice = parseFloat(document.getElementById('saleModalBuyPrice').value);
+            
+            if (!isNaN(sellPrice) && !isNaN(buyPrice) && sellPrice > 0) {
+                calculateSaleProfit();
+            }
         }
         
         function closeAddSaleModal() {
@@ -4862,6 +4862,11 @@
         }
         
         function saveSale() {
+            // Если прибыль еще не рассчитана, автоматически вызываем расчет
+            if (lastCalculatedSaleProfit === 0) {
+                calculateSaleProfit();
+            }
+            
             if (lastCalculatedSaleProfit === 0 && !confirm('Прибыль равна 0. Вы уверены, что хотите добавить эту сделку?')) {
                 return;
             }
@@ -4912,6 +4917,41 @@
         function formatDate(dateString) {
             const date = new Date(dateString);
             return date.toLocaleDateString();
+        }
+
+        // Функция для привязки обработчиков событий автоматического расчета
+        function bindAutoCalculateEvents() {
+            // Автоматический расчет при вводе цены продажи
+            document.getElementById('sellPrice').addEventListener('input', function() {
+                const skinName = document.getElementById('skinName').value;
+                const buyPrice = parseFloat(document.getElementById('buyPrice').value);
+                const sellPrice = parseFloat(this.value);
+                
+                if (skinName && !isNaN(buyPrice) && !isNaN(sellPrice)) {
+                    calculateProfit();
+                }
+            });
+            
+            // Автоматический перерасчет при изменении комиссии
+            document.getElementById('profitPercentage').addEventListener('change', function() {
+                const skinName = document.getElementById('skinName').value;
+                const buyPrice = parseFloat(document.getElementById('buyPrice').value);
+                const sellPrice = parseFloat(document.getElementById('sellPrice').value);
+                
+                if (skinName && !isNaN(buyPrice) && !isNaN(sellPrice)) {
+                    calculateProfit();
+                }
+            });
+            
+            // Перерасчет при изменении комиссии в окне продажи скина
+            document.getElementById('saleModalCommission').addEventListener('change', function() {
+                const sellPrice = parseFloat(document.getElementById('saleModalSellPrice').value);
+                const buyPrice = parseFloat(document.getElementById('saleModalBuyPrice').value);
+                
+                if (!isNaN(sellPrice) && !isNaN(buyPrice) && sellPrice > 0) {
+                    calculateSaleProfit();
+                }
+            });
         }
     </script>
     
