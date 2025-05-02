@@ -1314,6 +1314,9 @@
     .modal-body {
         margin-bottom: var(--spacing-lg);
         position: relative;
+        max-height: 70vh;
+        overflow-y: auto;
+        padding-right: var(--spacing-sm);
     }
 
     .modal-footer {
@@ -2868,6 +2871,25 @@
                     <input type="text" id="skinName" placeholder="Введите название скина" class="form-control">
                 </div>
                 <div class="form-group">
+                    <label for="skinQuality">Качество скина</label>
+                    <select id="skinQuality" class="form-control">
+                        <option value="">Не выбрано</option>
+                        <option value="Factory New">Прямо с завода (Factory New)</option>
+                        <option value="Minimal Wear">Немного поношенный (Minimal Wear)</option>
+                        <option value="Field-Tested">После полевых испытаний (Field-Tested)</option>
+                        <option value="Well-Worn">Поношенный (Well-Worn)</option>
+                        <option value="Battle-Scarred">Закаленный в боях (Battle-Scarred)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="skinType">Тип скина</label>
+                    <select id="skinType" class="form-control">
+                        <option value="Normal">Normal</option>
+                        <option value="StatTrak">StatTrak</option>
+                        <option value="Souvenir">Souvenir</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="buyPrice">Цена покупки ($)</label>
                     <input type="number" id="buyPrice" placeholder="Введите цену покупки" class="form-control">
                 </div>
@@ -3370,6 +3392,8 @@
 
         function calculateProfit() {
             const skinName = document.getElementById('skinName').value;
+            const skinQuality = document.getElementById('skinQuality').value;
+            const skinType = document.getElementById('skinType').value;
             const buy = parseFloat(document.getElementById('buyPrice').value);
             const sell = parseFloat(document.getElementById('sellPrice').value);
             const percent = parseFloat(document.getElementById('profitPercentage').value);
@@ -3379,12 +3403,25 @@
                 return;
             }
             
+            // Формируем полное название скина с учетом типа и качества
+            let fullSkinName = skinName;
+            
+            // Добавляем StatTrak или Souvenir в начало, если выбрано
+            if (skinType && skinType !== 'Normal') {
+                fullSkinName = `${skinType} ${fullSkinName}`;
+            }
+            
+            // Добавляем качество в конец, если выбрано
+            if (skinQuality) {
+                fullSkinName = `${fullSkinName} (${skinQuality})`;
+            }
+            
             const fee = sell * (percent / 100);
             const profit = sell - buy - fee;
             lastCalculatedProfit = profit;
 
             const resultHTML = `
-                <p><strong>Тема:</strong> ${skinName}</p>
+                <p><strong>Тема:</strong> ${fullSkinName}</p>
                 <p><strong>Цена покупки:</strong> $${buy.toLocaleString()}</p>
                 <p><strong>Цена продажи:</strong> $${sell.toLocaleString()}</p>
                 <p><strong>Комиссия:</strong> $${fee.toLocaleString()} (${percent}%)</p>
@@ -3476,22 +3513,39 @@
             }
 
             const skinName = document.getElementById('skinName').value;
+            const skinQuality = document.getElementById('skinQuality').value;
+            const skinType = document.getElementById('skinType').value;
             const buyPrice = parseFloat(document.getElementById('buyPrice').value);
             const sellPrice = parseFloat(document.getElementById('sellPrice').value);
             const percent = parseFloat(document.getElementById('profitPercentage').value);
             const date = document.getElementById('advancedDate').value || new Date().toISOString().split('T')[0];
             const profitPercent = ((lastCalculatedProfit / buyPrice) * 100).toFixed(2);
+            
+            // Формируем полное название скина с учетом типа и качества
+            let fullSkinName = skinName;
+            
+            // Добавляем StatTrak или Souvenir в начало, если выбрано
+            if (skinType && skinType !== 'Normal') {
+                fullSkinName = `${skinType} ${fullSkinName}`;
+            }
+            
+            // Добавляем качество в конец, если выбрано
+            if (skinQuality) {
+                fullSkinName = `${fullSkinName} (${skinQuality})`;
+            }
 
             const transaction = {
                 type: lastCalculatedProfit >= 0 ? 'income' : 'expense',
                 amount: Math.abs(lastCalculatedProfit),
-                description: `${skinName} (${lastCalculatedProfit >= 0 ? 'прибыль' : 'убыток'}: $${Math.abs(lastCalculatedProfit).toLocaleString()})`,
+                description: `${fullSkinName} (${lastCalculatedProfit >= 0 ? 'прибыль' : 'убыток'}: $${Math.abs(lastCalculatedProfit).toLocaleString()})`,
                 date: date,
-                theme: skinName,
+                theme: fullSkinName,
                 buyPrice: buyPrice,
                 sellPrice: sellPrice,
                 commission: percent,
-                profitPercent: Math.abs(profitPercent)
+                profitPercent: Math.abs(profitPercent),
+                skinQuality: skinQuality,
+                skinType: skinType
             };
 
             if (editingTransactionIndex !== null) {
@@ -3649,7 +3703,39 @@
             toggleTransactionFields();
             
             if (t.theme) {
-                document.getElementById('skinName').value = t.theme;
+                // Парсим информацию о скине, если она доступна
+                let skinName = t.theme;
+                let skinType = t.skinType || 'Normal';
+                let skinQuality = t.skinQuality || '';
+                
+                // Если в записи сохранены отдельные поля для типа и качества, используем их
+                if (!t.skinType || !t.skinQuality) {
+                    // Пытаемся распарсить из названия скина
+                    // Сначала проверяем на StatTrak или Souvenir
+                    if (skinName.startsWith('StatTrak ')) {
+                        skinType = 'StatTrak';
+                        skinName = skinName.substring(9).trim();
+                    } else if (skinName.startsWith('Souvenir ')) {
+                        skinType = 'Souvenir';
+                        skinName = skinName.substring(9).trim();
+                    }
+                    
+                    // Проверяем на наличие информации о качестве в скобках
+                    const qualityMatch = skinName.match(/\(([^)]+)\)$/);
+                    if (qualityMatch) {
+                        const possibleQuality = qualityMatch[1];
+                        // Проверяем, соответствует ли это качеству
+                        const qualities = ['Factory New', 'Minimal Wear', 'Field-Tested', 'Well-Worn', 'Battle-Scarred'];
+                        if (qualities.includes(possibleQuality)) {
+                            skinQuality = possibleQuality;
+                            skinName = skinName.replace(/\s*\([^)]+\)$/, '').trim();
+                        }
+                    }
+                }
+                
+                document.getElementById('skinName').value = skinName;
+                document.getElementById('skinType').value = skinType;
+                document.getElementById('skinQuality').value = skinQuality;
                 document.getElementById('buyPrice').value = t.buyPrice;
                 document.getElementById('sellPrice').value = t.sellPrice;
                 document.getElementById('profitPercentage').value = t.commission;
@@ -4019,6 +4105,8 @@
             document.getElementById('description').value = '';
             document.getElementById('date').value = '';
             document.getElementById('skinName').value = '';
+            document.getElementById('skinQuality').value = '';
+            document.getElementById('skinType').value = 'Normal';
             document.getElementById('buyPrice').value = '';
             document.getElementById('sellPrice').value = '';
             document.getElementById('profitPercentage').value = '2';
