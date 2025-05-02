@@ -614,7 +614,7 @@
     .transactions-grid {
         grid-column: span 12;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Увеличиваем минимальную ширину карточек */
         gap: var(--spacing-xl);
         max-height: 700px;
         overflow-y: auto;
@@ -631,23 +631,27 @@
         animation: itemAppear 0.6s ease;
         position: relative;
         overflow: hidden;
-        min-height: 180px;
+        min-height: 250px; /* Увеличиваем минимальную высоту */
         height: 100%;
         display: flex;
         flex-direction: column;
         box-shadow: var(--shadow-sm);
+        width: 100%; /* Гарантируем, что карточка будет занимать всю доступную ширину */
     }
 
     .transaction-card .transaction-info {
         flex-grow: 1;
-        padding-right: 60px; /* Добавляем отступ справа для кнопок */
+        padding-right: 70px; /* Отступ справа для кнопок */
+        overflow: visible; /* Показываем весь контент */
+        display: flex;
+        flex-direction: column;
     }
 
     .transaction-card .transaction-actions {
         position: absolute;
         right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
+        top: 40px; /* Смещаем кнопки вверх */
+        transform: translateY(0); /* Убираем смещение от центра */
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -684,19 +688,27 @@
     }
 
     .transaction-card h4 {
-        font-size: 1.3rem;
+        font-size: 1rem; /* Уменьшаем шрифт заголовка */
         margin-bottom: 10px;
         font-weight: 700;
+        word-wrap: break-word; /* Перенос длинных слов */
+        line-height: 1.3; /* Уменьшаем межстрочный интервал */
+        max-height: none; /* Убираем ограничение по высоте */
+        overflow-wrap: break-word; /* Улучшаем перенос длинных слов */
+        hyphens: auto; /* Добавляем переносы */
     }
 
     .transaction-card small {
-        font-size: 0.95rem;
+        font-size: 0.8rem; /* Уменьшаем размер шрифта даты */
         opacity: 0.8;
+        display: block; /* Гарантируем перенос на новую строку */
+        margin-bottom: 4px;
     }
 
     .transaction-card .transaction-amount {
-        margin-top: 20px;
-        font-size: 1.8rem;
+        margin-top: auto; /* Размещаем сумму внизу карточки */
+        padding-top: 10px; /* Добавляем отступ сверху */
+        font-size: 1.3rem; /* Уменьшаем размер шрифта для суммы */
         font-weight: 700;
         display: block;
         font-family: var(--font-display);
@@ -713,12 +725,13 @@
     }
 
     .transaction-card .profit-percent {
-        font-size: 1rem;
-        padding: 3px 8px;
+        font-size: 0.85rem; /* Уменьшаем размер шрифта для процентов */
+        padding: 2px 6px; /* Уменьшаем отступы */
         border-radius: var(--radius-full);
-        margin-left: 8px;
+        margin-left: 4px;
         vertical-align: middle;
         background: var(--glass);
+        white-space: nowrap; /* Предотвращаем перенос строки в проценте */
     }
 
     .transaction-item {
@@ -798,10 +811,6 @@
 
     .amount-positive .profit-percent {
         color: var(--positive);
-    }
-
-    .amount-negative .profit-percent {
-        color: var(--negative);
     }
 
     .amount-positive {
@@ -2501,6 +2510,135 @@
     .transaction-card .btn-icon:hover svg {
         stroke: var(--accent-primary);
     }
+
+    /* Стили для отображения информации о скине */
+    .skin-info {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 5px;
+    }
+    
+    .skin-weapon {
+        font-size: 0.85rem;
+        color: var(--text-tertiary);
+        margin-bottom: 2px;
+    }
+    
+    .skin-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 2px;
+    }
+    
+    .skin-quality {
+        font-size: 0.8rem;
+        color: var(--accent-primary);
+        margin-bottom: 5px;
+    }
+
+    /* Качества скинов */
+    .quality-fn {
+        color: #66eb73; /* Factory New */
+    }
+    
+    .quality-mw {
+        color: #4b84ff; /* Minimal Wear */
+    }
+    
+    .quality-ft {
+        color: #7f59fe; /* Field-Tested */
+    }
+    
+    .quality-ww {
+        color: #e25a00; /* Well-Worn */
+    }
+    
+    .quality-bs {
+        color: #eb4b4b; /* Battle-Scarred */
+    }
+
+    /**
+     * Парсит название скина на составляющие: оружие, название скина и качество
+     * @param {string} fullSkinName - Полное название скина
+     * @return {Object} Объект с полями weapon, name, quality
+     */
+    function parseSkinName(fullSkinName) {
+    // Результат по умолчанию
+    let result = {
+        weapon: '',
+        name: fullSkinName,
+        quality: '',
+        qualityClass: ''
+    };
+
+    // Качества скинов и соответствующие CSS классы
+    const qualities = [
+        { text: 'Factory New', shortText: 'FN', class: 'quality-fn' },
+        { text: 'Minimal Wear', shortText: 'MW', class: 'quality-mw' },
+        { text: 'Field-Tested', shortText: 'FT', class: 'quality-ft' },
+        { text: 'Well-Worn', shortText: 'WW', class: 'quality-ww' },
+        { text: 'Battle-Scarred', shortText: 'BS', class: 'quality-bs' }
+    ];
+
+    // Поиск качества
+    for (const quality of qualities) {
+        if (
+            fullSkinName.includes(quality.text) ||
+            fullSkinName.includes(`(${quality.shortText})`) ||
+            fullSkinName.includes(quality.shortText)
+        ) {
+            result.quality = quality.text;
+            result.qualityClass = quality.class;
+            break;
+        }
+    }
+
+    // Удаление всех форматов обозначения качества
+    if (result.quality) {
+        const patternsToRemove = [
+            result.quality,
+            `(${result.quality})`,
+            qualities.find(q => q.text === result.quality)?.shortText || '',
+            `(${qualities.find(q => q.text === result.quality)?.shortText || ''})`
+        ];
+
+        for (const pattern of patternsToRemove) {
+            if (pattern) {
+                fullSkinName = fullSkinName.replace(pattern, '').trim();
+            }
+        }
+
+        fullSkinName = fullSkinName.replace(/\(\s*\)/g, '').trim();
+    }
+
+    // Разделение на оружие и имя скина (если есть разделитель "|")
+    if (fullSkinName.includes('|')) {
+        const parts = fullSkinName.split('|').map(part => part.trim());
+        result.weapon = parts[0];
+        result.name = parts[1];
+    } else {
+        // Если разделителя нет, пробуем определить по известным оружиям
+        const weapons = [
+            'AK-47', 'M4A4', 'M4A1-S', 'AWP', 'Desert Eagle', 'USP-S', 'P250', 'Glock-18',
+            'Five-SeveN', 'P90', 'MP5-SD', 'MP7', 'MP9', 'MAC-10', 'UMP-45', 'PP-Bizon',
+            'Galil AR', 'FAMAS', 'SG 553', 'AUG', 'SSG 08', 'G3SG1', 'SCAR-20'
+        ];
+
+        for (const weapon of weapons) {
+            if (fullSkinName.startsWith(weapon)) {
+                result.weapon = weapon;
+                result.name = fullSkinName.substring(weapon.length).trim();
+                break;
+            }
+        }
+
+        if (!result.weapon) {
+            result.name = fullSkinName.trim();
+        }
+    }
+
+    return result;
+}
 </style>
 </head>
 <body>
@@ -5240,30 +5378,52 @@
                 const gridItem = document.createElement('div');
                 gridItem.className = `transaction-card ${t.type}`;
                 gridItem.dataset.index = i;
+                
+                // Анализируем название скина, если оно есть
+                let skinInfo = '';
+                if (t.skinName) {
+                    const parsedSkin = parseSkinName(t.skinName);
+                    skinInfo = `
+                        <div class="skin-info">
+                            ${parsedSkin.weapon ? `<div class="skin-weapon">${parsedSkin.weapon}</div>` : ''}
+                            <div class="skin-name">${parsedSkin.name}</div>
+                            ${parsedSkin.quality ? `<div class="skin-quality ${parsedSkin.qualityClass}">${parsedSkin.quality}</div>` : ''}
+                        </div>
+                    `;
+                } else if (t.theme) {
+                    // Для обратной совместимости со старыми транзакциями
+                    const parsedSkin = parseSkinName(t.theme);
+                    skinInfo = `
+                        <div class="skin-info">
+                            ${parsedSkin.weapon ? `<div class="skin-weapon">${parsedSkin.weapon}</div>` : ''}
+                            <div class="skin-name">${parsedSkin.name}</div>
+                            ${parsedSkin.quality ? `<div class="skin-quality ${parsedSkin.qualityClass}">${parsedSkin.quality}</div>` : ''}
+                        </div>
+                    `;
+                }
+                
                 gridItem.innerHTML = `
-                    <div style="display: flex; align-items: center; justify-content: space-between;">
-                        <div class="transaction-info">
-                            <h4>${t.description}</h4>
-                            <small>${new Date(t.date).toLocaleDateString()}</small>
-                            <div class="transaction-amount ${t.type === 'income' ? 'amount-positive' : 'amount-negative'}">
-                                ${t.type === 'income' ? '+' : '-'}$${t.amount.toLocaleString()}
-                                ${showPercent ? `<span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${t.profitPercent}%)</span>` : ''}
-                            </div>
+                    <div class="transaction-info">
+                        <small>${new Date(t.date).toLocaleDateString()}</small>
+                        ${skinInfo}
+                        <div class="transaction-amount ${t.type === 'income' ? 'amount-positive' : 'amount-negative'}">
+                            ${t.type === 'income' ? '+' : '-'}$${t.amount.toLocaleString()}
+                            ${showPercent ? `<span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${t.profitPercent}%)</span>` : ''}
                         </div>
-                        <div class="transaction-actions">
-                            <button onclick="editTransaction(${i})" class="btn btn-secondary btn-icon" title="Редактировать">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                </svg>
-                            </button>
-                            <button onclick="confirmDelete(${i})" class="btn btn-secondary btn-icon" title="Удалить">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                </svg>
-                            </button>
-                        </div>
+                    </div>
+                    <div class="transaction-actions">
+                        <button onclick="editTransaction(${i})" class="btn btn-secondary btn-icon" title="Редактировать">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                        </button>
+                        <button onclick="confirmDelete(${i})" class="btn btn-secondary btn-icon" title="Удалить">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </button>
                     </div>
                 `;
                 gridContainer.appendChild(gridItem);
@@ -5427,29 +5587,27 @@
                 gridItem.className = `transaction-card ${t.type}`;
                 gridItem.dataset.index = transactions.indexOf(t);
                 gridItem.innerHTML = `
-                    <div style="display: flex; align-items: center; justify-content: space-between;">
-                        <div class="transaction-info">
-                            <h4>${t.description}</h4>
-                            <small>${new Date(t.date).toLocaleDateString()}</small>
-                            <div class="transaction-amount ${t.type === 'income' ? 'amount-positive' : 'amount-negative'}">
-                                ${t.type === 'income' ? '+' : '-'}$${t.amount.toLocaleString()}
-                                ${showPercent ? `<span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${t.profitPercent}%)</span>` : ''}
-                            </div>
+                    <div class="transaction-info">
+                        <h4>${t.description}</h4>
+                        <small>${new Date(t.date).toLocaleDateString()}</small>
+                        <div class="transaction-amount ${t.type === 'income' ? 'amount-positive' : 'amount-negative'}">
+                            ${t.type === 'income' ? '+' : '-'}$${t.amount.toLocaleString()}
+                            ${showPercent ? `<span class="profit-percent">(${t.type === 'income' ? '+' : '-'}${t.profitPercent}%)</span>` : ''}
                         </div>
-                        <div class="transaction-actions">
-                            <button onclick="editTransaction(${transactions.indexOf(t)})" class="btn btn-secondary btn-icon" title="Редактировать">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                </svg>
-                            </button>
-                            <button onclick="confirmDelete(${transactions.indexOf(t)})" class="btn btn-secondary btn-icon" title="Удалить">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                </svg>
-                            </button>
-                        </div>
+                    </div>
+                    <div class="transaction-actions">
+                        <button onclick="editTransaction(${transactions.indexOf(t)})" class="btn btn-secondary btn-icon" title="Редактировать">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                        </button>
+                        <button onclick="confirmDelete(${transactions.indexOf(t)})" class="btn btn-secondary btn-icon" title="Удалить">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </button>
                     </div>
                 `;
                 gridContainer.appendChild(gridItem);
@@ -5509,6 +5667,75 @@
                 viewToggleBtn.innerHTML = '<i class="fas fa-list"></i> Список';
                 viewToggleBtn.classList.add('active');
             }
+        }
+
+        /**
+         * Парсит название скина на составляющие: оружие, название скина и качество
+         * @param {string} fullSkinName - Полное название скина
+         * @return {Object} Объект с полями weapon, name, quality
+         */
+        function parseSkinName(fullSkinName) {
+            if (!fullSkinName) {
+                return { weapon: '', name: '', quality: '' };
+            }
+            
+            // Результат по умолчанию
+            let result = { 
+                weapon: '', 
+                name: fullSkinName, 
+                quality: '',
+                qualityClass: ''
+            };
+            
+            // Качества скинов и соответствующие CSS классы
+            const qualities = [
+                { text: 'Factory New', shortText: 'FN', class: 'quality-fn' },
+                { text: 'Minimal Wear', shortText: 'MW', class: 'quality-mw' },
+                { text: 'Field-Tested', shortText: 'FT', class: 'quality-ft' },
+                { text: 'Well-Worn', shortText: 'WW', class: 'quality-ww' },
+                { text: 'Battle-Scarred', shortText: 'BS', class: 'quality-bs' }
+            ];
+            
+            // Поиск качества
+            for (const quality of qualities) {
+                if (fullSkinName.includes(quality.text) || 
+                    fullSkinName.includes(`(${quality.shortText})`) || 
+                    fullSkinName.includes(quality.shortText)) {
+                    result.quality = quality.text;
+                    result.qualityClass = quality.class;
+                    break;
+                }
+            }
+            
+            // Разделение на оружие и имя скина (если есть разделитель "|")
+            if (fullSkinName.includes('|')) {
+                const parts = fullSkinName.split('|').map(part => part.trim());
+                result.weapon = parts[0];
+                result.name = parts[1];
+                
+                // Удаляем качество из названия скина если оно есть
+                if (result.quality) {
+                    result.name = result.name.replace(`(${result.quality})`, '').trim();
+                }
+            } else {
+                // Если разделителя нет, пробуем определить по известным оружиям
+                const weapons = ['AK-47', 'M4A4', 'M4A1-S', 'AWP', 'Desert Eagle', 'USP-S', 'P250', 'Glock-18', 'Five-SeveN', 'P90', 'MP5-SD', 'MP7', 'MP9', 'MAC-10', 'UMP-45', 'PP-Bizon', 'Galil AR', 'FAMAS', 'SG 553', 'AUG', 'SSG 08', 'G3SG1', 'SCAR-20'];
+                
+                for (const weapon of weapons) {
+                    if (fullSkinName.startsWith(weapon)) {
+                        result.weapon = weapon;
+                        result.name = fullSkinName.substring(weapon.length).trim();
+                        break;
+                    }
+                }
+                
+                // Удаляем качество из названия скина если оно есть
+                if (result.quality) {
+                    result.name = result.name.replace(`(${result.quality})`, '').trim();
+                }
+            }
+            
+            return result;
         }
     </script>
     
