@@ -3997,6 +3997,18 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 
+    <!-- Модальное окно подтверждения удаления скина -->
+    <div id="deleteSkinConfirmModal" class="confirm-modal">
+        <div class="confirm-modal-content">
+            <h3>Подтвердите действие</h3>
+            <p>Вы уверены, что хотите удалить этот скин?</p>
+            <div class="confirm-buttons">
+                <button onclick="confirmDeleteSkin()" class="btn btn-primary">OK</button>
+                <button onclick="closeDeleteSkinConfirmModal()" class="btn btn-secondary">Отмена</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Модальное окно добавления скина -->
     <div id="addSkinModal" class="modal">
         <div class="modal-content">
@@ -4069,6 +4081,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
     </div>
+
+
 
     <script>
         // Инициализация графика
@@ -7283,7 +7297,7 @@ function fixCalendarRendering() {
         
         // Определяем день недели для первого дня (0 - воскресенье, 1 - понедельник и т.д.)
         let firstDayOfWeek = firstDay.getDay();
-        if (firstDayOfWeek === 0) firstDayOfWeek = 7; // Воскресенье будет последним (7)
+        if (firstDayOfWeek === 0) firstDayOfWeek = 7; // Воскресенье = 7
         
         // Корректируем для нашей сетки (Пн=1, Вт=2, ...)
         firstDayOfWeek--;
