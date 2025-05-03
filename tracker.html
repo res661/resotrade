@@ -17,8 +17,11 @@
     :root {
         /* Main Colors */
         --bg-primary: #0a0e17;
+        --bg-primary-rgb: 10, 14, 23;
         --bg-secondary: #111827;
+        --bg-secondary-rgb: 17, 24, 39;
         --bg-tertiary: #1f2937;
+        --bg-tertiary-rgb: 31, 41, 55;
         --bg-card: linear-gradient(145deg, #131b2e, #1a2540);
         --glass: rgba(255, 255, 255, 0.05);
         --glass-hover: rgba(255, 255, 255, 0.08);
@@ -91,8 +94,11 @@
 
     :root.light-theme {
         --bg-primary: #f8fafc;
+        --bg-primary-rgb: 248, 250, 252;
         --bg-secondary: #f1f5f9;
+        --bg-secondary-rgb: 241, 245, 249;
         --bg-tertiary: #e2e8f0;
+        --bg-tertiary-rgb: 226, 232, 240;
         --bg-card: linear-gradient(145deg, #f8fafc, #f1f5f9);
         --glass: rgba(0, 0, 0, 0.03);
         --glass-hover: rgba(0, 0, 0, 0.06);
@@ -132,8 +138,11 @@
     /* Pink Japanese Theme */
     :root.pink-theme {
         --bg-primary: #1a0f1f;
+        --bg-primary-rgb: 26, 15, 31;
         --bg-secondary: #2d1535;
+        --bg-secondary-rgb: 45, 21, 53;
         --bg-tertiary: #3d1d47;
+        --bg-tertiary-rgb: 61, 29, 71;
         --bg-card: linear-gradient(145deg, #2d1535, #3d1d47);
         --glass: rgba(255, 255, 255, 0.05);
         --glass-hover: rgba(255, 255, 255, 0.08);
@@ -2557,12 +2566,14 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: var(--spacing-sm) 0;
+        padding: var(--spacing-sm);
+        margin: 5px auto;
         color: var(--text-secondary);
         text-decoration: none;
         transition: var(--transition-normal);
         position: relative;
-        width: 100%;
+        width: 80%;
+        border-radius: var(--radius-full);
     }
 
     .menu-item svg {
@@ -2578,11 +2589,15 @@
     .menu-item:hover {
         color: var(--text-primary);
         background: var(--glass-hover);
+        transform: scale(1.05);
+        box-shadow: var(--shadow-sm);
     }
 
     .menu-item.active {
         color: var(--accent-primary);
         background: var(--glass);
+        transform: scale(1.1);
+        box-shadow: var(--shadow-md);
     }
 
     .main-header {
@@ -2591,13 +2606,15 @@
         left: var(--sidebar-width);
         right: 0;
         height: var(--header-height);
-        background: var(--bg-secondary);
+        background: rgba(var(--bg-secondary-rgb), 0);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         z-index: 90;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0 var(--spacing-xl);
-        border-bottom: 1px solid var(--border);
+        border-bottom: none;
     }
 
     .header-left, .header-right {
@@ -2759,14 +2776,16 @@
         left: var(--sidebar-width);
         right: 0;
         height: var(--header-height);
-        background: var(--bg-secondary);
+        background: rgba(var(--bg-secondary-rgb), 0);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         border-bottom: 1px solid var(--border);
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0 var(--spacing-xl);
         z-index: 99;
-        box-shadow: 0 4px 15px -5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 15px -5px rgba(0, 0, 0, 0);
     }
 
     function updateChartColors() {
@@ -3537,7 +3556,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <!-- Боковое меню с иконками -->
         <div class="sidebar">
             <div class="sidebar-logo">
-                <h2>R</h2>
+
             </div>
             <div class="sidebar-menu">
                 <a href="#" class="menu-item active">
@@ -3603,7 +3622,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <!-- Хедер -->
         <div class="main-header">
             <div class="header-left">
-                <div class="header-title">Финансовый трекер</div>
+                <div class="header-title">RESOTRADE
+                </div>
             </div>
             <div class="header-right">
                 <a href="index.html" class="header-btn">
