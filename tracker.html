@@ -1622,7 +1622,7 @@
     }
 
     @keyframes pulse {
-        0%, 100% { transform: scale(1); }
+        0% { transform: scale(1); }
         50% { transform: scale(1.05); }
     }
     
@@ -2081,6 +2081,106 @@
         bottom: calc(var(--spacing-xl) + 60px);
         left: var(--spacing-xl);
     }
+}
+
+/* FAQ Styles */
+.faq-indicator {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background-color: #ef4444;
+    border-radius: 50%;
+    animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+    }
+    
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 7px rgba(255, 82, 82, 0);
+    }
+    
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+    }
+}
+
+/* Стили для Telegram кнопок в FAQ */
+.telegram-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.telegram-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--color-accent);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    width: fit-content;
+}
+
+.telegram-button:hover {
+    background-color: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.telegram-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.dark-theme .telegram-button {
+    background-color: #2AABEE;
+}
+
+.dark-theme .telegram-button:hover {
+    background-color: #229ED9;
+}
+
+.light-theme .telegram-button {
+    background-color: #0088cc;
+}
+
+.light-theme .telegram-button:hover {
+    background-color: #0077b5;
+}
+
+.pink-theme .telegram-button {
+    background-color: #ec4899;
+}
+
+.pink-theme .telegram-button:hover {
+    background-color: #db2777;
+}
+
+.header-btn {
+    position: relative;
+}
+
+.faq-item {
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 15px;
+}
+
+.faq-item h3 {
+    margin-bottom: 8px;
+    color: var(--accent-primary);
 }
 
     /* Стили для анимации загрузки */
@@ -3633,6 +3733,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     </svg>
                     Домой
                 </a>
+                <button class="header-btn" onclick="openFaqModal(); return false;">
+                    <div class="faq-indicator"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    FAQ
+                </button>
                 <button class="header-btn" onclick="toggleTheme(); return false;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -3645,7 +3754,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
-                    Сменить тему
+                    <span data-i18n="general.change_theme">Сменить тему</span>
                 </button>
             </div>
         </div>
@@ -3655,13 +3764,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="dashboard">
     <div class="card balance-card float-animation">
         <div class="card-glow"></div>
-        <h3>Общий баланс</h3>
+        <h3 data-i18n="general.total_balance">Общий баланс</h3>
         <h1 id="totalBalance" class="pulse-animation">$0</h1>
         <div class="btn-group">
-            <button class="btn btn-secondary" onclick="changePeriod('day')">День</button>
-            <button class="btn btn-secondary" onclick="changePeriod('week')">Неделя</button>
-            <button class="btn btn-secondary" onclick="changePeriod('month')">Месяц</button>
-            <button class="btn btn-secondary btn-active" onclick="changePeriod('all')">Все</button>
+            <button class="btn btn-secondary" onclick="changePeriod('day')" data-i18n="periods.day">День</button>
+            <button class="btn btn-secondary" onclick="changePeriod('week')" data-i18n="periods.week">Неделя</button>
+            <button class="btn btn-secondary" onclick="changePeriod('month')" data-i18n="periods.month">Месяц</button>
+            <button class="btn btn-secondary btn-active" onclick="changePeriod('all')" data-i18n="periods.all">Все</button>
         </div>
         <button class="btn btn-primary btn-large" onclick="openStatsModal()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -3669,17 +3778,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 <line x1="12" y1="20" x2="12" y2="4"></line>
                 <line x1="6" y1="20" x2="6" y2="14"></line>
             </svg>
-            Показать статистику
+            <span data-i18n="general.show_statistics">Показать статистику</span>
         </button>
         <div class="telegram-buttons">
-            <a href="https://t.me/+BwTh8OyJmC0wN2Vi" target="_blank" class="telegram-button" rel="noreferrer">
+            <a href="https://t.me/res661" target="_blank" class="telegram-button" rel="noreferrer">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="22" y1="2" x2="11" y2="13"></line>
                     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                 </svg>
                 <span>Telegram 1</span>
             </a>
-            <a href="https://t.me/+UxvIvNPO4-kxMmI6" target="_blank" class="telegram-button" rel="noreferrer">
+            <a href="https://t.me/slavniytrade" target="_blank" class="telegram-button" rel="noreferrer">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="22" y1="2" x2="11" y2="13"></line>
                     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -3692,12 +3801,12 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="profit-loss">
         <div class="card profit-loss-card income">
             <div class="card-glow"></div>
-            <h3>Общий доход</h3>
+            <h3 data-i18n="general.total_income">Общий доход</h3>
             <h2 id="totalIncome">$0</h2>
         </div>
         <div class="card profit-loss-card expense">
             <div class="card-glow"></div>
-            <h3>Общий расход</h3>
+            <h3 data-i18n="general.total_expense">Общий расход</h3>
             <h2 id="totalExpense">$0</h2>
         </div>
     </div>
@@ -3705,6 +3814,14 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="card chart-container">
         <div class="card-glow"></div>
         <div class="chart-glow"></div>
+        <div class="chart-controls">
+            <div class="chart-toggle">
+                <label class="toggle-label">
+                    <input type="checkbox" id="showExpensesChart">
+                    <span class="toggle-text" data-i18n="general.show_losses">Показать убытки</span>
+                </label>
+            </div>
+        </div>
         <canvas id="mainChart"></canvas>
     </div>
 
@@ -3731,15 +3848,15 @@ document.addEventListener('DOMContentLoaded', function() {
         <input type="text" id="searchName" class="search-input" onkeyup="filterTransactions()" placeholder="Поиск по названию">
         <input type="number" id="searchAmount" class="search-input" onkeyup="filterTransactions()" placeholder="Поиск по сумме">
         <select id="sortOrder" class="search-input" onchange="filterTransactions()">
-            <option value="newest">Сначала новые</option>
-            <option value="oldest">Сначала старые</option>
-            <option value="highest">Высокая сумма</option>
-            <option value="lowest">Низкая сумма</option>
-            <option value="profitable">Прибыльные сделки</option>
-            <option value="unprofitable">Убыточные сделки</option>
+            <option value="newest" data-i18n="sorting.newest">Сначала новые</option>
+            <option value="oldest" data-i18n="sorting.oldest">Сначала старые</option>
+            <option value="highest" data-i18n="sorting.highest">Высокая сумма</option>
+            <option value="lowest" data-i18n="sorting.lowest">Низкая сумма</option>
+            <option value="profitable" data-i18n="sorting.profitable">Прибыльные сделки</option>
+            <option value="unprofitable" data-i18n="sorting.unprofitable">Убыточные сделки</option>
         </select>
         <button id="viewToggleBtn" class="view-toggle-btn active" onclick="toggleTransactionsView()">
-            <i class="fas fa-list"></i> Список
+            <i class="fas fa-list"></i> <span data-i18n="view.list">Список</span>
         </button>
     </div>
 
@@ -3760,59 +3877,59 @@ document.addEventListener('DOMContentLoaded', function() {
     <div id="transactionModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Добавить транзакцию</h2>
+            <h2 data-i18n="transaction_modal.add_transaction">Добавить транзакцию</h2>
             <span class="close" onclick="closeModalWithConfirmation()">&times;</span>
         </div>
         <div class="modal-body">
             <div class="form-group">
-                <label for="transactionType">Тип транзакции</label>
+                <label for="transactionType" data-i18n="transaction_modal.transaction_type">Тип транзакции</label>
                 <select id="transactionType" class="form-control" onchange="toggleTransactionFields()">
-                    <option value="simple">Простая транзакция</option>
-                    <option value="advanced">Расширенная сделка</option>
-                    <option value="calculator">Калькулятор прибыли</option>
+                    <option value="simple" data-i18n="transaction_modal.simple_transaction">Простая транзакция</option>
+                    <option value="advanced" data-i18n="transaction_modal.advanced_transaction">Расширенная сделка</option>
+                    <option value="calculator" data-i18n="transaction_modal.profit_calculator">Калькулятор прибыли</option>
                 </select>
             </div>
             
             <div id="simpleTransactionFields">
                 <div class="form-group">
-                    <label for="type">Категория</label>
+                    <label for="type" data-i18n="transaction_modal.category">Категория</label>
                     <select id="type" class="form-control">
-                        <option value="income">Доход</option>
-                        <option value="expense">Расход</option>
+                        <option value="income" data-i18n="transaction_modal.income">Доход</option>
+                        <option value="expense" data-i18n="transaction_modal.expense">Расход</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="amount">Сумма</label>
+                    <label for="amount" data-i18n="transaction_modal.amount">Сумма</label>
                     <input type="number" id="amount" placeholder="Введите сумму" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="date">Дата</label>
+                    <label for="date" data-i18n="transaction_modal.date">Дата</label>
                     <input type="date" id="date" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="description">Описание</label>
+                    <label for="description" data-i18n="transaction_modal.description">Описание</label>
                     <textarea id="description" placeholder="Введите описание" class="form-control"></textarea>
                 </div>
             </div>
             
             <div id="advancedTransactionFields" style="display:none;">
                 <div class="form-group">
-                    <label for="skinName">Название скина</label>
+                    <label for="skinName" data-i18n="transaction_modal.skin_name">Название скина</label>
                     <input type="text" id="skinName" placeholder="Введите название скина" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="skinQuality">Качество скина</label>
+                    <label for="skinQuality" data-i18n="transaction_modal.skin_quality">Качество скина</label>
                     <select id="skinQuality" class="form-control">
-                        <option value="">Не выбрано</option>
-                        <option value="Factory New">Прямо с завода (Factory New)</option>
-                        <option value="Minimal Wear">Немного поношенный (Minimal Wear)</option>
-                        <option value="Field-Tested">После полевых испытаний (Field-Tested)</option>
-                        <option value="Well-Worn">Поношенный (Well-Worn)</option>
-                        <option value="Battle-Scarred">Закаленный в боях (Battle-Scarred)</option>
+                        <option value="" data-i18n="transaction_modal.not_selected">Не выбрано</option>
+                        <option value="Factory New" data-i18n="transaction_modal.factory_new">Прямо с завода (Factory New)</option>
+                        <option value="Minimal Wear" data-i18n="transaction_modal.minimal_wear">Немного поношенный (Minimal Wear)</option>
+                        <option value="Field-Tested" data-i18n="transaction_modal.field_tested">После полевых испытаний (Field-Tested)</option>
+                        <option value="Well-Worn" data-i18n="transaction_modal.well_worn">Поношенный (Well-Worn)</option>
+                        <option value="Battle-Scarred" data-i18n="transaction_modal.battle_scarred">Закаленный в боях (Battle-Scarred)</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="skinType">Тип скина</label>
+                    <label for="skinType" data-i18n="transaction_modal.skin_type">Тип скина</label>
                     <select id="skinType" class="form-control">
                         <option value="Normal">Normal</option>
                         <option value="StatTrak">StatTrak</option>
@@ -3820,56 +3937,57 @@ document.addEventListener('DOMContentLoaded', function() {
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="skinQuantity">Количество</label>
+                    <label for="skinQuantity" data-i18n="transaction_modal.skin_quantity">Количество</label>
                     <input type="number" id="skinQuantity" placeholder="Количество скинов" class="form-control" value="1" min="1">
                 </div>
                 <div class="form-group">
-                    <label for="buyPrice">Цена покупки ($)</label>
+                    <label for="buyPrice" data-i18n="transaction_modal.buy_price">Цена покупки ($)</label>
                     <input type="number" id="buyPrice" placeholder="Введите цену покупки" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="sellPrice">Цена продажи ($)</label>
+                    <label for="sellPrice" data-i18n="transaction_modal.sell_price">Цена продажи ($)</label>
                     <input type="number" id="sellPrice" placeholder="Введите цену продажи" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="profitPercentage">Комиссия</label>
+                    <label for="profitPercentage" data-i18n="transaction_modal.commission">Комиссия</label>
                     <select id="profitPercentage" class="form-control">
                         <option value="2">2%</option>
-                        <option value="2.5">2.5%</option>
+                        <option value="3">3%</option>
                         <option value="5">5%</option>
+                        <option value="7">7%</option>
                         <option value="10">10%</option>
-                        <option value="13">13%</option>
+                        <option value="15">15%</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="advancedDate">Дата</label>
+                    <label for="advancedDate" data-i18n="transaction_modal.date">Дата</label>
                     <input type="date" id="advancedDate" class="form-control">
                 </div>
-                <button onclick="calculateProfit()" class="btn btn-secondary btn-large">Рассчитать</button>
+                <button onclick="calculateProfit()" class="btn btn-secondary btn-large" data-i18n="transaction_modal.calculate">Рассчитать</button>
                 <div id="calculationResult" class="calculation-result" style="display:none;"></div>
             </div>
             
             <div id="calculatorFields" style="display:none;">
                 <div class="form-group">
-                    <label for="calcBuyPrice">Цена покупки ($):</label>
+                    <label for="calcBuyPrice" data-i18n="transaction_modal.calc_buy_price">Цена покупки ($):</label>
                     <input type="number" id="calcBuyPrice" placeholder="Введите цену покупки" class="form-control" step="0.01">
                 </div>
                 <div class="form-group">
-                    <label for="calcDesiredProfit">Желаемая прибыль ($):</label>
+                    <label for="calcDesiredProfit" data-i18n="transaction_modal.calc_desired_profit">Желаемая прибыль ($):</label>
                     <input type="number" id="calcDesiredProfit" placeholder="Введите желаемую прибыль" class="form-control" step="0.01">
                 </div>
                 <div class="form-group">
-                    <label for="calcCommission">Комиссия (%):</label>
+                    <label for="calcCommission" data-i18n="transaction_modal.calc_commission">Комиссия (%):</label>
                     <input type="number" id="calcCommission" placeholder="Комиссия в процентах" class="form-control" value="2" step="0.1">
                 </div>
-                <button onclick="calculateSellPrice()" class="btn btn-secondary btn-large">Рассчитать цену продажи</button>
+                <button onclick="calculateSellPrice()" class="btn btn-secondary btn-large" data-i18n="transaction_modal.calculate_sell_price">Рассчитать цену продажи</button>
                 <div id="sellPriceResult" class="calculation-result" style="display:none; margin-top: 20px;"></div>
             </div>
         </div>
         <div class="modal-footer">
-            <button onclick="closeModal()" class="btn btn-secondary">Отмена</button>
-            <button onclick="addTransaction()" id="addTransactionBtn" class="btn btn-primary">Добавить</button>
-            <button onclick="addAdvancedTransaction()" id="addAdvancedTransactionBtn" class="btn btn-primary" style="display:none;">Добавить сделку</button>
+            <button onclick="closeModal()" class="btn btn-secondary" data-i18n="transaction_modal.cancel">Отмена</button>
+            <button onclick="addTransaction()" id="addTransactionBtn" class="btn btn-primary" data-i18n="transaction_modal.add_button">Добавить</button>
+            <button onclick="addAdvancedTransaction()" id="addAdvancedTransactionBtn" class="btn btn-primary" style="display:none;" data-i18n="transaction_modal.add_deal">Добавить сделку</button>
         </div>
     </div>
     </div>
@@ -3877,10 +3995,10 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- Confirm Modal -->
     <div id="confirmModal" class="confirm-modal">
     <div class="confirm-modal-content">
-        <p>Выйти без изменений?</p>
+        <p data-i18n="confirm_modal.exit_without_changes">Выйти без изменений?</p>
         <div class="confirm-buttons">
-            <button onclick="confirmCloseModal(true)" class="btn btn-primary">Да</button>
-            <button onclick="confirmCloseModal(false)" class="btn btn-secondary">Нет</button>
+            <button onclick="confirmCloseModal(true)" class="btn btn-primary" data-i18n="confirm_modal.yes">Да</button>
+            <button onclick="confirmCloseModal(false)" class="btn btn-secondary" data-i18n="confirm_modal.no">Нет</button>
         </div>
     </div>
     </div>
@@ -3889,40 +4007,40 @@ document.addEventListener('DOMContentLoaded', function() {
     <div id="statsModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Статистика</h2>
+            <h2 data-i18n="stats_modal.statistics">Статистика</h2>
             <span class="close" onclick="closeStatsModal()">&times;</span>
         </div>
         <div class="modal-body">
             <div class="stats-grid">
                 <div class="stats-item">
-                    <h3>Сегодня</h3>
+                    <h3 data-i18n="stats_modal.today">Сегодня</h3>
                     <p id="todayEarnings">$0</p>
-                    <small id="todayDeals">0 сделок</small>
+                    <small id="todayDeals">0 <span data-i18n="stats_modal.deals">сделок</span></small>
                 </div>
                 <div class="stats-item">
-                    <h3>Вчера</h3>
+                    <h3 data-i18n="stats_modal.yesterday">Вчера</h3>
                     <p id="yesterdayEarnings">$0</p>
-                    <small id="yesterdayDeals">0 сделок</small>
+                    <small id="yesterdayDeals">0 <span data-i18n="stats_modal.deals">сделок</span></small>
                 </div>
                 <div class="stats-item">
-                    <h3>Последние 7 дней</h3>
+                    <h3 data-i18n="stats_modal.last_7_days">Последние 7 дней</h3>
                     <p id="weekEarnings">$0</p>
-                    <small id="weekDeals">0 сделок</small>
+                    <small id="weekDeals">0 <span data-i18n="stats_modal.deals">сделок</span></small>
                 </div>
                 <div class="stats-item">
-                    <h3>Последние 30 дней</h3>
+                    <h3 data-i18n="stats_modal.last_30_days">Последние 30 дней</h3>
                     <p id="monthEarnings">$0</p>
-                    <small id="monthDeals">0 сделок</small>
+                    <small id="monthDeals">0 <span data-i18n="stats_modal.deals">сделок</span></small>
                 </div>
                 <div class="stats-item" style="grid-column: span 2;">
-                    <h3>Итого за всё время</h3>
+                    <h3 data-i18n="stats_modal.all_time">Итого за всё время</h3>
                     <p id="totalEarnings">$0</p>
-                    <small id="totalDeals">0 сделок</small>
+                    <small id="totalDeals">0 <span data-i18n="stats_modal.deals">сделок</span></small>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button onclick="closeStatsModal()" class="btn btn-primary">Закрыть</button>
+            <button onclick="closeStatsModal()" class="btn btn-primary" data-i18n="stats_modal.close">Закрыть</button>
         </div>
     </div>
     </div>
@@ -3931,7 +4049,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div id="calendarModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Календарь</h2>
+            <h2 data-i18n="calendar_modal.calendar">Календарь</h2>
             <span class="close" onclick="closeCalendarModal()">&times;</span>
         </div>
         <div class="modal-body">
@@ -3951,7 +4069,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="calendar-grid" id="modalCalendarGrid"></div>
         </div>
         <div class="modal-footer">
-            <button onclick="closeCalendarModal()" class="btn btn-primary">Закрыть</button>
+            <button onclick="closeCalendarModal()" class="btn btn-primary" data-i18n="calendar_modal.close">Закрыть</button>
         </div>
     </div>
     </div>
@@ -3962,11 +4080,11 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- Модальное окно подтверждения удаления -->
     <div id="deleteConfirmModal" class="confirm-modal">
         <div class="confirm-modal-content">
-            <h3>Подтвердите действие</h3>
-            <p>Вы уверены, что хотите удалить эту транзакцию?</p>
+            <h3 data-i18n="delete_confirm_modal.confirm_action">Подтвердите действие</h3>
+            <p data-i18n="delete_confirm_modal.confirm_delete">Вы уверены, что хотите удалить эту транзакцию?</p>
             <div class="confirm-buttons">
-                <button id="deleteConfirmButton" class="btn btn-primary">OK</button>
-                <button onclick="closeDeleteConfirmModal()" class="btn btn-secondary">Отмена</button>
+                <button id="deleteConfirmButton" class="btn btn-primary" data-i18n="delete_confirm_modal.ok">OK</button>
+                <button onclick="closeDeleteConfirmModal()" class="btn btn-secondary" data-i18n="delete_confirm_modal.cancel">Отмена</button>
             </div>
         </div>
     </div>
@@ -3975,20 +4093,20 @@ document.addEventListener('DOMContentLoaded', function() {
     <div id="mySkinsModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Мои скины</h2>
+                <h2 data-i18n="my_skins_modal.my_skins">Мои скины</h2>
                 <span class="close" onclick="closeMySkinsModal()">&times;</span>
             </div>
             <div class="modal-body">
                 <div id="mySkinsInfo" class="info-box">
-                    <p>Здесь вы можете сохранять скины, которые купили, но ещё не продали. Когда продадите — просто добавьте цену продажи, и скин попадёт в статистику.</p>
-                    <p>Важно: все данные хранятся локально в вашем браузере. Если вы очистите кэш, куки или переустановите браузер — информация может быть утеряна!</p>
-                    <button class="btn btn-secondary btn-small" onclick="toggleMySkinsInfo()">Скрыть</button>
+                    <p data-i18n="my_skins_modal.info_text">Здесь вы можете сохранять скины, которые купили, но ещё не продали. Когда продадите — просто добавьте цену продажи, и скин попадёт в статистику.</p>
+                    <p data-i18n="my_skins_modal.warning">Важно: все данные хранятся локально в вашем браузере. Если вы очистите кэш, куки или переустановите браузер — информация может быть утеряна!</p>
+                    <button class="btn btn-secondary btn-small" onclick="toggleMySkinsInfo()" data-i18n="my_skins_modal.hide">Скрыть</button>
                 </div>
                 <div class="info-toggle" onclick="toggleMySkinsInfo()" style="display: none;">
-                    <i class="fas fa-info-circle"></i> Показать информацию
+                    <i class="fas fa-info-circle"></i> <span data-i18n="my_skins_modal.show_info">Показать информацию</span>
                 </div>
                 <div class="form-group">
-                    <button onclick="openAddSkinModal()" class="btn btn-primary">Добавить скин</button>
+                    <button onclick="openAddSkinModal()" class="btn btn-primary" data-i18n="my_skins_modal.add_skin">Добавить скин</button>
                 </div>
                 <div id="mySkinsListContainer" class="my-skins-list">
                     <div id="mySkinsList"></div>
@@ -4000,11 +4118,11 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- Модальное окно подтверждения удаления скина -->
     <div id="deleteSkinConfirmModal" class="confirm-modal">
         <div class="confirm-modal-content">
-            <h3>Подтвердите действие</h3>
-            <p>Вы уверены, что хотите удалить этот скин?</p>
+            <h3 data-i18n="delete_skin_confirm_modal.confirm_action">Подтвердите действие</h3>
+            <p data-i18n="delete_skin_confirm_modal.confirm_delete">Вы уверены, что хотите удалить этот скин?</p>
             <div class="confirm-buttons">
-                <button onclick="confirmDeleteSkin()" class="btn btn-primary">OK</button>
-                <button onclick="closeDeleteSkinConfirmModal()" class="btn btn-secondary">Отмена</button>
+                <button onclick="confirmDeleteSkin()" class="btn btn-primary" data-i18n="delete_skin_confirm_modal.ok">OK</button>
+                <button onclick="closeDeleteSkinConfirmModal()" class="btn btn-secondary" data-i18n="delete_skin_confirm_modal.cancel">Отмена</button>
             </div>
         </div>
     </div>
@@ -4013,26 +4131,26 @@ document.addEventListener('DOMContentLoaded', function() {
     <div id="addSkinModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="addSkinModalTitle">Добавить скин</h2>
+                <h2 id="addSkinModalTitle" data-i18n="add_skin_modal.add_skin">Добавить скин</h2>
                 <span class="close" onclick="closeAddSkinModal()">&times;</span>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="newSkinName">Название скина</label>
+                    <label for="newSkinName" data-i18n="add_skin_modal.skin_name">Название скина</label>
                     <input type="text" id="newSkinName" placeholder="Введите название скина" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="newSkinBuyPrice">Цена покупки ($)</label>
+                    <label for="newSkinBuyPrice" data-i18n="add_skin_modal.buy_price">Цена покупки ($)</label>
                     <input type="number" id="newSkinBuyPrice" placeholder="Введите цену покупки" class="form-control" step="0.01">
                 </div>
                 <div class="form-group">
-                    <label for="newSkinDate">Дата покупки</label>
+                    <label for="newSkinDate" data-i18n="add_skin_modal.buy_date">Дата покупки</label>
                     <input type="date" id="newSkinDate" class="form-control">
                 </div>
             </div>
             <div class="modal-footer">
-                <button onclick="closeAddSkinModal()" class="btn btn-secondary">Отмена</button>
-                <button onclick="saveSkin()" id="saveSkinBtn" class="btn btn-primary">Сохранить</button>
+                <button onclick="closeAddSkinModal()" class="btn btn-secondary" data-i18n="add_skin_modal.cancel">Отмена</button>
+                <button onclick="saveSkin()" id="saveSkinBtn" class="btn btn-primary" data-i18n="add_skin_modal.save">Сохранить</button>
             </div>
         </div>
     </div>
@@ -4041,24 +4159,24 @@ document.addEventListener('DOMContentLoaded', function() {
     <div id="addSaleModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Добавить продажу</h2>
+                <h2 data-i18n="add_sale_modal.add_sale">Добавить продажу</h2>
                 <span class="close" onclick="closeAddSaleModal()">&times;</span>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="saleModalSkinName">Название скина:</label>
+                    <label for="saleModalSkinName" data-i18n="add_sale_modal.skin_name">Название скина:</label>
                     <input type="text" id="saleModalSkinName" class="form-control" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="saleModalBuyPrice">Цена покупки ($):</label>
+                    <label for="saleModalBuyPrice" data-i18n="add_sale_modal.buy_price">Цена покупки ($):</label>
                     <input type="number" id="saleModalBuyPrice" class="form-control" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="saleModalSellPrice">Цена продажи ($):</label>
+                    <label for="saleModalSellPrice" data-i18n="add_sale_modal.sell_price">Цена продажи ($):</label>
                     <input type="number" id="saleModalSellPrice" placeholder="Введите цену продажи" class="form-control" step="0.01">
                 </div>
                 <div class="form-group">
-                    <label for="saleModalCommission">Комиссия:</label>
+                    <label for="saleModalCommission" data-i18n="add_sale_modal.commission">Комиссия:</label>
                     <select id="saleModalCommission" class="form-control">
                         <option value="2">2%</option>
                         <option value="2.5">2.5%</option>
@@ -4478,10 +4596,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         data: [],
                         borderColor: '#4f46e5',
                         borderWidth: 3,
-                        tension: 0.4,
+                        tension: 0.5,
                         fill: true,
                         backgroundColor: gradient,
-                        pointRadius: 4,
+                        pointRadius: 0,
                         pointHoverRadius: 8,
                         pointBackgroundColor: '#4f46e5',
                         pointHoverBackgroundColor: '#4f46e5',
@@ -4544,12 +4662,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     },
                     interaction: {
-                        mode: 'index',
-                        intersect: false
+                        mode: 'nearest',
+                        intersect: false,
+                        axis: 'x'
                     },
                     elements: {
                         line: {
-                            borderJoinStyle: 'round'
+                            borderJoinStyle: 'round',
+                            tension: 0.5
+                        },
+                        point: {
+                            hitRadius: 10
                         }
                     },
                     animation: {
@@ -7711,6 +7834,91 @@ function displayTransactionsByExactDate(dateString) {
     modal.appendChild(modalContentDiv);
     document.body.appendChild(modal);
 }
+
+// Функция для модального окна FAQ
+function openFaqModal() {
+    const modal = document.createElement('div');
+    modal.id = 'faqModal';
+    modal.className = 'modal';
+    modal.style.display = 'block';
+    
+    modal.innerHTML = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>FAQ — Часто задаваемые вопросы</h2>
+                <span class="close" onclick="closeFaqModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="faq-item">
+                    <h3>Вы видите мои сделки?</h3>
+                    <p>Нет. Все данные хранятся только у вас в браузере через localStorage. Мы не имеем доступа к вашим сделкам и не передаём данные на сервер.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Что будет, если я очищу кэш или куки браузера?</h3>
+                    <p>Все данные исчезнут. Перед этим обязательно сделайте экспорт в .json, иначе восстановить информацию будет невозможно.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Как сохранить сделки?</h3>
+                    <p>Нажмите кнопку «Экспорт» (в левом меню), чтобы сохранить все сделки в файл .json. Этот файл вы сможете позже импортировать и восстановить все данные.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Могу ли я перенести сделки на другой ПК?</h3>
+                    <p>Да. Сначала сделайте экспорт, затем на другом устройстве используйте кнопку «Импорт», чтобы загрузить файл .json и восстановить ваши данные.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Почему данные не сохраняются на сервере?</h3>
+                    <p>Потому что сайт размещён на GitHub Pages, который поддерживает только статические сайты. Мы не можем и не собираем вашу информацию.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Это анонимный сервис?</h3>
+                    <p>Да. Финансовый трекер полностью оффлайн и анонимный. Всё, что вы записываете, остаётся только у вас в браузере.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Что делать, если всё пропало?</h3>
+                    <p>Если вы случайно удалили кэш/куки или используете другой браузер — данные исчезнут. Поэтому регулярно сохраняйте резервную копию через экспорт.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Хочу предложить улучшение!</h3>
+                    <p>Пишите в Telegram — мы открыты к идеям.</p>
+                    <div class="telegram-buttons">
+                        <a href="https://t.me/res661" target="_blank" class="telegram-button" rel="noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                            <span>Telegram 1</span>
+                        </a>
+                        <a href="https://t.me/slavniytrade" target="_blank" class="telegram-button" rel="noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                            <span>Telegram 2</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    modal.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            closeFaqModal();
+        }
+    });
+}
+
+function closeFaqModal() {
+    const modal = document.getElementById('faqModal');
+    if (modal) {
+        modal.remove();
+    }
+}
 </script>
 </body>
-</html></html>
+</html>
+</script>
+</body>
+</html>
