@@ -3913,7 +3913,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <div id="advancedTransactionFields" style="display:none;">
                 <div class="form-group">
                     <label for="skinName" data-i18n="transaction_modal.skin_name">Название скина</label>
-                    <input type="text" id="skinName" placeholder="Введите название скина" class="form-control">
+                    <input type="text" id="skinName" placeholder="Введите название скина" class="form-control" list="skinNamesList" autocomplete="off">
+                    <datalist id="skinNamesList"></datalist>
                 </div>
                 <div class="form-group">
                     <label for="skinQuality" data-i18n="transaction_modal.skin_quality">Качество скина</label>
@@ -3950,11 +3951,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <label for="profitPercentage" data-i18n="transaction_modal.commission">Комиссия</label>
                     <select id="profitPercentage" class="form-control">
                         <option value="2">2%</option>
-                        <option value="3">2.5%</option>
+                        <option value="2.5">2.5%</option>
                         <option value="5">5%</option>
-                        <option value="7">7%</option>
                         <option value="10">10%</option>
-                        <option value="15">13%</option>
+                        <option value="13">13%</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -3976,7 +3976,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="form-group">
                     <label for="calcCommission" data-i18n="transaction_modal.calc_commission">Комиссия (%):</label>
-                    <input type="number" id="calcCommission" placeholder="Комиссия в процентах" class="form-control" value="2" step="0.1">
+                    <select id="calcCommission" class="form-control">
+                        <option value="2">2%</option>
+                        <option value="2.5">2.5%</option>
+                        <option value="5">5%</option>
+                        <option value="10">10%</option>
+                        <option value="13">13%</option>
+                    </select>
                 </div>
                 <button onclick="calculateSellPrice()" class="btn btn-secondary btn-large" data-i18n="transaction_modal.calculate_sell_price">Рассчитать цену продажи</button>
                 <div id="sellPriceResult" class="calculation-result" style="display:none; margin-top: 20px;"></div>
@@ -4135,7 +4141,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="modal-body">
                 <div class="form-group">
                     <label for="newSkinName" data-i18n="add_skin_modal.skin_name">Название скина</label>
-                    <input type="text" id="newSkinName" placeholder="Введите название скина" class="form-control">
+                    <input type="text" id="newSkinName" placeholder="Введите название скина" class="form-control" list="skinNamesList" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label for="newSkinBuyPrice" data-i18n="add_skin_modal.buy_price">Цена покупки ($)</label>
@@ -4206,6 +4212,106 @@ document.addEventListener('DOMContentLoaded', function() {
         let currentView = 'chart';
         let currentTheme = localStorage.getItem('theme') || 'dark-theme';
         document.documentElement.classList.add(currentTheme);
+        let skinsData = []; // Массив для хранения названий скинов
+
+        // Загрузка списка скинов из JSON-файла
+        function loadSkinsList() {
+            fetch('skins_list.json')
+                .then(response => response.json())
+                .then(data => {
+                    skinsData = data.skins;
+                    populateSkinsList();
+                    setupAutoComplete();
+                })
+                .catch(error => {
+                    console.error('Ошибка загрузки списка скинов:', error);
+                });
+        }
+
+        // Заполнение datalist с названиями скинов
+        function populateSkinsList() {
+            const datalist = document.getElementById('skinNamesList');
+            datalist.innerHTML = '';
+            
+            skinsData.forEach(skin => {
+                const option = document.createElement('option');
+                option.value = skin;
+                datalist.appendChild(option);
+            });
+        }
+
+        // Добавляем функцию для настройки продвинутого автодополнения
+        function setupAutoComplete() {
+            const inputFields = [
+                document.getElementById('skinName'),
+                document.getElementById('newSkinName')
+            ];
+            
+            inputFields.forEach(input => {
+                if (!input) return; // Проверка на null
+                
+                // Создаем выпадающий список для автодополнения
+                const autocompleteWrapper = document.createElement('div');
+                autocompleteWrapper.className = 'autocomplete-wrapper';
+                
+                const autocompleteDropdown = document.createElement('div');
+                autocompleteDropdown.className = 'autocomplete-dropdown';
+                autocompleteDropdown.style.display = 'none';
+                
+                // Вставляем wrapper после input
+                input.parentNode.insertBefore(autocompleteWrapper, input.nextSibling);
+                autocompleteWrapper.appendChild(autocompleteDropdown);
+                
+                // Обработчик ввода в поле
+                input.addEventListener('input', function() {
+                    const value = this.value.toLowerCase();
+                    if (value.length < 2) {
+                        autocompleteDropdown.style.display = 'none';
+                        return;
+                    }
+                    
+                    // Фильтруем скины по введенному тексту
+                    const matchedSkins = skinsData.filter(skin => 
+                        skin.toLowerCase().includes(value)
+                    ).slice(0, 10); // Ограничиваем до 10 результатов
+                    
+                    if (matchedSkins.length > 0) {
+                        autocompleteDropdown.innerHTML = '';
+                        matchedSkins.forEach(skin => {
+                            const item = document.createElement('div');
+                            item.className = 'autocomplete-item';
+                            item.textContent = skin;
+                            
+                            item.addEventListener('click', function() {
+                                input.value = skin;
+                                autocompleteDropdown.style.display = 'none';
+                                
+                                // Вызываем событие input для пересчета
+                                const event = new Event('input', {
+                                    bubbles: true,
+                                    cancelable: true,
+                                });
+                                input.dispatchEvent(event);
+                            });
+                            
+                            autocompleteDropdown.appendChild(item);
+                        });
+                        autocompleteDropdown.style.display = 'block';
+                    } else {
+                        autocompleteDropdown.style.display = 'none';
+                    }
+                });
+                
+                // Скрываем выпадающий список при клике вне него
+                document.addEventListener('click', function(e) {
+                    if (!input.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
+                        autocompleteDropdown.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Удаляем созданный отдельный обработчик DOMContentLoaded
 
         // Функция для переключения темы
         function toggleTheme() {
