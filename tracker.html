@@ -2904,6 +2904,9 @@
         
         // Update chart colors
         if (chart) {
+            // Сохраняем текущий режим отображения точек
+            const currentPointRadius = chart.data.datasets[0].pointRadius;
+            
             chart.data.datasets[0].borderColor = primaryColor;
             chart.data.datasets[0].pointBackgroundColor = primaryColor;
             chart.data.datasets[0].pointHoverBackgroundColor = primaryColor;
@@ -2976,6 +2979,20 @@
             chart.options.scales.y.ticks.color = newChartOptions.scales.y.ticks.color;
             chart.options.scales.y.ticks.font = newChartOptions.scales.y.ticks.font;
             chart.options.plugins.tooltip = newChartOptions.plugins.tooltip;
+            
+            // Восстанавливаем режим отображения точек
+            chart.data.datasets[0].pointRadius = currentPointRadius;
+            
+            // Обновляем внешний вид кнопки
+            const button = document.getElementById('togglePointsBtn');
+            if (button) {
+                if (currentPointRadius > 0) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            }
+            
             chart.update();
         }
     }
@@ -3386,6 +3403,72 @@
             margin: 10px 0;
             border: 1px solid var(--border);
         }
+    }
+
+    .btn-large {
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: 1rem;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: var(--spacing-sm);
+        flex-wrap: wrap;
+    }
+
+    .btn-group .btn {
+        flex: 1;
+    }
+
+    .btn-active {
+        background: var(--gradient-primary);
+        color: white;
+        border: none;
+        box-shadow: 0 4px 6px rgba(79, 70, 229, 0.25);
+    }
+    
+    .btn-icon {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text-secondary);
+        border-radius: var(--radius-full);
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition-normal);
+    }
+    
+    .btn-icon:hover {
+        color: var(--text-primary);
+        border-color: var(--text-primary);
+        transform: translateY(-1px);
+    }
+    
+    .btn-icon.active {
+        background: var(--gradient-primary);
+        color: white;
+        border: none;
+    }
+    
+    .btn-sm {
+        padding: var(--spacing-xs);
+        font-size: 0.875rem;
+    }
+
+    .add-btn span {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .chart-controls {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-sm);
     }
 </style>
 
@@ -3819,6 +3902,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <label class="toggle-label">
                 </label>
             </div>
+            <button id="togglePointsBtn" class="btn btn-icon btn-sm" onclick="toggleChartPoints()" title="Показать/скрыть точки">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="4"></circle>
+                </svg>
+            </button>
         </div>
         <canvas id="mainChart"></canvas>
     </div>
@@ -4690,6 +4779,10 @@ document.addEventListener('DOMContentLoaded', function() {
             gradient.addColorStop(0, 'rgba(79, 70, 229, 0.3)');
             gradient.addColorStop(0.5, 'rgba(139, 92, 246, 0.15)');
             gradient.addColorStop(1, 'rgba(236, 72, 153, 0.05)');
+            
+            // Проверяем сохраненное состояние точек
+            const pointsVisible = localStorage.getItem('chartPointsVisible') === 'true';
+            const pointRadius = pointsVisible ? 4 : 0;
 
             chart = new Chart(ctx, {
                 type: 'line',
@@ -4703,7 +4796,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         tension: 0.5,
                         fill: true,
                         backgroundColor: gradient,
-                        pointRadius: 0,
+                        pointRadius: pointRadius,
                         pointHoverRadius: 8,
                         pointBackgroundColor: '#4f46e5',
                         pointHoverBackgroundColor: '#4f46e5',
@@ -4785,6 +4878,41 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             });
+            
+            // Обновляем состояние кнопки при инициализации
+            if (pointsVisible) {
+                const button = document.getElementById('togglePointsBtn');
+                if (button) {
+                    button.classList.add('active');
+                }
+            }
+        }
+        
+        function toggleChartPoints() {
+            if (!chart) return;
+            
+            // Текущий радиус точек
+            const currentPointRadius = chart.data.datasets[0].pointRadius;
+            
+            // Если точки скрыты (радиус 0), показываем их, иначе скрываем
+            const newPointRadius = currentPointRadius === 0 ? 4 : 0;
+            
+            // Обновляем настройки точек
+            chart.data.datasets[0].pointRadius = newPointRadius;
+            
+            // Обновляем внешний вид кнопки
+            const button = document.getElementById('togglePointsBtn');
+            if (newPointRadius > 0) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
+            }
+            
+            // Сохраняем состояние в localStorage
+            localStorage.setItem('chartPointsVisible', newPointRadius > 0 ? 'true' : 'false');
+            
+            // Обновляем график
+            chart.update();
         }
 
         function updateBalance() {
@@ -5898,6 +6026,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Update chart colors
             if (chart) {
+                // Сохраняем текущий режим отображения точек
+                const currentPointRadius = chart.data.datasets[0].pointRadius;
+                
                 chart.data.datasets[0].borderColor = primaryColor;
                 chart.data.datasets[0].pointBackgroundColor = primaryColor;
                 chart.data.datasets[0].pointHoverBackgroundColor = primaryColor;
@@ -5970,6 +6101,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 chart.options.scales.y.ticks.color = newChartOptions.scales.y.ticks.color;
                 chart.options.scales.y.ticks.font = newChartOptions.scales.y.ticks.font;
                 chart.options.plugins.tooltip = newChartOptions.plugins.tooltip;
+                
+                // Восстанавливаем режим отображения точек
+                chart.data.datasets[0].pointRadius = currentPointRadius;
+                
+                // Обновляем внешний вид кнопки
+                const button = document.getElementById('togglePointsBtn');
+                if (button) {
+                    if (currentPointRadius > 0) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                }
+                
                 chart.update();
             }
         }
