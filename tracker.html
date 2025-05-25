@@ -7364,6 +7364,63 @@ function showDashboard() {
 function importTransactions() {
     document.getElementById('fileInput').click();
 }
+
+function exportTransactions() {
+    const data = JSON.stringify(transactions, null, 2);
+    const blob = new Blob([data], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'transactions.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    showNotification('Данные успешно экспортированы', 'success');
+}
+
+function importTransactions(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const content = e.target.result;
+            const importedData = JSON.parse(content);
+            
+            if (!Array.isArray(importedData)) {
+                throw new Error('Неверный формат данных');
+            }
+            
+            transactions = transactions.concat(importedData);
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+            updateUI();
+            showNotification('Данные успешно импортированы', 'success');
+        } catch (error) {
+            showNotification('Ошибка при импорте: ' + error.message, 'error');
+        }
+    };
+    
+    reader.onerror = () => {
+        showNotification('Ошибка при чтении файла', 'error');
+    };
+    
+    reader.readAsText(file);
+    event.target.value = '';
+}
+
+// Добавляем обработчики для кнопок импорта/экспорта
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            const action = this.getAttribute('data-action');
+            if (action === 'importTransactions') {
+                document.getElementById('fileInput').click();
+            } else if (action === 'exportTransactions') {
+                exportTransactions();
+            }
+        });
+    });
+});
 </script>
 </head>
 <body>
@@ -8791,81 +8848,60 @@ function importTransactions() {
 
         function exportTransactions() {
             const data = JSON.stringify(transactions, null, 2);
-            const blob = new Blob([data], {type: 'text/plain'});
+            const blob = new Blob([data], {type: 'application/json'});
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
             a.download = 'transactions.json';
             a.click();
-            
-            // Show success notification
+            URL.revokeObjectURL(url);
             showNotification('Данные успешно экспортированы', 'success');
         }
 
-        function importTransactions(e) {
-            const file = e.target.files[0];
+        function importTransactions(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
             const reader = new FileReader();
-            reader.onload = (e) => {
-                const content = e.target.result;
+            reader.onload = function(e) {
                 try {
-                    const jsonData = JSON.parse(content);
-                    transactions = jsonData;
+                    const content = e.target.result;
+                    const importedData = JSON.parse(content);
+                    
+                    if (!Array.isArray(importedData)) {
+                        throw new Error('Неверный формат данных');
+                    }
+                    
+                    transactions = transactions.concat(importedData);
                     localStorage.setItem('transactions', JSON.stringify(transactions));
                     updateUI();
-                    
-                    // Show success message with animation
                     showNotification('Данные успешно импортированы', 'success');
                 } catch (error) {
-                    try {
-                        const lines = content.split('\n');
-                        const newTransactions = [];
-                        let currentTransaction = {};
-
-                        lines.forEach(line => {
-                            const [key, value] = line.split(': ').map(item => item.trim());
-                            if (key === 'Тип') {
-                                if (Object.keys(currentTransaction).length > 0) {
-                                    newTransactions.push(currentTransaction);
-                                    currentTransaction = {};
-                                }
-                                currentTransaction.type = value;
-                            } else if (key === 'Сумма') {
-                                currentTransaction.amount = Number.parseFloat(value);
-                            } else if (key ==='Описание') {
-                                currentTransaction.description = value;
-                            } else if (key === 'Дата') {
-                                currentTransaction.date = value;
-                            } else if (key === 'Тема') {
-                                currentTransaction.theme = value;
-                            } else if (key === 'Цена покупки') {
-                                currentTransaction.buyPrice = Number.parseFloat(value) || null;
-                            } else if (key === 'Цена продажи') {
-                                currentTransaction.sellPrice = Number.parseFloat(value) || null;
-                            } else if (key === 'Комиссия') {
-                                currentTransaction.commission = Number.parseFloat(value) || null;
-                            } else if (key === 'Количество') {
-                                currentTransaction.quantity = Number.parseInt(value) || 1;
-                            }
-                        });
-
-                        if (Object.keys(currentTransaction).length > 0) {
-                            newTransactions.push(currentTransaction);
-                        }
-
-                        transactions = transactions.concat(newTransactions);
-                        localStorage.setItem('transactions', JSON.stringify(transactions));
-                        updateUI();
-                        
-                        // Show success message with animation
-                        showNotification('Данные успешно импортированы', 'success');
-                    } catch (e) {
-                        showNotification('Ошибка при импорте данных', 'error');
-                    }
+                    showNotification('Ошибка при импорте: ' + error.message, 'error');
                 }
             };
+            
+            reader.onerror = () => {
+                showNotification('Ошибка при чтении файла', 'error');
+            };
+            
             reader.readAsText(file);
-            e.target.value = '';
+            event.target.value = '';
         }
+
+        // Добавляем обработчики для кнопок импорта/экспорта
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    const action = this.getAttribute('data-action');
+                    if (action === 'importTransactions') {
+                        document.getElementById('fileInput').click();
+                    } else if (action === 'exportTransactions') {
+                        exportTransactions();
+                    }
+                });
+            });
+        });
 
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
