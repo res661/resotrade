@@ -7915,6 +7915,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     <input type="text" id="newSkinName" placeholder="Введите название скина" class="form-control" list="skinNamesList" autocomplete="off">
                 </div>
                 <div class="form-group">
+                    <label for="newSkinQuality" data-i18n="add_skin_modal.skin_quality">Качество скина</label>
+                    <select id="newSkinQuality" class="form-control">
+                        <option value="" data-i18n="transaction_modal.not_selected">Не выбрано</option>
+                        <option value="Factory New" data-i18n="transaction_modal.factory_new">Прямо с завода (Factory New)</option>
+                        <option value="Minimal Wear" data-i18n="transaction_modal.minimal_wear">Немного поношенный (Minimal Wear)</option>
+                        <option value="Field-Tested" data-i18n="transaction_modal.field_tested">После полевых испытаний (Field-Tested)</option>
+                        <option value="Well-Worn" data-i18n="transaction_modal.well_worn">Поношенный (Well-Worn)</option>
+                        <option value="Battle-Scarred" data-i18n="transaction_modal.battle_scarred">Закаленный в боях (Battle-Scarred)</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="newSkinBuyPrice" data-i18n="add_skin_modal.buy_price">Цена покупки ($)</label>
                     <input type="number" id="newSkinBuyPrice" placeholder="Введите цену покупки" class="form-control" step="0.01">
                 </div>
@@ -9773,7 +9784,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 opacity: 0,
                 scale: delta > 0 ? 0.9 : 1.1,
                 x: delta > 0 ? -30 : 30,
-                duration: 0.3,
+                duration: 0.3, 
                 onComplete: () => {
                     renderCalendar();
                     gsap.fromTo(calendarGrid, 
@@ -10156,10 +10167,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('newSkinName').value = skin.name;
                 document.getElementById('newSkinBuyPrice').value = skin.buyPrice;
                 document.getElementById('newSkinDate').value = skin.date;
+                document.getElementById('newSkinQuality').value = skin.quality || '';
             } else {
                 document.getElementById('newSkinName').value = '';
                 document.getElementById('newSkinBuyPrice').value = '';
                 document.getElementById('newSkinDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('newSkinQuality').value = '';
             }
             
             document.getElementById('addSkinModal').style.display = 'block';
@@ -10174,6 +10187,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const name = document.getElementById('newSkinName').value.trim();
             const buyPrice = parseFloat(document.getElementById('newSkinBuyPrice').value);
             const date = document.getElementById('newSkinDate').value || new Date().toISOString().split('T')[0];
+            const quality = document.getElementById('newSkinQuality').value;
             
             if (!name) {
                 showNotification('Введите название скина', 'error');
@@ -10188,7 +10202,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const skin = {
                 name,
                 buyPrice,
-                date
+                date,
+                quality
             };
             
             if (editingSkinIndex !== null) {
@@ -10221,6 +10236,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h3>${skin.name}</h3>
                     <p>Цена покупки: $${skin.buyPrice.toLocaleString()}</p>
                     <p>Дата покупки: ${formatDate(skin.date)}</p>
+                    <p>Качество: ${skin.quality ? skin.quality : 'Не выбрано'}</p>
                     <div class="skin-actions">
                         <button class="btn btn-primary" onclick="openAddSaleModal(${index})">Добавить продажу</button>
                         <button class="btn btn-secondary" onclick="openAddSkinModal(${index})">Редактировать</button>
