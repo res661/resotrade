@@ -7721,13 +7721,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="form-group">
                     <label for="profitPercentage" data-i18n="transaction_modal.commission">Комиссия</label>
-                    <select id="profitPercentage" class="form-control">
-                        <option value="2">2%</option>
-                        <option value="2.5">2.5%</option>
-                        <option value="5">5%</option>
-                        <option value="10">10%</option>
-                        <option value="13">13%</option>
-                    </select>
+                    <input type="number" id="profitPercentage" class="form-control" placeholder="Введите комиссию (%)" step="0.01" min="0" max="100">
                 </div>
                 <div class="form-group">
                     <label for="advancedDate" data-i18n="transaction_modal.date">Дата</label>
@@ -7748,13 +7742,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="form-group">
                     <label for="calcCommission" data-i18n="transaction_modal.calc_commission">Комиссия (%):</label>
-                    <select id="calcCommission" class="form-control">
-                        <option value="2">2%</option>
-                        <option value="2.5">2.5%</option>
-                        <option value="5">5%</option>
-                        <option value="10">10%</option>
-                        <option value="13">13%</option>
-                    </select>
+                    <input type="number" id="calcCommission" class="form-control" placeholder="Введите комиссию (%)" step="0.01" min="0" max="100">
                 </div>
                 <button onclick="calculateSellPrice()" class="btn btn-secondary btn-large" data-i18n="transaction_modal.calculate_sell_price">Рассчитать цену продажи</button>
                 <div id="sellPriceResult" class="calculation-result" style="display:none; margin-top: 20px;"></div>
@@ -7964,13 +7952,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="form-group">
                     <label for="saleModalCommission" data-i18n="add_sale_modal.commission">Комиссия:</label>
-                    <select id="saleModalCommission" class="form-control">
-                        <option value="2">2%</option>
-                        <option value="2.5">2.5%</option>
-                        <option value="5">5%</option>
-                        <option value="10">10%</option>
-                        <option value="13">13%</option>
-                    </select>
+                    <input type="number" id="saleModalCommission" class="form-control" placeholder="Введите комиссию (%)" step="0.01" min="0" max="100">
                 </div>
 
                 <div class="form-group">
@@ -10419,8 +10401,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
-            // Автоматический перерасчет при изменении комиссии
-            document.getElementById('profitPercentage').addEventListener('change', function() {
+            // Автоматический перерасчет при изменении комиссии (input вместо change)
+            document.getElementById('profitPercentage').addEventListener('input', function() {
                 const skinName = document.getElementById('skinName').value;
                 const buyPrice = parseFloat(document.getElementById('buyPrice').value);
                 const sellPrice = parseFloat(document.getElementById('sellPrice').value);
@@ -10430,8 +10412,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
-            // Перерасчет при изменении комиссии в окне продажи скина
-            document.getElementById('saleModalCommission').addEventListener('change', function() {
+            // Перерасчет при изменении комиссии в окне продажи скина (input вместо change)
+            document.getElementById('saleModalCommission').addEventListener('input', function() {
                 const sellPrice = parseFloat(document.getElementById('saleModalSellPrice').value);
                 const buyPrice = parseFloat(document.getElementById('saleModalBuyPrice').value);
                 
