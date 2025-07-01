@@ -1230,6 +1230,2414 @@
         align-items: center;
         gap: 6px;
         margin-top: 2px;
+        flex-wrap: wrap;
+    }
+
+    .transaction-platform {
+        color: #007bff;
+        font-size: 0.75rem;
+        font-weight: 600;
+        background: rgba(0, 123, 255, 0.1);
+        padding: 2px 6px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-left: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    .transaction-description {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        font-weight: 500;
+        line-height: 1.4;
+        margin-top: 8px;
+        margin-left: 52px; /* Выравниваем с текстом, учитывая иконку + отступ */
+        opacity: 0.8;
+    }
+
+    .transaction-amount-section {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 12px;
+        min-width: 180px;
+        width: 180px;
+    }
+
+    .transaction-amount {
+        font-size: 1.8rem;
+        font-weight: 900;
+        line-height: 1;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .transaction-amount.income {
+        color: #22c55e;
+    }
+
+    .transaction-amount.expense {
+        color: #ef4444;
+    }
+
+    .transaction-profit-info {
+        text-align: right;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        line-height: 1.2;
+    }
+
+    .transaction-item:last-child {
+        border-bottom: none;
+    }
+
+    .transaction-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .btn-sm {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        border-radius: 8px;
+        min-width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-sm:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-sm.btn-secondary {
+        background: #444444;
+        color: #ffffff;
+    }
+
+    .btn-sm.btn-secondary:hover {
+        background: #555555;
+    }
+
+    .btn-sm.btn-danger {
+        background: #ef4444;
+        color: #ffffff;
+    }
+
+    .btn-sm.btn-danger:hover {
+        background: #dc2626;
+    }
+
+    .btn-sm.btn-info {
+        background: #007bff;
+        color: #ffffff;
+    }
+
+    .btn-sm.btn-info:hover {
+        background: #0056b3;
+    }
+
+    /* Адаптивность для транзакций */
+    @media (max-width: 768px) {
+        .transaction-item {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .transaction-amount-section {
+            padding: 15px 20px;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            min-width: auto;
+            border-top: 1px solid #333333;
+        }
+
+        .transaction-amount {
+            font-size: 1.5rem;
+        }
+
+        .transaction-actions {
+            margin-top: 0;
+            gap: 6px;
+        }
+
+        .btn-sm {
+            min-width: 40px;
+            height: 40px;
+            padding: 8px;
+        }
+
+        .transaction-header {
+            flex-wrap: wrap;
+        }
+
+        .transaction-icon {
+            width: 35px;
+            height: 35px;
+            font-size: 16px;
+        }
+
+        .transaction-title-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .transaction-title-row h4 {
+            font-size: 1.2rem;
+        }
+
+        .transaction-type {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+        }
+
+        .transaction-date {
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+
+        .transaction-description {
+            margin-left: 47px; /* Учитываем уменьшенную иконку на мобильных */
+            font-size: 0.8rem;
+            margin-top: 6px;
+        }
+    }
+
+
+
+    .chart-container {
+        height: 400px;
+        margin: 20px 0;
+    }
+
+    .controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+
+    /* Стили для индикатора активного фильтра */
+    .filter-indicator {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #007bff !important;
+        border: none !important;
+        border-radius: 12px;
+        padding: 12px 16px;
+        margin-bottom: 20px;
+    }
+
+    .filter-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #ffffff !important;
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+
+    .filter-info i {
+        font-size: 1rem;
+        color: #ffffff !important;
+    }
+
+    .filter-reset-btn {
+        background: #ff4757 !important;
+        border: none !important;
+        border-radius: 8px;
+        color: #ffffff !important;
+        cursor: pointer;
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 32px;
+        height: 32px;
+    }
+
+    .filter-reset-btn:hover {
+        background: #dc3545 !important;
+    }
+
+
+
+    /* Стили для управления графиком */
+    .chart-controls {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 25px;
+        padding: 0 5px;
+    }
+
+    .chart-controls-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .chart-btn {
+        background: var(--bg-card);
+        color: var(--text-primary);
+        border: 2px solid var(--border);
+        padding: 10px 18px;
+        border-radius: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        min-width: 100px;
+        justify-content: center;
+    }
+
+    .chart-btn:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    }
+
+    .chart-btn.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: white;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+    }
+
+    .chart-btn i {
+        font-size: 0.8rem;
+    }
+
+    .period-buttons {
+        display: flex;
+        background: var(--bg-card);
+        border-radius: 12px;
+        padding: 4px;
+        border: 2px solid var(--border);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .period-btn {
+        background: transparent;
+        color: var(--text-secondary);
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        transition: all 0.3s ease;
+        position: relative;
+        white-space: nowrap;
+    }
+
+    .period-btn:hover {
+        color: var(--text-primary);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .period-btn.active {
+        background: var(--accent);
+        color: white;
+        box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+        transform: scale(1.02);
+    }
+
+    /* Адаптивность для управления графиком */
+    @media (max-width: 768px) {
+        .chart-controls {
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .chart-controls-right {
+            width: 100%;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .period-buttons {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .period-btn {
+            flex: 1;
+            text-align: center;
+        }
+    }
+
+
+
+    .transactions-list {
+        max-height: 500px;
+        overflow-y: auto;
+        padding: 5px 15px 15px 5px;
+        margin: -5px;
+    }
+
+    /* Скроллбар для списка транзакций */
+    .transactions-list::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .transactions-list::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 10px;
+        margin: 5px 0;
+    }
+
+    .transactions-list::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 10px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+
+    .transactions-list::-webkit-scrollbar-thumb:hover {
+        background: #555555;
+        background-clip: content-box;
+    }
+
+    /* Общие стили скроллбара для всех элементов */
+    .skins-list::-webkit-scrollbar,
+    .modal-content::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .skins-list::-webkit-scrollbar-track,
+    .modal-content::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 8px;
+    }
+
+    .skins-list::-webkit-scrollbar-thumb,
+    .modal-content::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 8px;
+    }
+
+    .skins-list::-webkit-scrollbar-thumb:hover,
+    .modal-content::-webkit-scrollbar-thumb:hover {
+        background: var(--border);
+    }
+
+
+
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 90px;
+        height: 100vh;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        z-index: 101;
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .sidebar.expanded {
+        width: 280px;
+        background: #131213;
+        align-items: center;
+        padding: 20px;
+        box-shadow: 5px 0 20px rgba(0,0,0,0.3);
+    }
+
+    .sidebar-logo {
+        font-size: 40px;
+        font-weight: 900;
+        color: var(--accent);
+        margin-bottom: 35px;
+        text-align: center;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        -webkit-text-stroke: 0.8px;
+        cursor: pointer;
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-self: center;
+    }
+
+    .sidebar-logo:hover {
+        color: #ffffff;
+        transform: scale(1.1);
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        align-items: center;
+        height: calc(100vh - 90px);
+    }
+
+    .sidebar.expanded .sidebar-nav {
+        align-items: center;
+    }
+
+    .nav-btn {
+        width: 50px;
+        height: 50px;
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        position: relative;
+        border-radius: 10px;
+        margin: 2px 0;
+        gap: 0;
+    }
+
+    .sidebar.expanded .nav-btn {
+        width: 240px;
+        height: 50px;
+        justify-content: flex-start;
+        padding: 15px 20px;
+        margin: 5px 0;
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        gap: 18px;
+        text-align: left;
+        align-items: center;
+        display: flex;
+    }
+
+    .nav-btn i {
+        font-size: 22px;
+        font-weight: 900;
+        width: 24px;
+        min-width: 24px;
+        max-width: 24px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .sidebar.expanded .nav-btn i {
+        width: 24px;
+        min-width: 24px;
+        max-width: 24px;
+    }
+
+    .nav-btn-text {
+        color: var(--text-primary);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+        opacity: 0;
+        width: 0;
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        text-align: left;
+        line-height: 1;
+    }
+
+    .sidebar.expanded .nav-btn-text {
+        opacity: 1;
+        width: auto;
+        flex: 1;
+        text-align: left;
+        margin-left: 0;
+    }
+
+    .nav-btn:hover {
+        color: #999999;
+        background: #333333;
+    }
+
+    .nav-btn.active {
+        color: #ffffff;
+        background: #333333;
+    }
+
+    .nav-btn::before {
+        content: '';
+        position: absolute;
+        left: -20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 5px;
+        height: 0;
+        background: #ffffff;
+        transition: height 0.3s ease;
+        border-radius: 10px;
+    }
+
+    .nav-btn.active::before {
+        height: 30px;
+    }
+
+
+
+    /* Тултипы для кнопок меню */
+    .nav-btn {
+        position: relative;
+    }
+
+    .nav-btn::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        left: 65px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #444444;
+        color: #ffffff;
+        padding: 14px 18px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    }
+
+    .nav-btn:hover::after {
+        opacity: 1;
+        visibility: visible;
+        left: 75px;
+    }
+
+    /* Скрываем тултипы в расширенном меню */
+    .sidebar.expanded .nav-btn::after {
+        display: none;
+    }
+
+    /* Правый сайдбар */
+    .right-sidebar {
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 90px;
+        height: 100vh;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        z-index: 101;
+    }
+
+    .right-sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        align-items: center;
+        padding-top: 55px;
+    }
+
+    .right-nav-btn {
+        width: 50px;
+        height: 50px;
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        position: relative;
+        border-radius: 10px;
+        margin: 2px 0;
+    }
+
+    .right-nav-btn i {
+        font-size: 22px;
+        font-weight: 900;
+        width: 24px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .right-nav-btn:hover {
+        color: #999999;
+        background: #333333;
+    }
+
+    .right-nav-btn.active {
+        color: #ffffff;
+        background: #333333;
+    }
+
+    .right-nav-btn:not(.important)::before {
+        content: '';
+        position: absolute;
+        right: -20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 5px;
+        height: 0;
+        background: #ffffff;
+        transition: height 0.3s ease;
+        border-radius: 10px;
+    }
+
+    .right-nav-btn.active:not(.important)::before {
+        height: 30px;
+    }
+
+    /* Белая полоска для правого меню через дополнительный элемент */
+    .right-nav-btn .active-line {
+        position: absolute;
+        right: -20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 5px;
+        height: 0;
+        background: #ffffff;
+        transition: height 0.3s ease;
+        border-radius: 10px;
+        z-index: 5;
+    }
+
+    .right-nav-btn.active .active-line {
+        height: 30px;
+    }
+
+    /* Тултипы для правых кнопок */
+    .right-nav-btn::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        right: 65px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #444444;
+        color: #ffffff;
+        padding: 14px 18px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    }
+
+    .right-nav-btn:hover::after {
+        opacity: 1;
+        visibility: visible;
+        right: 75px;
+    }
+
+    /* Красная точка для кнопки FAQ */
+    .right-nav-btn.important {
+        position: relative;
+    }
+
+    .red-dot {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 8px;
+        height: 8px;
+        background: #ff0000;
+        border-radius: 50%;
+        z-index: 10;
+        box-shadow: 0 0 0 2px #000000, 0 0 8px rgba(255, 0, 0, 0.6);
+        animation: pulse-red 2s infinite;
+    }
+
+    @keyframes pulse-red {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.2);
+            opacity: 0.8;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    /* Белая полоска для активных элементов */
+    .nav-btn::before {
+        content: '';
+        position: absolute;
+        left: -20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 5px;
+        height: 0;
+        background: #ffffff;
+        transition: height 0.3s ease;
+        border-radius: 10px;
+    }
+
+    .nav-btn.active::before {
+        height: 30px;
+    }
+
+    .nav-separator {
+        width: 60px;
+        height: 1px;
+        background: var(--border);
+        margin: 15px 5px;
+        border-radius: 1px;
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .sidebar.expanded .nav-separator {
+        width: 240px;
+        margin: 15px 0;
+        align-self: center;
+    }
+
+    .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding: 15px 20px;
+        background: var(--bg-card);
+        border-radius: 12px;
+        border: none;
+    }
+
+    .calendar-nav-btn {
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: var(--accent);
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .calendar-nav-btn:hover {
+        background: var(--positive);
+        transform: scale(1.05);
+    }
+
+    .calendar-month-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: white !important;
+        text-align: center;
+        flex: 1;
+    }
+
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        margin-top: 20px;
+        background: var(--bg-card);
+        padding: 20px;
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .calendar-weekday {
+        padding: 15px 10px;
+        text-align: center;
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: white !important;
+        background: #131213;
+        border-radius: 6px;
+        border-bottom: 3px solid var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .calendar-day {
+        padding: 8px;
+        text-align: center;
+        border-radius: 10px;
+        cursor: pointer;
+        min-height: 70px;
+        position: relative;
+        transition: all 0.3s ease;
+        background: var(--bg-primary);
+        border: 1px solid transparent;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .calendar-day:hover {
+        background: #131213;
+        border-color: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+    }
+
+    .calendar-day-number {
+        font-weight: 800;
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+        color: white !important;
+    }
+
+    .calendar-day-transactions {
+        font-size: 12px;
+        font-weight: 800;
+        color: white !important;
+        margin: 3px 0;
+    }
+
+    .calendar-day-balance {
+        font-size: 11px;
+        font-weight: 800;
+        padding: 3px 6px;
+        border-radius: 6px;
+        margin-top: auto;
+        color: white !important;
+    }
+
+    .calendar-day-balance.positive {
+        background: rgba(40, 167, 69, 0.2);
+        color: var(--positive);
+    }
+
+    .calendar-day-balance.negative {
+        background: rgba(220, 53, 69, 0.2);
+        color: var(--negative);
+    }
+
+    .calendar-day.today {
+        background: var(--accent);
+        color: white;
+        box-shadow: 0 0 20px rgba(0, 123, 255, 0.4);
+        border-color: var(--accent);
+    }
+
+    .calendar-day.today .calendar-day-number {
+        color: white;
+    }
+
+    .calendar-day.today .calendar-day-transactions {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .calendar-day.today .calendar-day-balance {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+
+    .calendar-day.has-transactions::after {
+        content: '';
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 6px;
+        height: 6px;
+        background: var(--accent);
+        border-radius: 50%;
+    }
+
+    .calendar-day.today.has-transactions::after {
+        background: white;
+    }
+
+    .calculator-section {
+        border-top: 1px solid var(--border);
+        padding-top: 20px;
+        margin-top: 20px;
+    }
+
+    .skins-list {
+        max-height: 300px;
+        overflow-y: auto;
+        border: none;
+        border-radius: 10px;
+        padding: 10px;
+        background: var(--bg-card);
+    }
+
+    .skin-item {
+        padding: 10px;
+        border-bottom: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .skin-quality {
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+
+    .skin-info-card {
+        background: var(--bg-card);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-left: 4px solid var(--accent);
+    }
+
+    .skin-info-card h4 {
+        margin: 0 0 10px 0;
+        color: var(--text-primary);
+        font-size: 1.2rem;
+    }
+
+    .skin-info-card p {
+        margin: 5px 0;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    .sell-calculation {
+        background: var(--bg-card);
+        border-radius: 8px;
+        padding: 15px;
+        margin: 15px 0;
+        border: 1px solid var(--border);
+    }
+
+    .calculation-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 8px 0;
+        font-size: 0.95rem;
+    }
+
+    .calculation-row.profit {
+        border-top: 1px solid var(--border);
+        padding-top: 8px;
+        margin-top: 12px;
+        font-weight: 800;
+        font-size: 1.1rem;
+    }
+
+    .calculation-row.profit span:last-child {
+        color: var(--positive);
+    }
+
+    /* Стили страницы "Мои скины" */
+    
+    /* Стили для баннера скинов */
+    .skins-hero-banner {
+        background: linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa, #93c5fd);
+        border-radius: 20px;
+        padding: 50px 60px;
+        margin: 20px 0 50px 0;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        min-height: 240px;
+    }
+
+    .skins-hero-banner::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            radial-gradient(circle at 25% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 75% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
+        z-index: 1;
+    }
+
+    .skins-hero-banner::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255,255,255,0.03) 3px, rgba(255,255,255,0.03) 6px),
+            repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(255,255,255,0.02) 3px, rgba(255,255,255,0.02) 6px);
+        z-index: 1;
+    }
+
+    .skins-hero-content {
+        position: relative;
+        z-index: 3;
+        flex: 1;
+        max-width: 65%;
+    }
+
+    .skins-hero-icon {
+        background: rgba(255, 255, 255, 0.15);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 25px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .skins-hero-icon i {
+        font-size: 2.5rem;
+        color: #ffffff;
+    }
+
+    .skins-hero-title {
+        font-size: 3.2rem;
+        font-weight: 900;
+        color: #ffffff;
+        margin: 0 0 20px 0;
+        line-height: 1.2;
+        -webkit-text-stroke: 0.5px;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .skins-hero-subtitle {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.85);
+        margin: 0 0 30px 0;
+        line-height: 1.5;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+
+    .skins-hero-decoration {
+        position: relative;
+        z-index: 2;
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        max-width: 35%;
+    }
+
+    .skins-weapon {
+        width: 780px;
+        height: auto;
+        object-fit: contain;
+        transform: rotate(-15deg) scale(1.65);
+        opacity: 0.95;
+        position: relative;
+        right: -270px;
+        top: 27px;
+    }
+
+    .skins-stats-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESOTRADE</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --bg-primary: #000000;
+        --bg-secondary: #111111;
+        --bg-card: #333333;
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --border: #333333;
+        --accent: #007bff;
+        --positive: #28a745;
+        --negative: #dc3545;
+        --shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    :root.dark {
+        --bg-primary: #000000;
+        --bg-secondary: #111111;
+        --bg-card: #333333;
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --border: #333333;
+        --accent: #0d6efd;
+        --positive: #198754;
+        --negative: #dc3545;
+        --shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        transition: all 0.3s ease;
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    * {
+        font-weight: 800 !important;
+    }
+
+    /* Мобильное сообщение о разработке */
+    .mobile-development-message {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #000000 0%, #111111 100%);
+        z-index: 9999;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .mobile-dev-icon {
+        font-size: 5rem;
+        color: var(--accent);
+        margin-bottom: 30px;
+    }
+
+    .mobile-dev-title {
+        font-size: 2.5rem;
+        font-weight: 900;
+        margin-bottom: 20px;
+        color: var(--text-primary);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .mobile-dev-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        line-height: 1.6;
+        max-width: 350px;
+    }
+
+    .mobile-dev-features {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 40px;
+    }
+
+    .mobile-dev-features li {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .mobile-dev-features li i {
+        color: var(--accent);
+        margin-right: 10px;
+        width: 20px;
+    }
+
+    .mobile-dev-contact {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        opacity: 0.8;
+    }
+
+    .mobile-dev-contact a {
+        color: var(--accent);
+        text-decoration: none;
+    }
+
+
+
+    /* Скрытие основного контента на мобильных */
+    @media (max-width: 768px) {
+        .mobile-development-message {
+            display: flex !important;
+        }
+        
+        .frame,
+        .sidebar,
+        .right-sidebar,
+        .main-area {
+            display: none !important;
+        }
+    }
+
+    .frame {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #131213;
+        z-index: 50;
+    }
+    
+    .frame::after {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 90px;
+        right: 90px;
+        bottom: 10px;
+        background: var(--bg-primary);
+        border-radius: 25px;
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    body.sidebar-expanded .frame::after {
+        left: 280px;
+    }
+
+    .main-area {
+        position: fixed;
+        top: 20px;
+        left: 100px;
+        right: 105px;
+        bottom: 20px;
+        background: transparent;
+        border-radius: 20px;
+        margin: 0;
+        box-shadow: 
+            inset 0 0 20px rgba(0,0,0,0.3);
+        overflow: auto;
+        z-index: 100;
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    body.sidebar-expanded .main-area {
+        left: 290px;
+        right: 105px;
+    }
+
+    /* Кастомный скроллбар */
+    .main-area::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .main-area::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 8px;
+    }
+
+    .main-area::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 8px;
+    }
+
+    .main-area::-webkit-scrollbar-thumb:hover {
+        background: var(--border);
+    }
+
+    .container {
+        max-width: none;
+        margin: 0;
+        padding: 30px;
+        height: 100%;
+        min-height: calc(100vh - 140px);
+    }
+
+    .header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 30px;
+        padding: 0;
+        border: none;
+    }
+
+    .header h1 {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: var(--accent);
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+
+
+    .card {
+        background: #111111 !important;
+        border: none;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: var(--shadow);
+        font-size: 19px;
+        font-weight: 800;
+    }
+
+    .card h3 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        color: var(--accent);
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+
+
+    .btn {
+        background: var(--bg-card);
+        color: white;
+        border: none;
+        padding: 15px 25px;
+        border-radius: 10px;
+        cursor: pointer;
+        margin: 8px;
+        font-size: 1.1rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        -webkit-text-stroke: 0.3px;
+    }
+    .btn-secondary {
+        background: #333333;
+        color: var(--text-primary);
+        border: 1px solid var(--border);
+    }
+
+    .btn-danger {
+        background: var(--negative);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: #ffffff !important;
+        -webkit-text-stroke: 0.1px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #333333 !important;
+        border-radius: 8px !important;
+        background: #1a1a1a !important;
+        color: #ffffff !important;
+        font-size: 0.9rem;
+        font-weight: 400;
+    }
+
+    .form-control:focus {
+        border-color: var(--accent) !important;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2) !important;
+        outline: none;
+    }
+
+    /* Стили для пользовательского диапазона дат */
+    .date-range-modal {
+        z-index: 1300;
+        background: #000000 !important;
+    }
+
+    .date-range-modal-content {
+        background: #131213 !important; /* Цвет как у левого меню */
+        border: 1px solid #333333;
+        margin: 5% auto; /* Поднимаем выше */
+        padding: 25px 35px;
+        border-radius: 16px;
+        max-width: 700px; /* Уменьшили для 3 колонок */
+        width: 90%;
+        position: relative;
+        font-size: 1rem;
+        font-weight: 500; /* Тоньше шрифт */
+        box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+        color: #ffffff !important; /* Белый текст */
+    }
+
+    .date-range-modal-content h3 {
+        font-size: 1.3rem !important; /* Еще меньше заголовок */
+        font-weight: 600; /* Тоньше заголовок */
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        color: #ffffff !important; /* Белый заголовок */
+        text-align: center;
+        -webkit-text-stroke: 0.2px;
+        border-bottom: 1px solid #333333; /* Разделительная линия */
+    }
+
+    .date-range-modal-content h3 i {
+        font-size: 0.9rem !important; /* Уменьшаем иконку */
+        margin-right: 6px;
+        opacity: 0.8;
+    }
+
+    .date-range-modal-content .close {
+        color: #cccccc;
+        font-size: 24px;
+    }
+
+    .date-range-modal-content .close:hover {
+        color: #ff4757;
+    }
+
+    .date-range-form-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0px; /* Убираем gap, используем margin и padding для разделителей */
+        margin-bottom: 5px;
+    }
+
+    .date-range-type-row {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .date-range-dates-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        align-items: end;
+    }
+
+    .date-range-form-grid .form-group {
+        margin-bottom: 0;
+    }
+
+    .date-range-form-grid .form-group label {
+        font-size: 0.9rem;
+        font-weight: 500; /* Тоньше лейблы */
+        color: #ffffff !important; /* Белые лейблы */
+        margin-bottom: 8px;
+        -webkit-text-stroke: 0.1px;
+        display: block;
+    }
+
+    .date-range-form-grid select.form-control {
+        background: #1a1a1a !important;
+        border: 1px solid #333333 !important;
+        color: #ffffff !important;
+        font-size: 0.9rem;
+        font-weight: 400; /* Тоньше текст в полях */
+        padding: 12px;
+    }
+
+    .date-range-form-grid select.form-control:focus {
+        border-color: var(--accent) !important;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2) !important;
+    }
+
+    .date-range-form-grid input.form-control {
+        background: #1a1a1a !important;
+        border: 1px solid #333333 !important;
+        color: #ffffff !important;
+        font-size: 0.9rem;
+        font-weight: 400; /* Тоньше текст в полях */
+        padding: 12px;
+        border-radius: 8px !important;
+    }
+
+    .date-range-form-grid input.form-control:focus {
+        border-color: var(--accent) !important;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2) !important;
+        outline: none !important;
+    }
+
+    /* Белые иконки календаря в полях дат */
+    .date-range-form-grid input[type="date"] {
+        color-scheme: dark;
+    }
+
+    .date-range-form-grid input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+        cursor: pointer;
+    }
+
+    .date-range-form-grid input[type="date"]::-webkit-datetime-edit {
+        color: #ffffff !important;
+    }
+
+    .date-range-form-grid input[type="date"]::-webkit-datetime-edit-text {
+        color: #ffffff !important;
+    }
+
+    .date-range-form-grid input[type="date"]::-webkit-datetime-edit-month-field {
+        color: #ffffff !important;
+    }
+
+    .date-range-form-grid input[type="date"]::-webkit-datetime-edit-day-field {
+        color: #ffffff !important;
+    }
+
+    .date-range-form-grid input[type="date"]::-webkit-datetime-edit-year-field {
+        color: #ffffff !important;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .date-range-form-grid option {
+        background: #1a1a1a !important;
+        color: #ffffff !important;
+        font-weight: 400;
+    }
+
+    .date-range-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .date-range-buttons .btn {
+        min-width: 120px;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border: none !important;
+        border-radius: 8px !important;
+    }
+
+    /* Красная кнопка ОТМЕНИТЬ */
+    .date-range-buttons .btn.btn-secondary {
+        background: #dc3545 !important;
+        color: #ffffff !important;
+    }
+
+    .date-range-buttons .btn.btn-secondary:hover {
+        background: #c82333 !important;
+    }
+
+    /* Синяя кнопка ФИЛЬТР */
+    .date-range-buttons .btn:not(.btn-secondary) {
+        background: #007bff !important;
+        color: #ffffff !important;
+    }
+
+    .date-range-buttons .btn:not(.btn-secondary):hover {
+        background: #0056b3 !important;
+        color: #ffffff !important;
+    }
+
+    /* Адаптивность для горизонтального модального окна */
+    @media (max-width: 768px) {
+        .date-range-modal-content {
+            max-width: 95%;
+            padding: 20px 25px;
+            margin: 8% auto;
+        }
+
+        .date-range-dates-row {
+            grid-template-columns: 1fr; /* 1 колонка на мобильных для дат */
+            gap: 15px;
+        }
+
+        .date-range-modal-content h3 {
+            font-size: 1.15rem !important;
+        }
+
+        .date-range-buttons .btn {
+            min-width: 100px;
+            padding: 10px 16px;
+            font-size: 0.85rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .date-range-dates-row {
+            grid-template-columns: 1fr; /* 1 колонка на очень маленьких экранах */
+            gap: 12px;
+        }
+
+        .date-range-buttons {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .date-range-buttons .btn {
+            width: 100%;
+        }
+    }
+
+    /* Стили для поля поиска с иконкой */
+    .search-container {
+        position: relative;
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .search-input {
+        padding-left: 50px !important;
+    }
+
+    .search-input:focus {
+        border-color: var(--border) !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+        font-size: 16px;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    select.form-control {
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 16px;
+        padding-right: 40px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    select.form-control:focus {
+        border-color: var(--border) !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    option {
+        font-weight: 400;
+        padding: 12px 15px;
+        background: #1a1a1a !important;
+        color: #ffffff !important;
+        border: none;
+        font-size: 0.9rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        text-transform: none;
+        letter-spacing: 0.2px;
+        line-height: 1.4;
+        border-radius: 0;
+    }
+
+    /* Стилизация выпадающего списка */
+    select.form-control option:first-child {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    select.form-control option:last-child {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    option:hover,
+    option:focus,
+    option:checked {
+        background: var(--accent) !important;
+        color: #ffffff !important;
+    }
+
+    /* Для Firefox */
+    select.form-control {
+        text-indent: 0.01px;
+        text-overflow: '';
+    }
+
+    /* Для WebKit браузеров */
+    select.form-control::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    select.form-control::-webkit-scrollbar-track {
+        background: var(--bg-card);
+        border-radius: 8px;
+    }
+
+    select.form-control::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 8px;
+    }
+
+    select.form-control::-webkit-scrollbar-thumb:hover {
+        background: var(--accent);
+    }
+
+    /* Дополнительная стилизация для WebKit браузеров */
+    select.form-control {
+        border-radius: 10px;
+    }
+
+    /* Попытка стилизации выпадающего списка в WebKit */
+    select.form-control::-webkit-list-box {
+        border-radius: 10px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    /* Для Firefox - альтернативный подход */
+    @-moz-document url-prefix() {
+        select.form-control {
+            border-radius: 10px;
+            background: var(--bg-card);
+        }
+    }
+
+    /* Дополнительные правила для Brave и других Chromium браузеров */
+    select.form-control {
+        border-radius: 10px !important;
+        overflow: hidden;
+    }
+
+    /* Попытка для всех WebKit браузеров */
+    select.form-control::-webkit-appearance {
+        border-radius: 10px;
+    }
+
+    /* Принудительное применение стилей */
+    select.form-control, 
+    select.form-control * {
+        border-radius: 10px !important;
+        -webkit-border-radius: 10px !important;
+        -moz-border-radius: 10px !important;
+    }
+
+    /* Для Brave специально */
+    select.form-control {
+        background-clip: padding-box !important;
+        border-radius: 10px !important;
+        box-sizing: border-box !important;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000000;
+        z-index: 1200;
+    }
+
+    /* Блокировка скролла и взаимодействия при открытом модальном окне */
+    body.modal-open {
+        overflow: hidden;
+    }
+
+    body.modal-open .sidebar {
+        pointer-events: none;
+    }
+    
+    /* Правый сайдбар остается активным для модального окна депозитов */
+    body.modal-open .right-sidebar {
+        pointer-events: auto;
+    }
+
+    /* Затемнение сайдбаров при открытом модальном окне - только левый сайдбар */
+    body.modal-open .sidebar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #000000;
+        z-index: 50;
+        pointer-events: none;
+    }
+
+    /* Иконки в правом сайдбаре должны быть выше затемнения */
+    body.modal-open .right-sidebar .right-nav-btn {
+        position: relative;
+        z-index: 51;
+    }
+
+    body.modal-open .right-sidebar .right-nav-btn i {
+        position: relative;
+        z-index: 52;
+    }
+
+    body.modal-open .sidebar,
+    body.modal-open .right-sidebar {
+        position: relative;
+    }
+
+    .modal-content {
+        background: #131213 !important;
+        border: 1px solid #333333;
+        margin: 5% auto;
+        padding: 25px 35px;
+        border-radius: 16px;
+        max-width: 700px;
+        width: 90%;
+        position: relative;
+        font-size: 1rem;
+        font-weight: 500;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+        color: #ffffff !important;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+
+    .modal-content h3 {
+        font-size: 1.3rem !important;
+        font-weight: 600;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        color: #ffffff !important;
+        text-align: center;
+        -webkit-text-stroke: 0.2px;
+        border-bottom: 1px solid #333333;
+    }
+
+    .modal-content h3 i {
+        font-size: 0.9rem !important;
+        margin-right: 6px;
+        opacity: 0.8;
+    }
+
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 24px;
+        font-weight: 900;
+        cursor: pointer;
+        color: #cccccc;
+        transition: all 0.3s;
+    }
+
+    .close:hover {
+        color: #ff4757;
+    }
+
+    /* Стили кнопок для модального окна добавления сделки */
+    .modal-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .modal-buttons .btn {
+        min-width: 120px;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border: none !important;
+        border-radius: 8px !important;
+    }
+
+    /* Красная кнопка ОТМЕНИТЬ */
+    .modal-buttons .btn.btn-secondary {
+        background: #dc3545 !important;
+        color: #ffffff !important;
+    }
+
+    .modal-buttons .btn.btn-secondary:hover {
+        background: #c82333 !important;
+    }
+
+    /* Синяя кнопка ДОБАВИТЬ */
+    .modal-buttons .btn:not(.btn-secondary) {
+        background: #007bff !important;
+        color: #ffffff !important;
+    }
+
+    .modal-buttons .btn:not(.btn-secondary):hover {
+        background: #0056b3 !important;
+        color: #ffffff !important;
+    }
+
+    /* Горизонтальная сетка для полей формы */
+    .transaction-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 15px;
+    }
+
+    .transaction-form-grid .form-group {
+        margin-bottom: 0;
+    }
+
+    /* Белые иконки календаря в полях дат модального окна */
+    .modal-content input[type="date"] {
+        color-scheme: dark;
+    }
+
+    .modal-content input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+        cursor: pointer;
+    }
+
+    .modal-content input[type="date"]::-webkit-datetime-edit {
+        color: #ffffff !important;
+    }
+
+    .modal-content input[type="date"]::-webkit-datetime-edit-day-field {
+        color: #ffffff !important;
+    }
+
+    .modal-content input[type="date"]::-webkit-datetime-edit-year-field {
+        color: #ffffff !important;
+    }
+
+    /* Кастомный скроллбар для модальных окон */
+    .modal-content::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .modal-content::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 8px;
+        margin: 8px 0;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 8px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb:hover {
+        background: #555555;
+        background-clip: content-box;
+    }
+
+    /* Адаптивность для модального окна */
+    @media (max-width: 768px) {
+        .modal-content {
+            max-width: 95%;
+            padding: 20px 25px;
+            margin: 3% auto;
+            max-height: 90vh;
+        }
+
+        .transaction-form-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .modal-content h3 {
+            font-size: 1.15rem !important;
+        }
+
+        .modal-buttons .btn {
+            min-width: 100px;
+            padding: 10px 16px;
+            font-size: 0.85rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .modal-content {
+            margin: 2% auto;
+            max-height: 95vh;
+            padding: 15px 20px;
+        }
+
+        .modal-buttons {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .modal-buttons .btn {
+            width: 100%;
+        }
+    }
+
+    /* Стили для модального окна подтверждения удаления */
+    .confirm-delete-modal-content {
+        max-width: 500px !important;
+        text-align: center;
+    }
+
+    .confirm-delete-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .confirm-delete-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: #dc3545;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .confirm-delete-icon i {
+        font-size: 2.2rem;
+        color: #ffffff;
+    }
+
+    .confirm-delete-header h3 {
+        margin: 0;
+        padding: 0;
+        border: none;
+        color: #dc3545 !important;
+        font-size: 1.4rem !important;
+        font-weight: 800;
+    }
+
+    .confirm-delete-body {
+        margin-bottom: 30px;
+    }
+
+    .confirm-delete-body p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+
+    .transaction-preview {
+        background: #1a1a1a;
+        border: 1px solid #333333;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 15px 0;
+        text-align: left;
+    }
+
+    .transaction-preview h4 {
+        color: var(--text-primary);
+        font-size: 1.1rem;
+        margin: 0 0 8px 0;
+        font-weight: 700;
+    }
+
+    .transaction-preview .preview-amount {
+        font-size: 1.2rem;
+        font-weight: 800;
+        margin: 8px 0;
+    }
+
+    .transaction-preview .preview-amount.income {
+        color: #22c55e;
+    }
+
+    .transaction-preview .preview-amount.expense {
+        color: #ef4444;
+    }
+
+    .transaction-preview .preview-date {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin: 5px 0;
+    }
+
+    .transaction-preview .preview-type {
+        background: rgba(0, 123, 255, 0.15);
+        color: var(--accent);
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-top: 8px;
+    }
+
+    .confirm-delete-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .confirm-delete-buttons .btn {
+        min-width: 120px;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        border: none !important;
+        border-radius: 8px !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .confirm-delete-buttons .btn.btn-secondary {
+        background: #6c757d !important;
+        color: #ffffff !important;
+    }
+
+    .confirm-delete-buttons .btn.btn-secondary:hover {
+        background: #5a6268 !important;
+    }
+
+    .confirm-delete-buttons .btn.btn-danger {
+        background: #dc3545 !important;
+        color: #ffffff !important;
+    }
+
+    .confirm-delete-buttons .btn.btn-danger:hover {
+        background: #c82333 !important;
+    }
+
+    @media (max-width: 480px) {
+        .confirm-delete-modal-content {
+            max-width: 95% !important;
+        }
+        
+        .confirm-delete-buttons {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .confirm-delete-buttons .btn {
+            width: 100%;
+        }
+    }
+
+    .transaction-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0;
+        margin-bottom: 25px;
+        background: #1a1a1a;
+        border: none;
+        border-radius: 16px;
+        font-size: 1.1rem;
+        font-weight: 900;
+        -webkit-text-stroke: 0.2px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        min-height: 100px;
+    }
+
+    .transaction-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+        background: linear-gradient(180deg, var(--accent), #0066ff);
+        opacity: 0;
+    }
+
+    .transaction-item.income::before {
+        background: linear-gradient(180deg, #22c55e, #16a34a);
+        opacity: 1;
+    }
+
+    .transaction-item.expense::before {
+        background: linear-gradient(180deg, #ef4444, #dc2626);
+        opacity: 1;
+    }
+
+    .transaction-content {
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .transaction-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 6px;
+    }
+
+    .transaction-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: #ffffff;
+        flex-shrink: 0;
+    }
+
+    .transaction-icon.income {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+    }
+
+    .transaction-icon.expense {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+    .transaction-main-info {
+        flex: 1;
+    }
+
+    .transaction-item h4 {
+        font-size: 1.4rem;
+        font-weight: 900;
+        margin: 0;
+        color: var(--text-primary);
+        -webkit-text-stroke: 0.3px;
+        line-height: 1.2;
+    }
+
+    .transaction-title-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 6px;
+    }
+
+    .transaction-title-row h4 {
+        margin: 0;
+        flex: 1;
+        min-width: 0; /* Позволяет тексту сжиматься */
+    }
+
+    .transaction-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin-top: 4px;
+    }
+
+    .transaction-type {
+        background: rgba(0, 123, 255, 0.15);
+        color: var(--accent);
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: 1px solid rgba(0, 123, 255, 0.3);
+    }
+
+    .transaction-date {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 2px;
+        flex-wrap: wrap;
+    }
+
+    .transaction-platform {
+        color: #007bff;
+        font-size: 0.75rem;
+        font-weight: 600;
+        background: rgba(0, 123, 255, 0.1);
+        padding: 2px 6px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-left: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
     }
 
     .transaction-description {
@@ -2648,6 +5056,433 @@
 
         .skins-grid {
             grid-template-columns: 1fr;
+        }
+    }
+
+    /* Стили страницы "Пул скинов" */
+    
+    /* Стили для баннера пула скинов */
+    .skinpool-hero-banner {
+        background: linear-gradient(135deg, #7c3aed, #a855f7, #c084fc, #ddd6fe);
+        border-radius: 20px;
+        padding: 50px 60px;
+        margin: 20px 0 50px 0;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        min-height: 240px;
+    }
+
+    .skinpool-hero-banner::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            radial-gradient(circle at 25% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 75% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
+        z-index: 1;
+    }
+
+    .skinpool-hero-banner::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255,255,255,0.03) 3px, rgba(255,255,255,0.03) 6px),
+            repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(255,255,255,0.02) 3px, rgba(255,255,255,0.02) 6px);
+        z-index: 1;
+    }
+
+    .skinpool-hero-content {
+        position: relative;
+        z-index: 3;
+        flex: 1;
+        max-width: 65%;
+    }
+
+    .skinpool-hero-icon {
+        background: rgba(255, 255, 255, 0.15);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 25px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .skinpool-hero-icon i {
+        font-size: 2.5rem;
+        color: #ffffff;
+    }
+
+    .skinpool-hero-title {
+        font-size: 3.2rem;
+        font-weight: 900;
+        color: #ffffff;
+        margin: 0 0 20px 0;
+        line-height: 1.2;
+        -webkit-text-stroke: 0.5px;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .skinpool-hero-subtitle {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.85);
+        margin: 0 0 15px 0;
+        line-height: 1.5;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+
+    .skinpool-hero-description {
+        font-size: 1rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.75);
+        margin: 0;
+        line-height: 1.6;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+
+    .skinpool-hero-decoration {
+        position: relative;
+        z-index: 2;
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        max-width: 35%;
+    }
+
+    .skinpool-weapon {
+        width: 780px;
+        height: auto;
+        object-fit: contain;
+        transform: rotate(-15deg) scale(1.65);
+        opacity: 0.95;
+        position: relative;
+        right: -270px;
+        top: 27px;
+    }
+
+    .skinpool-stats-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .skinpool-stat-card {
+        background: #131213;
+        border-radius: 15px;
+        padding: 25px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        border: 1px solid var(--border);
+    }
+
+    .skinpool-stat-card .stat-icon {
+        width: 60px;
+        height: 60px;
+        background: #7c3aed;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    .skinpool-stat-card .stat-content h3 {
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    .skinpool-stat-card .stat-content p {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin: 5px 0 0 0;
+        font-weight: 600;
+    }
+
+    .skinpool-main-content {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        gap: 30px;
+    }
+
+    .skinpool-sidebar {
+        background: #131213;
+        border-radius: 15px;
+        padding: 25px;
+        height: fit-content;
+        border: 1px solid var(--border);
+    }
+
+    .add-poolskin-section h3 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .add-poolskin-section .form-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .add-poolskin-section .form-buttons .btn {
+        flex: 1;
+        min-width: 60px;
+        max-width: 80px;
+        height: 50px;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .skinpool-grid-section {
+        background: #131213;
+        border-radius: 15px;
+        padding: 25px;
+        border: 1px solid var(--border);
+        height: fit-content;
+        max-height: 700px;
+        overflow-y: auto;
+    }
+
+    .skinpool-grid-section::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .skinpool-grid-section::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+    }
+
+    .skinpool-grid-section::-webkit-scrollbar-thumb {
+        background: #666666;
+        border-radius: 4px;
+    }
+
+    .skinpool-grid-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid var(--border);
+    }
+
+    .skinpool-grid-header h3 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    .skinpool-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .skinpool-controls select {
+        min-width: 200px;
+    }
+
+    .skinpool-controls .btn {
+        padding: 8px 12px;
+        font-size: 1rem;
+        min-width: 45px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .skinpool-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .pool-skin-card {
+        background: #1a1a1a;
+        border-radius: 15px;
+        padding: 20px;
+        border: 1px solid var(--border);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .pool-skin-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 15px;
+    }
+
+    .pool-skin-name {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin: 0;
+        line-height: 1.3;
+    }
+
+    .pool-skin-float {
+        font-size: 0.9rem;
+        color: #7c3aed;
+        font-weight: 700;
+        background: rgba(124, 58, 237, 0.1);
+        padding: 4px 8px;
+        border-radius: 6px;
+    }
+
+    .pool-skin-price {
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: var(--positive);
+        margin: 10px 0;
+    }
+
+    .pool-skin-link {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    .pool-skin-link a {
+        color: #7c3aed;
+        text-decoration: none;
+        word-break: break-all;
+    }
+
+    .pool-skin-link a:hover {
+        text-decoration: underline;
+    }
+
+    .pool-skin-comment {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-bottom: 15px;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+    }
+
+    .pool-skin-date {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-bottom: 15px;
+        opacity: 0.7;
+    }
+
+    .pool-skin-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .pool-skin-actions .btn {
+        flex: 1;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .empty-pool {
+        text-align: center;
+        padding: 80px 20px;
+        color: var(--text-secondary);
+    }
+
+    .empty-pool i {
+        font-size: 5rem;
+        margin-bottom: 25px;
+        opacity: 0.6;
+        color: #7c3aed;
+    }
+
+    .empty-pool h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 15px;
+    }
+
+    .empty-pool p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    /* Адаптивность для страницы пула скинов */
+    @media (max-width: 768px) {
+        .skinpool-main-content {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .skinpool-stats-cards {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .skinpool-hero-title {
+            font-size: 2.5rem;
+        }
+
+        .skinpool-hero-subtitle {
+            font-size: 1rem;
+        }
+
+        .skinpool-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .skinpool-sidebar {
+            order: 2;
+        }
+
+        .skinpool-grid-section {
+            order: 1;
+        }
+
+        .skinpool-grid-header {
+            flex-direction: column;
+            gap: 15px;
+            align-items: stretch;
+        }
+
+        .skinpool-controls {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .skinpool-controls select {
+            min-width: auto;
+            width: 100%;
         }
     }
 
@@ -4688,6 +7523,84 @@
         }
     }
 
+    /* Стили для модальных окон экспорта/импорта */
+    .export-format-options {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .format-option {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        border: 2px solid #333333;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        gap: 20px;
+    }
+
+    .format-option:hover {
+        background: linear-gradient(135deg, #252525 0%, #333333 100%);
+        border-color: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+    }
+
+    .format-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--accent), #0066ff);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .format-details {
+        flex: 1;
+    }
+
+    .format-details h4 {
+        margin: 0 0 8px 0;
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: var(--text-primary);
+    }
+
+    .format-details p {
+        margin: 0 0 8px 0;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .format-features {
+        font-size: 0.8rem;
+        color: var(--accent);
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .format-option {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+        
+        .format-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+        }
+    }
+
     /* Стили дашборда в современном стиле */
     .dashboard-cards {
         display: grid;
@@ -5415,11 +8328,11 @@
                 <div class="nav-separator"></div>
 
                 <div style="margin-top: auto;">
-                    <button class="nav-btn" onclick="exportData(); collapseSidebar()" data-tooltip="Экспорт данных">
+                    <button class="nav-btn" onclick="showModal('exportFormatModal'); collapseSidebar()" data-tooltip="Экспорт данных">
                         <i class="fas fa-download"></i>
                         <span class="nav-btn-text">Экспорт</span>
                     </button>
-                    <button class="nav-btn" onclick="document.getElementById('importFile').click(); collapseSidebar()" data-tooltip="Импорт данных">
+                    <button class="nav-btn" onclick="showModal('importFormatModal'); collapseSidebar()" data-tooltip="Импорт данных">
                         <i class="fas fa-upload"></i>
                         <span class="nav-btn-text">Импорт</span>
                     </button>
@@ -5434,6 +8347,10 @@
                     <span class="active-line"></span>
                     <i class="fas fa-chart-pie"></i>
                 </button>
+                <button class="right-nav-btn" onclick="goToSkinPool(this)" data-tooltip="ПУЛ СКИНОВ">
+                    <span class="active-line"></span>
+                    <i class="fas fa-layer-group"></i>
+                </button>
                 <button class="right-nav-btn important" onclick="setActiveRightNav(this); showView('faq')" data-tooltip="FAQ">
                     <span class="red-dot"></span>
                     <span class="active-line"></span>
@@ -5442,8 +8359,8 @@
             </div>
         </div>
 
-        <!-- Скрытый input для импорта -->
-        <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importTransactions(event)">
+        <!-- Скрытые input для импорта разных форматов -->
+            <input type="file" id="importFileJson" accept=".json" style="display:none;" onchange="importTransactions(event, 'json')">
         
         <!-- Главная область с округлыми краями -->
         <div class="main-area">
@@ -5680,7 +8597,7 @@
                     </div>
                 </div>
                 <div class="statistics-hero-decoration">
-                    <img src="playside (7) (1).png" alt="Скин статистики" class="statistics-weapon">
+                    <img src="playside (75) (1).png" alt="Скин статистики" class="statistics-weapon">
                 </div>
             </div>
             
@@ -6121,6 +9038,119 @@
                 </div>
             </div>
         </div>
+
+        <!-- Пул скинов -->
+        <div id="skinpool" class="view" style="display: none;">
+            <div class="skinpool-hero-banner">
+                <div class="skinpool-hero-content">
+                    <div class="skinpool-hero-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h1 class="skinpool-hero-title">ПУЛ СКИНОВ</h1>
+                    <p class="skinpool-hero-subtitle">База скинов для торговли</p>
+                    <p class="skinpool-hero-description">Создайте свою базу скинов для удобного ведения торговли. Добавляйте информацию о скинах, их ценах, флоте и другие важные данные для успешных сделок.</p>
+                </div>
+                <div class="skinpool-hero-decoration">
+                    <img src="playside (7) (1).png" alt="Скин пула" class="skinpool-weapon">
+                </div>
+            </div>
+
+            <div class="skinpool-stats-cards">
+                <div class="skinpool-stat-card total-pool">
+                    <div class="stat-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalPoolSkinsCount">0</h3>
+                        <p>Всего в пуле</p>
+                    </div>
+                </div>
+                
+                <div class="skinpool-stat-card avg-pool-value">
+                    <div class="stat-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="avgPoolValue">$0.00</h3>
+                        <p>Средняя цена</p>
+                    </div>
+                </div>
+                
+                <div class="skinpool-stat-card pool-range">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-area"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="poolPriceRange">$0-0</h3>
+                        <p>Диапазон цен</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skinpool-main-content">
+                <div class="skinpool-sidebar">
+                    <div class="add-poolskin-section">
+                        <h3 id="poolSkinFormTitle"><i class="fas fa-plus"></i> Добавить в пул</h3>
+                        
+                        <div class="form-group">
+                            <label>Название скина (опционально):</label>
+                            <input type="text" id="poolSkinName" class="form-control" placeholder="Например: AK-47 | Redline">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Флот (опционально):</label>
+                            <input type="text" id="poolSkinFloat" class="form-control" placeholder="Например: 0.15">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Цена (опционально):</label>
+                            <input type="number" id="poolSkinPrice" class="form-control" step="0.01" placeholder="0.00">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Ссылка на скин (опционально):</label>
+                            <input type="url" id="poolSkinLink" class="form-control" placeholder="https://...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Комментарий (опционально):</label>
+                            <textarea id="poolSkinComment" class="form-control" rows="3" placeholder="Дополнительная информация о скине..."></textarea>
+                        </div>
+                        
+                        <div class="form-buttons">
+                            <button class="btn btn-primary" id="poolSkinSubmitBtn" onclick="addPoolSkin()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button class="btn btn-secondary" id="poolSkinCancelBtn" onclick="cancelEditPoolSkin()" style="display: none;">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skinpool-grid-section">
+                    <div class="skinpool-grid-header">
+                        <h3>База скинов</h3>
+                        <div class="skinpool-controls">
+                            <select id="poolSort" class="form-control" onchange="loadPoolGrid()">
+                                <option value="date_desc">Сначала новые</option>
+                                <option value="date_asc">Сначала старые</option>
+                                <option value="price_desc">Дорогие сначала</option>
+                                <option value="price_asc">Дешевые сначала</option>
+                                <option value="name_asc">По названию А-Я</option>
+                            </select>
+                            <button class="btn btn-secondary" onclick="clearPool()" title="Очистить весь пул">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="poolGrid" class="skinpool-grid">
+                        <!-- Скины из пула будут добавлены через JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -6164,6 +9194,17 @@
                         <label>Дата:</label>
                         <input type="date" id="transactionDate" class="form-control" required>
                     </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Платформа:</label>
+                        <select id="simplePlatform" class="form-control">
+                            <option value="Steam">Steam</option>
+                            <option value="CS Float">CS Float</option>
+                            <option value="CS Money">CS Money</option>
+                            <option value="Buff163">Buff163</option>
+                            <option value="Другое">Другое</option>
+                        </select>
                     </div>
                     
                     <div class="form-group">
@@ -6212,6 +9253,17 @@
                         <label>Дата:</label>
                         <input type="date" id="advancedDate" class="form-control" required>
                     </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Платформа:</label>
+                        <select id="advancedPlatform" class="form-control">
+                            <option value="Steam">Steam</option>
+                            <option value="CS Float">CS Float</option>
+                            <option value="CS Money">CS Money</option>
+                            <option value="Buff163">Buff163</option>
+                            <option value="Другое">Другое</option>
+                        </select>
                     </div>
 
                     <div id="dealResult" style="padding: 15px; background: #000000; border: 1px solid #333333; border-radius: 8px; margin-top: 15px; display: none; color: #ffffff;">
@@ -6275,6 +9327,17 @@
                 <label>Комиссия (%):</label>
                 <input type="number" id="sellCommission" class="form-control" step="0.01" value="10" placeholder="10" oninput="calculateSellProfit()" onkeyup="calculateSellProfit()">
             </div>
+            <div class="form-group">
+                <label>Платформа:</label>
+                <select id="sellPlatform" class="form-control">
+                    <option value="Steam">Steam</option>
+                    <option value="CS Float">CS Float</option>
+                    <option value="CS Money">CS Money</option>
+                    <option value="Buff163">Buff163</option>
+                    <option value="Другое">Другое</option>
+                </select>
+            </div>
+            
             <div class="form-group">
                 <label>Комментарий:</label>
                 <input type="text" id="sellComment" class="form-control" placeholder="Дополнительная информация...">
@@ -6407,6 +9470,120 @@
         </div>
     </div>
 
+    <!-- Модальное окно выбора формата экспорта -->
+    <div id="exportFormatModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('exportFormatModal')">&times;</span>
+            <h3><i class="fas fa-download"></i> ЭКСПОРТ ДАННЫХ</h3>
+            
+            <div style="text-align: center; margin-bottom: 25px;">
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    Выберите формат для экспорта ваших данных
+                </p>
+            </div>
+            
+            <div class="export-format-options">
+                <div class="format-option" onclick="exportDataWithFormat('json')">
+                    <div class="format-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="format-details">
+                        <h4>JSON формат</h4>
+                        <p>Структурированные данные для импорта обратно в приложение</p>
+                        <span class="format-features">• Полный бэкап • Легко импортировать</span>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно выбора формата импорта -->
+    <div id="importFormatModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideModal('importFormatModal')">&times;</span>
+            <h3><i class="fas fa-upload"></i> ИМПОРТ ДАННЫХ</h3>
+            
+            <div style="text-align: center; margin-bottom: 25px;">
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    Выберите тип файла для импорта
+                </p>
+            </div>
+            
+            <div class="export-format-options">
+                <div class="format-option" onclick="openImportFile('json')">
+                    <div class="format-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="format-details">
+                        <h4>JSON файл</h4>
+                        <p>Импорт полного бэкапа данных RESOTRADE</p>
+                        <span class="format-features">• Полное восстановление данных</span>
+                    </div>
+                </div>
+                
+
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #ff4757; border-radius: 8px; color: white;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Внимание:</strong> Импорт заменит все существующие данные!
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно подтверждения удаления из пула скинов -->
+    <div id="confirmDeletePoolSkinModal" class="modal">
+        <div class="modal-content confirm-delete-modal-content">
+            <span class="close" onclick="hideModal('confirmDeletePoolSkinModal')">&times;</span>
+            <div class="confirm-delete-header">
+                <div class="confirm-delete-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3>УДАЛИТЬ ИЗ ПУЛА</h3>
+            </div>
+            
+            <div class="confirm-delete-body">
+                <p>Вы уверены, что хотите удалить этот скин из пула?</p>
+                <div class="transaction-preview" id="deletePoolSkinPreview"></div>
+            </div>
+            
+            <div class="confirm-delete-buttons">
+                <button type="button" class="btn btn-secondary" onclick="hideModal('confirmDeletePoolSkinModal')">ОТМЕНИТЬ</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDeletePoolSkin()">УДАЛИТЬ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно подтверждения очистки пула -->
+    <div id="confirmClearPoolModal" class="modal">
+        <div class="modal-content confirm-delete-modal-content">
+            <span class="close" onclick="hideModal('confirmClearPoolModal')">&times;</span>
+            <div class="confirm-delete-header">
+                <div class="confirm-delete-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3>ОЧИСТИТЬ ПУЛ</h3>
+            </div>
+            
+            <div class="confirm-delete-body">
+                <p>Вы уверены, что хотите очистить весь пул скинов?</p>
+                <p style="color: #ff4757; font-weight: 600; margin-top: 15px;">
+                    <i class="fas fa-warning"></i> Это действие нельзя отменить!
+                </p>
+                <div style="margin-top: 15px; padding: 10px; background: rgba(255, 71, 87, 0.1); border-radius: 8px; border-left: 4px solid #ff4757;">
+                    <span id="poolSkinsCount">0</span> скинов будет удалено из пула
+                </div>
+            </div>
+            
+            <div class="confirm-delete-buttons">
+                <button type="button" class="btn btn-secondary" onclick="hideModal('confirmClearPoolModal')">ОТМЕНИТЬ</button>
+                <button type="button" class="btn btn-danger" onclick="confirmClearPool()">ОЧИСТИТЬ ПУЛ</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Модальное окно депозитов -->
     <div id="depositsModal" class="modal">
         <div class="modal-content">
@@ -6531,6 +9708,31 @@
             localStorage.setItem('saved_sell_commission', sellCommission);
         }
 
+        // Функции для сохранения и восстановления последней платформы
+        function saveLastPlatform(platform) {
+            localStorage.setItem('last_platform', platform);
+        }
+
+        function getLastPlatform() {
+            return localStorage.getItem('last_platform') || 'Steam';
+        }
+
+        function loadLastPlatforms() {
+            const lastPlatform = getLastPlatform();
+            
+            // Восстанавливаем платформу для простых транзакций
+            const simplePlatformInput = document.getElementById('simplePlatform');
+            if (simplePlatformInput) {
+                simplePlatformInput.value = lastPlatform;
+            }
+            
+            // Восстанавливаем платформу для расширенных сделок
+            const advancedPlatformInput = document.getElementById('advancedPlatform');
+            if (advancedPlatformInput) {
+                advancedPlatformInput.value = lastPlatform;
+            }
+        }
+
         function loadCommissionSettings() {
             const savedCommission = localStorage.getItem('saved_commission');
             const savedCalcCommission = localStorage.getItem('saved_calc_commission');
@@ -6652,6 +9854,9 @@
             // Загружаем сохраненные настройки комиссии
             loadCommissionSettings();
             
+            // Загружаем последнюю выбранную платформу
+            loadLastPlatforms();
+            
             // Настраиваем автосохранение комиссии
             setupCommissionAutoSave();
             
@@ -6687,8 +9892,11 @@
             if (modalId === 'transactionModal') {
                 document.getElementById('transactionForm').reset();
                 const today = getLocalDateString();
+                const lastPlatform = getLastPlatform();
                 document.getElementById('transactionDate').value = today;
                 document.getElementById('advancedDate').value = today;
+                document.getElementById('simplePlatform').value = lastPlatform;
+                document.getElementById('advancedPlatform').value = lastPlatform;
                 document.getElementById('transactionType').value = 'simple';
                 toggleTransactionFields();
             }
@@ -6790,7 +9998,7 @@
 
         // Управление видами
         function showView(viewName) {
-            const views = ['home', 'dashboard', 'calendar', 'statistics', 'faq', 'skins'];
+            const views = ['home', 'dashboard', 'calendar', 'statistics', 'faq', 'skins', 'skinpool'];
             views.forEach(view => {
                 document.getElementById(view).style.display = view === viewName ? 'block' : 'none';
             });
@@ -6843,6 +10051,12 @@
         function goToStatistics(button) {
             setActiveRightNav(button);
             showView('statistics');
+        }
+
+        // Функция для перехода в пул скинов
+        function goToSkinPool(button) {
+            setActiveRightNav(button);
+            showView('skinpool');
         }
 
         // Переключение полей транзакции
@@ -6900,6 +10114,7 @@
             let transaction;
 
             if (transactionType === 'simple') {
+                const platform = document.getElementById('simplePlatform').value;
                 transaction = {
                     id: Date.now(),
                     type: document.getElementById('category').value,
@@ -6907,8 +10122,12 @@
                     amount: parseFloat(document.getElementById('transactionAmount').value),
                     date: document.getElementById('transactionDate').value,
                     description: document.getElementById('transactionDescription').value,
-                    transactionType: 'simple'
+                    transactionType: 'simple',
+                    platform: platform
                 };
+                
+                // Сохраняем последнюю выбранную платформу
+                saveLastPlatform(platform);
             } else {
                 const buyPrice = parseFloat(document.getElementById('buyPrice').value);
                 const sellPrice = parseFloat(document.getElementById('sellPrice').value);
@@ -6939,6 +10158,7 @@
 
                 const quality = document.getElementById('skinQuality').value;
                 const fullName = quality ? `${skinName} (${quality})` : skinName;
+                const platform = document.getElementById('advancedPlatform').value;
 
                 transaction = {
                     id: Date.now(),
@@ -6952,8 +10172,12 @@
                     sellPrice: sellPrice,
                     commission: commission,
                     skinName: skinName,
-                    quality: quality
+                    quality: quality,
+                    platform: platform
                 };
+                
+                // Сохраняем последнюю выбранную платформу
+                saveLastPlatform(platform);
             }
 
             // Проверяем, редактируем ли мы существующую транзакцию
@@ -6986,8 +10210,11 @@
             }
             
             document.getElementById('transactionForm').reset();
+            const lastPlatform = getLastPlatform();
             document.getElementById('transactionDate').value = getLocalDateString();
             document.getElementById('advancedDate').value = getLocalDateString();
+            document.getElementById('simplePlatform').value = lastPlatform;
+            document.getElementById('advancedPlatform').value = lastPlatform;
             toggleTransactionFields();
         }
 
@@ -7114,6 +10341,7 @@
                         document.getElementById('sellPrice').value = transaction.sellPrice || '';
                         document.getElementById('commission').value = transaction.commission || 13;
                         document.getElementById('advancedDate').value = transaction.date;
+                        document.getElementById('advancedPlatform').value = transaction.platform || 'Steam';
                     } else {
                         document.getElementById('transactionType').value = 'simple';
                         toggleTransactionFields();
@@ -7122,6 +10350,7 @@
                         document.getElementById('transactionAmount').value = transaction.amount;
                         document.getElementById('transactionDate').value = transaction.date;
                         document.getElementById('transactionDescription').value = transaction.description || '';
+                        document.getElementById('simplePlatform').value = transaction.platform || 'Steam';
                     }
                 }, 50); // Небольшая задержка для корректной работы
                 
@@ -7293,6 +10522,7 @@
                                     <div class="transaction-date">
                                         <i class="fas fa-calendar-alt"></i>
                                         ${formattedDate}
+                                        ${transaction.platform ? `<span class="transaction-platform"><i class="fas fa-store"></i> ${transaction.platform}</span>` : ''}
                                     </div>
                                 </div>
                             </div>
@@ -8211,6 +11441,10 @@
             const savedSellCommission = localStorage.getItem('saved_sell_commission') || '10';
             document.getElementById('sellCommission').value = savedSellCommission;
             
+            // Устанавливаем последнюю выбранную платформу
+            const lastPlatform = getLastPlatform();
+            document.getElementById('sellPlatform').value = lastPlatform;
+            
             document.getElementById('sellComment').value = '';
             document.getElementById('sellCalculation').style.display = 'none';
             
@@ -8291,6 +11525,7 @@
             }
             
             // Создаем расширенную сделку
+            const platform = document.getElementById('sellPlatform').value;
             const transaction = {
                 id: Date.now(),
                 transactionType: 'advanced',
@@ -8301,8 +11536,12 @@
                 commission: commission,
                 amount: sellPrice - (sellPrice * commission / 100) - skin.price,
                 date: getLocalDateString(),
-                description: comment || `Продажа скина из коллекции. Куплен ${skin.date} за $${skin.price.toFixed(2)}`
+                description: comment || `Продажа скина из коллекции. Куплен ${skin.date} за $${skin.price.toFixed(2)}`,
+                platform: platform
             };
+            
+            // Сохраняем последнюю выбранную платформу
+            saveLastPlatform(platform);
             
             transactions.push(transaction);
             localStorage.setItem('transactions', JSON.stringify(transactions));
@@ -8490,35 +11729,75 @@
 
 
         // Импорт/Экспорт данных
-        function exportData() {
+        function exportDataWithFormat(format) {
+            hideModal('exportFormatModal');
+            
+            const currentDate = new Date();
+            const dateStr = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
+            const timeStr = currentDate.toTimeString().split(' ')[0].replace(/:/g, '-'); // HH-MM-SS
+            
             const data = {
                 transactions: transactions,
                 skins: skins,
+                skinPool: skinPool,
                 deposits: deposits,
                 depositsEnabled: depositsEnabled,
-                exportDate: new Date().toISOString(),
-                version: '1.1'
+                exportDate: currentDate.toISOString(),
+                version: '1.3'
             };
             
+            if (format === 'json') {
+                exportAsJson(data, dateStr, timeStr);
+            }
+        }
+
+        function exportAsJson(data, dateStr, timeStr) {
             const dataStr = JSON.stringify(data, null, 2);
             const dataBlob = new Blob([dataStr], {type: 'application/json'});
             
             const link = document.createElement('a');
             link.href = URL.createObjectURL(dataBlob);
-            link.download = `financial_tracker_backup_${getLocalDateString()}.json`;
+            link.download = `resotrade_backup_${dateStr}_${timeStr}.json`;
             link.click();
+            
+            showNotification('JSON файл успешно экспортирован!', 'success');
         }
 
-        function importTransactions(event) {
+
+
+        function openImportFile(format) {
+            hideModal('importFormatModal');
+            
+            if (format === 'json') {
+                document.getElementById('importFileJson').click();
+            }
+        }
+
+        function importTransactions(event, format) {
             const file = event.target.files[0];
             if (!file) return;
 
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
-                    const data = JSON.parse(e.target.result);
-                    
-                    if (confirm('Импорт данных заменит все существующие данные. Продолжить?')) {
+                    if (format === 'json') {
+                        importFromJson(e.target.result);
+                    }
+                } catch (error) {
+                    showNotification(`Ошибка при импорте ${format.toUpperCase()} файла. Проверьте формат.`, 'error');
+                    console.error('Import error:', error);
+                }
+                
+                // Очищаем input
+                event.target.value = '';
+            };
+            
+            reader.readAsText(file);
+        }
+
+        function importFromJson(jsonData) {
+            const data = JSON.parse(jsonData);
+            
                         // Проверяем формат данных
                         if (data.transactions && Array.isArray(data.transactions)) {
                             transactions = data.transactions;
@@ -8542,6 +11821,12 @@
                             localStorage.setItem('depositsEnabled', JSON.stringify(depositsEnabled));
                         }
                         
+                        // Импортируем пул скинов если есть
+                        if (data.skinPool && Array.isArray(data.skinPool)) {
+                            skinPool = data.skinPool;
+                            localStorage.setItem('skinPool', JSON.stringify(skinPool));
+                        }
+                        
                         // Обновляем интерфейс
                         updateDashboard();
                         loadSkinsGrid();
@@ -8550,18 +11835,191 @@
                         updateDepositsToggleState();
                         updateCalendar();
                         
-                        alert('Данные успешно импортированы!');
-                    }
-                } catch (error) {
-                    alert('Ошибка при импорте данных. Проверьте формат файла.');
-                    console.error('Import error:', error);
+                        // Обновляем пул скинов если мы на его странице
+                        if (window.location.hash === '#skinpool' || document.getElementById('skinpool').style.display !== 'none') {
+                            updatePoolStats();
+                            loadPoolGrid();
+                        }
+                        
+            showNotification('JSON данные успешно импортированы!', 'success');
+        }
+
+        function importFromTxt(txtData) {
+            // Парсим TXT данные согласно структуре экспорта
+            const lines = txtData.split('\n');
+            const newTransactions = [];
+            const newSkins = [];
+            const newDeposits = [];
+            
+            let currentSection = '';
+            let currentItem = null;
+            let lineIndex = 0;
+            
+            while (lineIndex < lines.length) {
+                let line = lines[lineIndex].trim();
+                
+                if (line.includes('=== ТРАНЗАКЦИИ')) {
+                    currentSection = 'transactions';
+                    lineIndex++;
+                    continue;
+                } else if (line.includes('=== МОИ СКИНЫ')) {
+                    currentSection = 'skins';
+                    lineIndex++;
+                    continue;
+                } else if (line.includes('=== ДЕПОЗИТЫ')) {
+                    currentSection = 'deposits';
+                    lineIndex++;
+                    continue;
+                } else if (line.includes('=== ОБЩАЯ СТАТИСТИКА')) {
+                    break;
                 }
                 
-                // Очищаем input
-                event.target.value = '';
-            };
+                // Парсим транзакции
+                if (currentSection === 'transactions' && line.match(/^\d+\.\s/)) {
+                    const transaction = {
+                        id: Date.now() + Math.random(),
+                        name: line.replace(/^\d+\.\s/, ''),
+                        transactionType: 'simple',
+                        type: 'income',
+                        amount: 0,
+                        date: new Date().toISOString(),
+                        description: ''
+                    };
+                    
+                    // Парсим детали транзакции
+                    while (++lineIndex < lines.length) {
+                        let detailLine = lines[lineIndex].trim();
+                        if (!detailLine) break;
+                        if (detailLine.match(/^\d+\.\s/)) {
+                            lineIndex--; // Возвращаемся к началу следующей транзакции
+                            break;
+                        }
+                        
+                        if (detailLine.startsWith('Тип: ')) {
+                            transaction.transactionType = detailLine.includes('Расширенная') ? 'advanced' : 'simple';
+                        } else if (detailLine.startsWith('Сумма: ')) {
+                            const amountStr = detailLine.replace('Сумма: ', '');
+                            transaction.type = amountStr.startsWith('+') ? 'income' : 'expense';
+                            transaction.amount = parseFloat(amountStr.replace(/[+\-$]/g, ''));
+                        } else if (detailLine.startsWith('Дата: ')) {
+                            const dateStr = detailLine.replace('Дата: ', '');
+                            const [day, month, year] = dateStr.split('.');
+                            transaction.date = new Date(year, month - 1, day).toISOString();
+                        } else if (detailLine.startsWith('Цена покупки: ')) {
+                            transaction.buyPrice = parseFloat(detailLine.replace('Цена покупки: $', ''));
+                        } else if (detailLine.startsWith('Цена продажи: ')) {
+                            transaction.sellPrice = parseFloat(detailLine.replace('Цена продажи: $', ''));
+                        } else if (detailLine.startsWith('Комиссия: ')) {
+                            transaction.commission = parseFloat(detailLine.replace('Комиссия: ', '').replace('%', ''));
+                        } else if (detailLine.startsWith('Описание: ')) {
+                            transaction.description = detailLine.replace('Описание: ', '');
+                        }
+                    }
+                    
+                    newTransactions.push(transaction);
+                    continue;
+                }
+                
+                // Парсим скины
+                if (currentSection === 'skins' && line.match(/^\d+\.\s/)) {
+                    const skin = {
+                        id: Date.now() + Math.random(),
+                        name: line.replace(/^\d+\.\s/, ''),
+                        quality: 'FT',
+                        price: 0,
+                        date: new Date().toISOString()
+                    };
+                    
+                    // Парсим детали скина
+                    while (++lineIndex < lines.length) {
+                        let detailLine = lines[lineIndex].trim();
+                        if (!detailLine) break;
+                        if (detailLine.match(/^\d+\.\s/)) {
+                            lineIndex--; // Возвращаемся к началу следующего скина
+                            break;
+                        }
+                        
+                        if (detailLine.startsWith('Качество: ')) {
+                            skin.quality = detailLine.replace('Качество: ', '');
+                        } else if (detailLine.startsWith('Цена: ')) {
+                            skin.price = parseFloat(detailLine.replace('Цена: $', ''));
+                        } else if (detailLine.startsWith('Дата покупки: ')) {
+                            const dateStr = detailLine.replace('Дата покупки: ', '');
+                            const [day, month, year] = dateStr.split('.');
+                            skin.date = new Date(year, month - 1, day).toISOString();
+                        }
+                    }
+                    
+                    newSkins.push(skin);
+                    continue;
+                }
+                
+                // Парсим депозиты
+                if (currentSection === 'deposits' && line.match(/^\d+\.\s\$/)) {
+                    const deposit = {
+                        id: Date.now() + Math.random(),
+                        amount: parseFloat(line.replace(/^\d+\.\s\$/, '')),
+                        comment: 'Без комментария',
+                        date: new Date().toISOString(),
+                        created: new Date().toISOString()
+                    };
+                    
+                    // Парсим детали депозита
+                    while (++lineIndex < lines.length) {
+                        let detailLine = lines[lineIndex].trim();
+                        if (!detailLine) break;
+                        if (detailLine.match(/^\d+\.\s\$/)) {
+                            lineIndex--; // Возвращаемся к началу следующего депозита
+                            break;
+                        }
+                        
+                        if (detailLine.startsWith('Комментарий: ')) {
+                            deposit.comment = detailLine.replace('Комментарий: ', '');
+                        } else if (detailLine.startsWith('Дата: ')) {
+                            const dateStr = detailLine.replace('Дата: ', '');
+                            const [day, month, year] = dateStr.split('.');
+                            deposit.date = new Date(year, month - 1, day).toISOString().split('T')[0];
+                        }
+                    }
+                    
+                    newDeposits.push(deposit);
+                    continue;
+                }
+                
+                lineIndex++;
+            }
             
-            reader.readAsText(file);
+            // Применяем импортированные данные
+            if (newTransactions.length > 0) {
+                transactions = newTransactions;
+                localStorage.setItem('transactions', JSON.stringify(transactions));
+            }
+            
+            if (newSkins.length > 0) {
+                skins = newSkins;
+                localStorage.setItem('skins', JSON.stringify(skins));
+            }
+            
+            if (newDeposits.length > 0) {
+                deposits = newDeposits;
+                localStorage.setItem('deposits', JSON.stringify(deposits));
+            }
+            
+            // Обновляем интерфейс
+            updateDashboard();
+            loadSkinsGrid();
+            updateSkinsStats();
+            loadDeposits();
+            updateDepositsToggleState();
+            updateCalendar();
+            
+            const importedCount = newTransactions.length + newSkins.length + newDeposits.length;
+            showNotification(`TXT данные успешно импортированы! (${newTransactions.length} транзакций, ${newSkins.length} скинов, ${newDeposits.length} депозитов)`, 'success');
+        }
+
+        // Старая функция для совместимости
+        function exportData() {
+            exportDataWithFormat('json');
         }
 
         // Закрытие модальных окон при клике вне них
@@ -9304,6 +12762,278 @@
                 }
             });
         }
+
+        // ==================== ФУНКЦИИ ПУЛА СКИНОВ ====================
+        
+        // Инициализация пула скинов
+        let skinPool = JSON.parse(localStorage.getItem('skinPool')) || [];
+        let editingPoolSkinId = null; // ID редактируемого скина
+
+        // Функция добавления/редактирования скина в пул
+        function addPoolSkin() {
+            const name = document.getElementById('poolSkinName').value.trim();
+            const float = document.getElementById('poolSkinFloat').value.trim();
+            const price = parseFloat(document.getElementById('poolSkinPrice').value) || 0;
+            const link = document.getElementById('poolSkinLink').value.trim();
+            const comment = document.getElementById('poolSkinComment').value.trim();
+
+            // Проверяем, что хотя бы одно поле заполнено
+            if (!name && !float && price === 0 && !link && !comment) {
+                showNotification('Заполните хотя бы одно поле', 'error');
+                return;
+            }
+
+            if (editingPoolSkinId) {
+                // Режим редактирования
+                const skinIndex = skinPool.findIndex(s => s.id === editingPoolSkinId);
+                if (skinIndex !== -1) {
+                    // Обновляем существующий скин, сохраняя дату добавления
+                    skinPool[skinIndex] = {
+                        id: editingPoolSkinId,
+                        name: name || 'Без названия',
+                        float: float,
+                        price: price,
+                        link: link,
+                        comment: comment,
+                        dateAdded: skinPool[skinIndex].dateAdded // Сохраняем оригинальную дату
+                    };
+                    showNotification('Скин успешно обновлен!', 'success');
+                }
+                
+                // Выходим из режима редактирования
+                cancelEditPoolSkin();
+            } else {
+                // Режим добавления нового скина
+                const poolSkin = {
+                    id: Date.now(),
+                    name: name || 'Без названия',
+                    float: float,
+                    price: price,
+                    link: link,
+                    comment: comment,
+                    dateAdded: new Date().toISOString().split('T')[0]
+                };
+
+                skinPool.push(poolSkin);
+                showNotification('Скин успешно добавлен в пул!', 'success');
+
+                // Очищаем форму только при добавлении
+                clearPoolSkinForm();
+            }
+
+            localStorage.setItem('skinPool', JSON.stringify(skinPool));
+            updatePoolStats();
+            loadPoolGrid();
+        }
+
+        // Функция очистки формы пула скинов
+        function clearPoolSkinForm() {
+            document.getElementById('poolSkinName').value = '';
+            document.getElementById('poolSkinFloat').value = '';
+            document.getElementById('poolSkinPrice').value = '';
+            document.getElementById('poolSkinLink').value = '';
+            document.getElementById('poolSkinComment').value = '';
+        }
+
+        // Функция обновления статистики пула
+        function updatePoolStats() {
+            const totalCount = skinPool.length;
+            const validPrices = skinPool.filter(skin => skin.price > 0);
+            const totalValue = validPrices.reduce((sum, skin) => sum + skin.price, 0);
+            const avgValue = validPrices.length > 0 ? totalValue / validPrices.length : 0;
+            
+            const allPrices = validPrices.map(skin => skin.price);
+            const minPrice = allPrices.length > 0 ? Math.min(...allPrices) : 0;
+            const maxPrice = allPrices.length > 0 ? Math.max(...allPrices) : 0;
+
+            document.getElementById('totalPoolSkinsCount').textContent = totalCount;
+            document.getElementById('avgPoolValue').textContent = `$${avgValue.toFixed(2)}`;
+            document.getElementById('poolPriceRange').textContent = validPrices.length > 0 ? `$${minPrice.toFixed(0)}-${maxPrice.toFixed(0)}` : '$0-0';
+        }
+
+        // Функция загрузки сетки пула
+        function loadPoolGrid() {
+            const grid = document.getElementById('poolGrid');
+            const sortSelect = document.getElementById('poolSort');
+            const sortValue = sortSelect ? sortSelect.value : 'date_desc';
+
+            if (skinPool.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-pool">
+                        <i class="fas fa-layer-group"></i>
+                        <h3>Пул пуст</h3>
+                        <p>Добавьте первый скин в свой пул для торговли. Все добавленные скины будут отображаться здесь.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let sortedPool = [...skinPool];
+
+            switch(sortValue) {
+                case 'date_asc':
+                    sortedPool.sort((a, b) => new Date(a.dateAdded) - new Date(b.dateAdded));
+                    break;
+                case 'price_desc':
+                    sortedPool.sort((a, b) => b.price - a.price);
+                    break;
+                case 'price_asc':
+                    sortedPool.sort((a, b) => a.price - b.price);
+                    break;
+                case 'name_asc':
+                    sortedPool.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                default: // date_desc
+                    sortedPool.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+            }
+
+            grid.innerHTML = sortedPool.map(skin => `
+                <div class="pool-skin-card">
+                    <div class="pool-skin-card-header">
+                        <h4 class="pool-skin-name">${skin.name}</h4>
+                        ${skin.float ? `<span class="pool-skin-float">Float: ${skin.float}</span>` : ''}
+                    </div>
+                    ${skin.price > 0 ? `<div class="pool-skin-price">$${skin.price.toFixed(2)}</div>` : ''}
+                    ${skin.link ? `<div class="pool-skin-link"><a href="${skin.link}" target="_blank" rel="noopener noreferrer">${skin.link}</a></div>` : ''}
+                    ${skin.comment ? `<div class="pool-skin-comment">${skin.comment}</div>` : ''}
+                    <div class="pool-skin-date">Добавлен: ${new Date(skin.dateAdded).toLocaleDateString('ru-RU')}</div>
+                    <div class="pool-skin-actions">
+                        <button class="btn btn-secondary" onclick="editPoolSkin(${skin.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger" onclick="removePoolSkin(${skin.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Функция удаления скина из пула
+        function removePoolSkin(skinId) {
+            // Находим скин для отображения в модальном окне
+            const skin = skinPool.find(s => s.id === skinId);
+            if (!skin) return;
+            
+            // Заполняем предварительный просмотр
+            const preview = document.getElementById('deletePoolSkinPreview');
+            preview.innerHTML = `
+                <div style="background: #1a1a1a; padding: 15px; border-radius: 10px; border: 1px solid #333;">
+                    <div style="font-weight: 700; color: #7c3aed; margin-bottom: 5px;">${skin.name}</div>
+                    ${skin.float ? `<div style="font-size: 0.9rem; color: #ccc;">Float: ${skin.float}</div>` : ''}
+                    ${skin.price > 0 ? `<div style="font-size: 0.9rem; color: #28a745;">Цена: $${skin.price.toFixed(2)}</div>` : ''}
+                    ${skin.comment ? `<div style="font-size: 0.9rem; color: #ccc; margin-top: 8px;">${skin.comment}</div>` : ''}
+                </div>
+            `;
+            
+            // Сохраняем ID для удаления
+            window.deletingPoolSkinId = skinId;
+            
+            // Показываем модальное окно
+            showModal('confirmDeletePoolSkinModal');
+        }
+
+        // Функция подтверждения удаления скина из пула
+        function confirmDeletePoolSkin() {
+            if (window.deletingPoolSkinId) {
+                skinPool = skinPool.filter(skin => skin.id !== window.deletingPoolSkinId);
+                localStorage.setItem('skinPool', JSON.stringify(skinPool));
+                updatePoolStats();
+                loadPoolGrid();
+                window.deletingPoolSkinId = null;
+                showNotification('Скин удален из пула', 'success');
+            }
+            hideModal('confirmDeletePoolSkinModal');
+        }
+
+        // Функция редактирования скина в пуле
+        function editPoolSkin(skinId) {
+            const skin = skinPool.find(s => s.id === skinId);
+            if (!skin) return;
+
+            // Устанавливаем режим редактирования
+            editingPoolSkinId = skinId;
+
+            // Заполняем форму данными скина
+            document.getElementById('poolSkinName').value = skin.name === 'Без названия' ? '' : skin.name;
+            document.getElementById('poolSkinFloat').value = skin.float || '';
+            document.getElementById('poolSkinPrice').value = skin.price || '';
+            document.getElementById('poolSkinLink').value = skin.link || '';
+            document.getElementById('poolSkinComment').value = skin.comment || '';
+
+            // Меняем интерфейс на режим редактирования
+            const submitBtn = document.getElementById('poolSkinSubmitBtn');
+            const cancelBtn = document.getElementById('poolSkinCancelBtn');
+            const formTitle = document.getElementById('poolSkinFormTitle');
+            
+            formTitle.innerHTML = '<i class="fas fa-edit"></i> Редактировать скин';
+            submitBtn.innerHTML = '<i class="fas fa-save"></i>';
+            submitBtn.className = 'btn btn-primary';
+            cancelBtn.style.display = 'inline-block';
+
+            // Прокручиваем к форме
+            document.getElementById('poolSkinName').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('poolSkinName').focus();
+        }
+
+        // Функция отмены редактирования
+        function cancelEditPoolSkin() {
+            // Сбрасываем режим редактирования
+            editingPoolSkinId = null;
+
+            // Возвращаем интерфейс в режим добавления
+            const submitBtn = document.getElementById('poolSkinSubmitBtn');
+            const cancelBtn = document.getElementById('poolSkinCancelBtn');
+            const formTitle = document.getElementById('poolSkinFormTitle');
+            
+            formTitle.innerHTML = '<i class="fas fa-plus"></i> Добавить в пул';
+            submitBtn.innerHTML = '<i class="fas fa-plus"></i>';
+            submitBtn.className = 'btn btn-primary';
+            cancelBtn.style.display = 'none';
+
+            // Очищаем форму
+            clearPoolSkinForm();
+        }
+
+        // Функция очистки всего пула
+        function clearPool() {
+            // Показываем количество скинов для удаления
+            document.getElementById('poolSkinsCount').textContent = skinPool.length;
+            
+            // Показываем модальное окно
+            showModal('confirmClearPoolModal');
+        }
+
+        // Функция подтверждения очистки пула
+        function confirmClearPool() {
+            const deletedCount = skinPool.length;
+            skinPool = [];
+            localStorage.setItem('skinPool', JSON.stringify(skinPool));
+            updatePoolStats();
+            loadPoolGrid();
+            hideModal('confirmClearPoolModal');
+            showNotification(`Пул очищен! Удалено ${deletedCount} скинов`, 'success');
+        }
+
+        // Обновляем функцию showView для обработки пула скинов
+        const originalShowView = showView;
+        showView = function(viewName) {
+            // Если покидаем страницу пула скинов в режиме редактирования, сбрасываем его
+            if (editingPoolSkinId && viewName !== 'skinpool') {
+                cancelEditPoolSkin();
+            }
+            
+            // Вызываем оригинальную функцию
+            originalShowView(viewName);
+            
+            // Специальная логика для пула скинов
+            if (viewName === 'skinpool') {
+                setTimeout(() => {
+                    updatePoolStats();
+                    loadPoolGrid();
+                }, 50);
+            }
+        };
 
     </script>
 </body>
