@@ -6503,6 +6503,159 @@
         font-weight: 700;
     }
 
+    /* Стили для статистики по платформам */
+    .platforms-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .platform-stat-card {
+        background: #1a1a1a;
+        border: 1px solid #333333;
+        border-radius: 15px;
+        padding: 20px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .platform-stat-card:hover {
+        border-color: #555555;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .platform-stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+    }
+
+    .platform-stat-card.steam::before {
+        background: linear-gradient(90deg, #171a21, #66c0f4);
+    }
+
+    .platform-stat-card.cs-float::before {
+        background: linear-gradient(90deg, #ff6b35, #f7931e);
+    }
+
+    .platform-stat-card.cs-money::before {
+        background: linear-gradient(90deg, #1e88e5, #42a5f5);
+    }
+
+    .platform-stat-card.buff163::before {
+        background: linear-gradient(90deg, #f44336, #ff5722);
+    }
+
+    .platform-stat-card.other::before {
+        background: linear-gradient(90deg, #6c757d, #adb5bd);
+    }
+
+    .platform-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .platform-name {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .platform-icon {
+        font-size: 1rem;
+        color: #007bff;
+        background: rgba(0, 123, 255, 0.1);
+        padding: 6px;
+        border-radius: 6px;
+    }
+
+    .platform-deals-count {
+        background: rgba(0, 123, 255, 0.1);
+        color: #007bff;
+        padding: 4px 8px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .platform-stats-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0;
+        padding: 8px 0;
+        border-bottom: 1px solid #2a2a2a;
+    }
+
+    .platform-stats-row:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+
+    .platform-stat-label {
+        color: #cccccc;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .platform-stat-value {
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .platform-stat-value.positive {
+        color: #28a745;
+    }
+
+    .platform-stat-value.negative {
+        color: #dc3545;
+    }
+
+    .platform-total-profit {
+        background: rgba(40, 167, 69, 0.1);
+        border: 1px solid rgba(40, 167, 69, 0.2);
+        border-radius: 10px;
+        padding: 12px;
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .platform-total-profit.negative {
+        background: rgba(220, 53, 69, 0.1);
+        border-color: rgba(220, 53, 69, 0.2);
+    }
+
+    .platform-profit-label {
+        color: #cccccc;
+        font-size: 0.8rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 5px;
+    }
+
+    .platform-profit-value {
+        color: #28a745;
+        font-size: 1.4rem;
+        font-weight: 700;
+    }
+
+    .platform-profit-value.negative {
+        color: #dc3545;
+    }
+
     /* Стили для графиков активности */
     .activity-charts-grid {
         display: grid;
@@ -6687,6 +6840,28 @@
         
         .chart-number {
             font-size: 2rem;
+        }
+        
+        .platforms-stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .platform-stat-card {
+            padding: 15px;
+        }
+        
+        .platform-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .platform-name {
+            font-size: 1.1rem;
+        }
+        
+        .platform-profit-value {
+            font-size: 1.2rem;
         }
     }
 
@@ -8842,6 +9017,16 @@
                          <div class="deal-details" id="minProfitDetails">-</div>
                      </div>
                  </div>
+                 
+                 <!-- Секция статистики по платформам -->
+                 <h3 class="statistics-section-title">
+                     <i class="fas fa-store"></i>
+                     Статистика по платформам
+                 </h3>
+                 
+                 <div class="platforms-stats-grid" id="platformsStatsGrid">
+                     <!-- Здесь будут динамически добавляться карточки платформ -->
+                 </div>
             </div>
         </div>
 
@@ -9756,6 +9941,111 @@
             // Примечание: комиссия для продажи скинов восстанавливается в openSellSkinModal
         }
 
+        // Функция для автоматической установки комиссии по платформе (возвращает true если комиссия была установлена)
+        function setPlatformCommissionIfSupported(platform, commissionFieldId) {
+            const commissionField = document.getElementById(commissionFieldId);
+            if (!commissionField) return false;
+            
+            let commission;
+            switch(platform) {
+                case 'Steam':
+                    commission = '15';
+                    break;
+                case 'CS Float':
+                    commission = '2';
+                    break;
+                case 'CS Money':
+                    commission = '5';
+                    break;
+                case 'Buff163':
+                    commission = '2.5';
+                    break;
+                default:
+                    // Для "Другое" и других вариантов не меняем комиссию
+                    return false;
+            }
+            
+            commissionField.value = commission;
+            // Сохраняем в localStorage
+            localStorage.setItem(`saved_${commissionFieldId}`, commission);
+            
+            // Если это поле для расширенных сделок, пересчитываем прибыль
+            if (commissionFieldId === 'commission') {
+                calculateDealProfit();
+            }
+            // Если это поле для продажи скинов, пересчитываем прибыль
+            if (commissionFieldId === 'sellCommission') {
+                calculateSellProfit();
+            }
+            
+            return true;
+        }
+
+        // Функция для автоматической установки комиссии по платформе
+        function setPlatformCommission(platform, commissionFieldId) {
+            const commissionField = document.getElementById(commissionFieldId);
+            if (!commissionField) return;
+            
+            let commission;
+            switch(platform) {
+                case 'Steam':
+                    commission = '15';
+                    break;
+                case 'CS Float':
+                    commission = '2';
+                    break;
+                case 'CS Money':
+                    commission = '5';
+                    break;
+                case 'Buff163':
+                    commission = '2.5';
+                    break;
+                default:
+                    // Для "Другое" и других вариантов не меняем комиссию
+                    return;
+            }
+            
+            commissionField.value = commission;
+            // Сохраняем в localStorage
+            localStorage.setItem(`saved_${commissionFieldId}`, commission);
+            
+            // Если это поле для расширенных сделок, пересчитываем прибыль
+            if (commissionFieldId === 'commission') {
+                calculateDealProfit();
+            }
+            // Если это поле для продажи скинов, пересчитываем прибыль
+            if (commissionFieldId === 'sellCommission') {
+                calculateSellProfit();
+            }
+        }
+
+        // Функция для настройки обработчиков платформ
+        function setupPlatformHandlers() {
+            // Обработчик для простых транзакций (не имеет поля комиссии)
+            const simplePlatformSelect = document.getElementById('simplePlatform');
+            if (simplePlatformSelect) {
+                simplePlatformSelect.addEventListener('change', function() {
+                    // Простые транзакции не имеют поля комиссии, поэтому ничего не делаем
+                });
+            }
+            
+            // Обработчик для расширенных сделок
+            const advancedPlatformSelect = document.getElementById('advancedPlatform');
+            if (advancedPlatformSelect) {
+                advancedPlatformSelect.addEventListener('change', function() {
+                    setPlatformCommission(this.value, 'commission');
+                });
+            }
+            
+            // Обработчик для продажи скинов
+            const sellPlatformSelect = document.getElementById('sellPlatform');
+            if (sellPlatformSelect) {
+                sellPlatformSelect.addEventListener('change', function() {
+                    setPlatformCommission(this.value, 'sellCommission');
+                });
+            }
+        }
+
         function setupCommissionAutoSave() {
             // Автосохранение для поля комиссии в транзакциях
             const commissionInput = document.getElementById('commission');
@@ -9772,6 +10062,9 @@
                     localStorage.setItem('saved_calc_commission', this.value);
                 });
             }
+            
+            // Настраиваем обработчики для автоматической установки комиссии по платформе
+            setupPlatformHandlers();
             
             // Примечание: для поля комиссии в продаже скинов обработчики устанавливаются
             // в функции openSellSkinModal, так как это модальное окно
@@ -11437,13 +11730,17 @@
             // Инициализируем поля
             document.getElementById('skinSellPrice').value = ''; // Очищаем поле цены
             
-            // Восстанавливаем сохраненную комиссию или устанавливаем по умолчанию 10%
-            const savedSellCommission = localStorage.getItem('saved_sell_commission') || '10';
-            document.getElementById('sellCommission').value = savedSellCommission;
-            
             // Устанавливаем последнюю выбранную платформу
             const lastPlatform = getLastPlatform();
             document.getElementById('sellPlatform').value = lastPlatform;
+            
+            // Автоматически устанавливаем комиссию для выбранной платформы
+            // Если платформа не поддерживает автоматическую комиссию, восстанавливаем сохраненную
+            const platformCommissionSet = setPlatformCommissionIfSupported(lastPlatform, 'sellCommission');
+            if (!platformCommissionSet) {
+                const savedSellCommission = localStorage.getItem('saved_sell_commission') || '10';
+                document.getElementById('sellCommission').value = savedSellCommission;
+            }
             
             document.getElementById('sellComment').value = '';
             document.getElementById('sellCalculation').style.display = 'none';
@@ -11451,6 +11748,7 @@
             // Устанавливаем обработчики событий для автоматического расчета
             const sellPriceInput = document.getElementById('skinSellPrice');
             const sellCommissionInput = document.getElementById('sellCommission');
+            const sellPlatformSelect = document.getElementById('sellPlatform');
             
             // Удаляем старые обработчики (если есть) и добавляем новые
             if (sellPriceInput) {
@@ -11474,6 +11772,16 @@
                 });
                 sellCommissionInput.addEventListener('keyup', calculateSellProfit);
                 sellCommissionInput.addEventListener('change', calculateSellProfit);
+            }
+            
+            // Добавляем обработчик для автоматической установки комиссии по платформе
+            if (sellPlatformSelect) {
+                sellPlatformSelect.removeEventListener('change', handleSellPlatformChange);
+                sellPlatformSelect.addEventListener('change', handleSellPlatformChange);
+            }
+            
+            function handleSellPlatformChange() {
+                setPlatformCommission(this.value, 'sellCommission');
             }
             
             // Принудительно вызываем расчет если поле комиссии уже заполнено
@@ -12256,6 +12564,9 @@
             
             // Обновляем графики активности
             updateActivityCharts(filteredTransactions);
+            
+            // Обновляем статистику по платформам
+            updatePlatformsStatistics(filteredTransactions);
         }
         
         function updateStatisticsTrends(profit, successRate, profitPercent) {
@@ -12466,6 +12777,107 @@
                 document.getElementById('minProfitAmount').textContent = '$0';
                 document.getElementById('minProfitDetails').textContent = '-';
             }
+        }
+
+        // Функция обновления статистики по платформам
+        function updatePlatformsStatistics(filteredTransactions) {
+            const platformsData = {};
+            
+            // Группируем транзакции по платформам
+            filteredTransactions.forEach(transaction => {
+                const platform = transaction.platform || 'Другое';
+                
+                if (!platformsData[platform]) {
+                    platformsData[platform] = {
+                        name: platform,
+                        totalDeals: 0,
+                        income: 0,
+                        expense: 0,
+                        profit: 0
+                    };
+                }
+                
+                platformsData[platform].totalDeals++;
+                
+                if (transaction.amount > 0) {
+                    platformsData[platform].income += transaction.amount;
+                } else {
+                    platformsData[platform].expense += Math.abs(transaction.amount);
+                }
+                
+                platformsData[platform].profit += transaction.amount;
+            });
+            
+            // Сортируем платформы по количеству сделок
+            const sortedPlatforms = Object.values(platformsData).sort((a, b) => b.totalDeals - a.totalDeals);
+            
+            // Создаем HTML для карточек платформ
+            const container = document.getElementById('platformsStatsGrid');
+            
+            if (sortedPlatforms.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 40px; grid-column: 1 / -1;">Нет данных для отображения статистики по платформам</div>';
+                return;
+            }
+            
+            container.innerHTML = sortedPlatforms.map(platform => {
+                const platformClass = platform.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                const profitClass = platform.profit >= 0 ? 'positive' : 'negative';
+                
+                // Выбираем иконку для платформы
+                let icon = 'fas fa-store';
+                switch(platform.name) {
+                    case 'Steam':
+                        icon = 'fab fa-steam';
+                        break;
+                    case 'CS Float':
+                        icon = 'fas fa-chart-line';
+                        break;
+                    case 'CS Money':
+                        icon = 'fas fa-coins';
+                        break;
+                    case 'Buff163':
+                        icon = 'fas fa-fire';
+                        break;
+                    default:
+                        icon = 'fas fa-store';
+                }
+                
+                return `
+                    <div class="platform-stat-card ${platformClass}">
+                        <div class="platform-header">
+                            <div class="platform-name">
+                                <i class="${icon} platform-icon"></i>
+                                ${platform.name}
+                            </div>
+                            <div class="platform-deals-count">
+                                ${platform.totalDeals} сделок
+                            </div>
+                        </div>
+                        
+                        <div class="platform-stats-row">
+                            <span class="platform-stat-label">Доходы:</span>
+                            <span class="platform-stat-value positive">$${platform.income.toFixed(2)}</span>
+                        </div>
+                        
+                        <div class="platform-stats-row">
+                            <span class="platform-stat-label">Расходы:</span>
+                            <span class="platform-stat-value negative">$${platform.expense.toFixed(2)}</span>
+                        </div>
+                        
+                        <div class="platform-stats-row">
+                            <span class="platform-stat-label">Средняя сделка:</span>
+                            <span class="platform-stat-value">${platform.totalDeals > 0 ? '$' + (platform.profit / platform.totalDeals).toFixed(2) : '$0.00'}</span>
+                        </div>
+                        
+                        <div class="platform-total-profit ${platform.profit < 0 ? 'negative' : ''}">
+                            <div class="platform-profit-label">ИТОГОВЫЙ РЕЗУЛЬТАТ</div>
+                            <div class="platform-profit-value ${profitClass}">
+                                ${platform.profit >= 0 ? '+' : ''}$${platform.profit.toFixed(2)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
         // Переменные для хранения графиков
