@@ -4353,7 +4353,7 @@
     .calendar-day-new {
         background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
         border-radius: 12px;
-        padding: 15px 12px;
+        padding: 10px 8px 12px 8px;
         min-height: 80px;
         max-height: none;
         cursor: pointer;
@@ -4411,36 +4411,113 @@
     }
 
     .calendar-day-balance {
-        font-size: 0.65rem;
+        font-size: 0.75rem;
         font-weight: 800;
         margin: 0;
-        padding: 4px 6px;
-        border-radius: 6px;
-        min-width: 40px;
+        padding: 4px 8px;
+        border-radius: 10px;
+        min-width: 45px;
+        max-width: 85%;
+        width: auto;
+        text-align: center;
         text-transform: uppercase;
-        letter-spacing: 0.2px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        letter-spacing: 0.3px;
+        white-space: nowrap;
+        overflow: visible;
+        box-shadow: 
+            0 3px 12px rgba(0, 0, 0, 0.25),
+            0 1px 3px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        backdrop-filter: blur(10px);
+        flex-shrink: 0;
     }
+
+    /* Убираем белый эффект блика полностью */
 
     .calendar-day-balance.profit {
         color: #ffffff;
-        background: linear-gradient(135deg, #22c55e, #16a34a);
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        border-color: #22c55e;
+        background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+        text-shadow: 
+            0 1px 3px rgba(0, 0, 0, 0.4),
+            0 0 8px rgba(16, 185, 129, 0.3);
+        border-color: rgba(16, 185, 129, 0.4);
+        box-shadow: 
+            0 3px 12px rgba(16, 185, 129, 0.3),
+            0 1px 3px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
 
     .calendar-day-balance.loss {
         color: #ffffff;
-        background: linear-gradient(135deg, #ef4444, #dc2626);
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        border-color: #ef4444;
+        background: linear-gradient(135deg, #f87171 0%, #ef4444 50%, #dc2626 100%);
+        text-shadow: 
+            0 1px 3px rgba(0, 0, 0, 0.4),
+            0 0 8px rgba(248, 113, 113, 0.3);
+        border-color: rgba(248, 113, 113, 0.4);
+        box-shadow: 
+            0 3px 12px rgba(248, 113, 113, 0.3),
+            0 1px 3px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
 
     .calendar-day-balance.neutral {
-        color: var(--text-secondary);
-        background: linear-gradient(135deg, #374151, #4b5563);
-        border-color: #4b5563;
+        color: #e5e7eb;
+        background: linear-gradient(135deg, #6b7280 0%, #4b5563 50%, #374151 100%);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        border-color: rgba(107, 114, 128, 0.4);
+        box-shadow: 
+            0 3px 12px rgba(107, 114, 128, 0.2),
+            0 1px 3px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    /* Дополнительные эффекты при наведении */
+    .calendar-day-new:hover .calendar-day-balance.profit {
+        transform: scale(1.05);
+        box-shadow: 
+            0 5px 20px rgba(16, 185, 129, 0.4),
+            0 2px 6px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .calendar-day-new:hover .calendar-day-balance.loss {
+        transform: scale(1.05);
+        box-shadow: 
+            0 5px 20px rgba(248, 113, 113, 0.4),
+            0 2px 6px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .calendar-day-new:hover .calendar-day-balance.neutral {
+        transform: scale(1.05);
+        box-shadow: 
+            0 5px 20px rgba(107, 114, 128, 0.3),
+            0 2px 6px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    /* Особые стили для сегодняшнего дня */
+    .calendar-day-new.today .calendar-day-balance {
+        animation: todayGlow 2s ease-in-out infinite alternate;
+        border-width: 2px;
+    }
+
+    @keyframes todayGlow {
+        0% {
+            box-shadow: 
+                0 3px 12px rgba(0, 123, 255, 0.3),
+                0 1px 3px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+        100% {
+            box-shadow: 
+                0 6px 25px rgba(0, 123, 255, 0.5),
+                0 2px 6px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
     }
 
     .calendar-day-new.has-transactions {
@@ -4569,7 +4646,8 @@
 
         .calendar-day-new {
             min-height: 60px;
-            padding: 10px 8px;
+            padding: 8px 6px 10px 6px;
+            gap: 5px;
         }
 
         .calendar-day-number-new {
@@ -4577,10 +4655,28 @@
         }
 
         .calendar-day-balance {
-            font-size: 0.55rem;
-            padding: 3px 5px;
-            min-width: 35px;
-            letter-spacing: 0.1px;
+            font-size: 0.65rem;
+            padding: 4px 8px;
+            min-width: 42px;
+            max-width: 85%;
+            letter-spacing: 0.2px;
+            border-radius: 10px;
+            margin: 0;
+            white-space: nowrap;
+            overflow: visible;
+            box-shadow: 
+                0 2px 8px rgba(0, 0, 0, 0.2),
+                0 1px 2px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .calendar-day-new:hover .calendar-day-balance {
+            transform: scale(1.02);
+        }
+
+        .calendar-day-new.today .calendar-day-balance {
+            animation: none; /* Отключаем анимацию на мобильных для производительности */
+            border-width: 1px;
         }
 
         .calendar-grid-new {
@@ -6424,6 +6520,61 @@
             return `${year}-${month}-${day}`;
         }
 
+        // Функции для сохранения и восстановления комиссии
+        function saveCommissionSettings() {
+            const commission = document.getElementById('commission').value || '13';
+            const calcCommission = document.getElementById('calcCommission').value || '13';
+            const sellCommission = document.getElementById('sellCommission').value || '10';
+            
+            localStorage.setItem('saved_commission', commission);
+            localStorage.setItem('saved_calc_commission', calcCommission);
+            localStorage.setItem('saved_sell_commission', sellCommission);
+        }
+
+        function loadCommissionSettings() {
+            const savedCommission = localStorage.getItem('saved_commission');
+            const savedCalcCommission = localStorage.getItem('saved_calc_commission');
+            
+            // Восстанавливаем комиссию для транзакций
+            if (savedCommission) {
+                const commissionInput = document.getElementById('commission');
+                if (commissionInput) {
+                    commissionInput.value = savedCommission;
+                }
+            }
+            
+            // Восстанавливаем комиссию для калькулятора прибыли
+            if (savedCalcCommission) {
+                const calcCommissionInput = document.getElementById('calcCommission');
+                if (calcCommissionInput) {
+                    calcCommissionInput.value = savedCalcCommission;
+                }
+            }
+            
+            // Примечание: комиссия для продажи скинов восстанавливается в openSellSkinModal
+        }
+
+        function setupCommissionAutoSave() {
+            // Автосохранение для поля комиссии в транзакциях
+            const commissionInput = document.getElementById('commission');
+            if (commissionInput) {
+                commissionInput.addEventListener('input', function() {
+                    localStorage.setItem('saved_commission', this.value);
+                });
+            }
+            
+            // Автосохранение для поля комиссии в калькуляторе прибыли
+            const calcCommissionInput = document.getElementById('calcCommission');
+            if (calcCommissionInput) {
+                calcCommissionInput.addEventListener('input', function() {
+                    localStorage.setItem('saved_calc_commission', this.value);
+                });
+            }
+            
+            // Примечание: для поля комиссии в продаже скинов обработчики устанавливаются
+            // в функции openSellSkinModal, так как это модальное окно
+        }
+
         // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
             const today = getLocalDateString();
@@ -6497,6 +6648,12 @@
             if (currentCustomFilter) {
                 updateSortSelectForCustomFilter();
             }
+            
+            // Загружаем сохраненные настройки комиссии
+            loadCommissionSettings();
+            
+            // Настраиваем автосохранение комиссии
+            setupCommissionAutoSave();
             
             // Обработчики для продажи скинов устанавливаются в функции openSellSkinModal
             // Здесь их убираем, чтобы избежать конфликтов с дублирующимися ID
@@ -7730,6 +7887,9 @@
                 .reduce((total, t) => total + (t.type === 'income' ? t.amount : -t.amount), 0);
         }
 
+        // Переменная для отслеживания последнего выбранного дня
+        let lastSelectedDay = null;
+
         // Показать транзакции месяца в правой панели
         function showMonthTransactions() {
             const monthTransactions = transactions.filter(t => {
@@ -7739,10 +7899,20 @@
             }).sort((a, b) => new Date(b.date) - new Date(a.date));
 
             displayCalendarTransactions(monthTransactions, 'Все сделки месяца');
+            lastSelectedDay = null; // Сбрасываем выбранный день
         }
 
         // Фильтровать транзакции по дню
         function filterTransactionsByDay(date, day) {
+            // Если кликнули на тот же день что и в прошлый раз, показываем все сделки месяца
+            if (lastSelectedDay === date) {
+                showMonthTransactions();
+                return;
+            }
+            
+            // Сохраняем текущий выбранный день
+            lastSelectedDay = date;
+            
             const dayTransactions = getTransactionsForDate(date);
             const monthNames = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
                 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
@@ -7796,6 +7966,7 @@
 
         function changeMonth(direction) {
             currentMonth.setMonth(currentMonth.getMonth() + direction);
+            lastSelectedDay = null; // Сбрасываем выбранный день при смене месяца
             updateCalendar();
         }
 
@@ -8035,7 +8206,11 @@
             
             // Инициализируем поля
             document.getElementById('skinSellPrice').value = ''; // Очищаем поле цены
-            document.getElementById('sellCommission').value = '10'; // Комиссия по умолчанию 10%
+            
+            // Восстанавливаем сохраненную комиссию или устанавливаем по умолчанию 10%
+            const savedSellCommission = localStorage.getItem('saved_sell_commission') || '10';
+            document.getElementById('sellCommission').value = savedSellCommission;
+            
             document.getElementById('sellComment').value = '';
             document.getElementById('sellCalculation').style.display = 'none';
             
@@ -8058,7 +8233,11 @@
                 sellCommissionInput.removeEventListener('keyup', calculateSellProfit);
                 sellCommissionInput.removeEventListener('change', calculateSellProfit);
                 
-                sellCommissionInput.addEventListener('input', calculateSellProfit);
+                // Добавляем обработчик для автосохранения комиссии
+                sellCommissionInput.addEventListener('input', function() {
+                    localStorage.setItem('saved_sell_commission', this.value);
+                    calculateSellProfit();
+                });
                 sellCommissionInput.addEventListener('keyup', calculateSellProfit);
                 sellCommissionInput.addEventListener('change', calculateSellProfit);
             }
