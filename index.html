@@ -2390,7 +2390,9 @@
         margin-bottom: 40px;
     }
 
-<!DOCTYPE html>
+</style>
+</head>
+<body>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -9385,11 +9387,12 @@
                     <div class="form-group">
                         <label>Платформа:</label>
                         <select id="simplePlatform" class="form-control">
-                            <option value="Steam">Steam</option>
-                            <option value="CS Float">CS Float</option>
-                            <option value="CS Money">CS Money</option>
-                            <option value="Buff163">Buff163</option>
-                            <option value="Другое">Другое</option>
+                            <option value="">Выберите платформу</option>
+                            <option value="Steam">Steam (15% комиссия)</option>
+                            <option value="CS Float">CS Float (2% комиссия)</option>
+                            <option value="CS Money">CS Money (5% комиссия)</option>
+                            <option value="Buff163">Buff163 (2.5% комиссия)</option>
+                            <option value="Другое">Другое (ввести вручную)</option>
                         </select>
                     </div>
                     
@@ -9433,7 +9436,7 @@
                     <div class="transaction-form-grid">
                     <div class="form-group">
                         <label>Комиссия (%):</label>
-                        <input type="number" id="commission" class="form-control" value="13" step="0.01" onkeyup="calculateDealProfit()">
+                        <input type="number" id="commission" class="form-control" placeholder="Выберите платформу" step="0.01" onkeyup="calculateDealProfit()" readonly>
                     </div>
                     <div class="form-group">
                         <label>Дата:</label>
@@ -9444,11 +9447,12 @@
                     <div class="form-group">
                         <label>Платформа:</label>
                         <select id="advancedPlatform" class="form-control">
-                            <option value="Steam">Steam</option>
-                            <option value="CS Float">CS Float</option>
-                            <option value="CS Money">CS Money</option>
-                            <option value="Buff163">Buff163</option>
-                            <option value="Другое">Другое</option>
+                            <option value="">Выберите платформу</option>
+                            <option value="Steam">Steam (15% комиссия)</option>
+                            <option value="CS Float">CS Float (2% комиссия)</option>
+                            <option value="CS Money">CS Money (5% комиссия)</option>
+                            <option value="Buff163">Buff163 (2.5% комиссия)</option>
+                            <option value="Другое">Другое (ввести вручную)</option>
                         </select>
                     </div>
 
@@ -9482,7 +9486,7 @@
             </div>
             <div class="form-group">
                 <label>Комиссия площадки (%):</label>
-                <input type="number" id="calcCommission" class="form-control" value="13" onkeyup="calculateProfit()">
+                <input type="number" id="calcCommission" class="form-control" placeholder="Выберите платформу в сделке" step="0.01" onkeyup="calculateProfit()" readonly>
             </div>
             <div class="calculator-section">
                 <h4>Результат:</h4>
@@ -9511,16 +9515,17 @@
             </div>
             <div class="form-group">
                 <label>Комиссия (%):</label>
-                <input type="number" id="sellCommission" class="form-control" step="0.01" value="10" placeholder="10" oninput="calculateSellProfit()" onkeyup="calculateSellProfit()">
+                <input type="number" id="sellCommission" class="form-control" step="0.01" placeholder="Выберите платформу" oninput="calculateSellProfit()" onkeyup="calculateSellProfit()" readonly>
             </div>
             <div class="form-group">
                 <label>Платформа:</label>
                 <select id="sellPlatform" class="form-control">
-                    <option value="Steam">Steam</option>
-                    <option value="CS Float">CS Float</option>
-                    <option value="CS Money">CS Money</option>
-                    <option value="Buff163">Buff163</option>
-                    <option value="Другое">Другое</option>
+                    <option value="">Выберите платформу</option>
+                    <option value="Steam">Steam (15% комиссия)</option>
+                    <option value="CS Float">CS Float (2% комиссия)</option>
+                    <option value="CS Money">CS Money (5% комиссия)</option>
+                    <option value="Buff163">Buff163 (2.5% комиссия)</option>
+                    <option value="Другое">Другое (ввести вручную)</option>
                 </select>
             </div>
             
@@ -9889,9 +9894,9 @@
 
         // Функции для сохранения и восстановления комиссии
         function saveCommissionSettings() {
-            const commission = document.getElementById('commission').value || '13';
-            const calcCommission = document.getElementById('calcCommission').value || '13';
-            const sellCommission = document.getElementById('sellCommission').value || '10';
+            const commission = document.getElementById('commission').value || '0';
+            const calcCommission = document.getElementById('calcCommission').value || '0';
+            const sellCommission = document.getElementById('sellCommission').value || '0';
             
             localStorage.setItem('saved_commission', commission);
             localStorage.setItem('saved_calc_commission', calcCommission);
@@ -9904,125 +9909,61 @@
         }
 
         function getLastPlatform() {
-            return localStorage.getItem('last_platform') || 'Steam';
+            return localStorage.getItem('last_platform') || '';
         }
 
         function loadLastPlatforms() {
-            const lastPlatform = getLastPlatform();
+            // Не загружаем последние платформы автоматически
+            // Пользователь должен выбрать платформу вручную для установки правильной комиссии
             
-            // Восстанавливаем платформу для простых транзакций
+            // Устанавливаем пустые значения для всех селектов платформ
             const simplePlatformInput = document.getElementById('simplePlatform');
             if (simplePlatformInput) {
-                simplePlatformInput.value = lastPlatform;
+                simplePlatformInput.value = '';
             }
             
-            // Восстанавливаем платформу для расширенных сделок
             const advancedPlatformInput = document.getElementById('advancedPlatform');
             if (advancedPlatformInput) {
-                advancedPlatformInput.value = lastPlatform;
+                advancedPlatformInput.value = '';
+            }
+            
+            const sellPlatformInput = document.getElementById('sellPlatform');
+            if (sellPlatformInput) {
+                sellPlatformInput.value = '';
             }
         }
 
         function loadCommissionSettings() {
-            const savedCommission = localStorage.getItem('saved_commission');
-            const savedCalcCommission = localStorage.getItem('saved_calc_commission');
+            // Не загружаем сохраненные комиссии автоматически
+            // Вместо этого комиссии будут устанавливаться при выборе платформы
+            // Это предотвращает ошибки новичков с неправильной комиссией
             
-            // Восстанавливаем комиссию для транзакций
-            if (savedCommission) {
-                const commissionInput = document.getElementById('commission');
-                if (commissionInput) {
-                    commissionInput.value = savedCommission;
-                }
+            // Устанавливаем начальные значения для полей комиссии
+            const commissionInput = document.getElementById('commission');
+            if (commissionInput) {
+                commissionInput.value = '';
+                commissionInput.placeholder = 'Выберите платформу';
+                commissionInput.readOnly = true;
             }
             
-            // Восстанавливаем комиссию для калькулятора прибыли
-            if (savedCalcCommission) {
-                const calcCommissionInput = document.getElementById('calcCommission');
-                if (calcCommissionInput) {
-                    calcCommissionInput.value = savedCalcCommission;
-                }
+            const calcCommissionInput = document.getElementById('calcCommission');
+            if (calcCommissionInput) {
+                calcCommissionInput.value = '';
+                calcCommissionInput.placeholder = 'Выберите платформу в сделке';
+                calcCommissionInput.readOnly = true;
             }
             
-            // Примечание: комиссия для продажи скинов восстанавливается в openSellSkinModal
+            const sellCommissionInput = document.getElementById('sellCommission');
+            if (sellCommissionInput) {
+                sellCommissionInput.value = '';
+                sellCommissionInput.placeholder = 'Выберите платформу';
+                sellCommissionInput.readOnly = true;
+            }
         }
 
-        // Функция для автоматической установки комиссии по платформе (возвращает true если комиссия была установлена)
-        function setPlatformCommissionIfSupported(platform, commissionFieldId) {
-            const commissionField = document.getElementById(commissionFieldId);
-            if (!commissionField) return false;
-            
-            let commission;
-            switch(platform) {
-                case 'Steam':
-                    commission = '15';
-                    break;
-                case 'CS Float':
-                    commission = '2';
-                    break;
-                case 'CS Money':
-                    commission = '5';
-                    break;
-                case 'Buff163':
-                    commission = '2.5';
-                    break;
-                default:
-                    // Для "Другое" и других вариантов не меняем комиссию
-                    return false;
-            }
-            
-            commissionField.value = commission;
-            // Сохраняем в localStorage
-            localStorage.setItem(`saved_${commissionFieldId}`, commission);
-            
-            // Если это поле для расширенных сделок, пересчитываем прибыль
-            if (commissionFieldId === 'commission') {
-                calculateDealProfit();
-            }
-            // Если это поле для продажи скинов, пересчитываем прибыль
-            if (commissionFieldId === 'sellCommission') {
-                calculateSellProfit();
-            }
-            
-            return true;
-        }
 
-        // Функция для автоматической установки комиссии по платформе
-        function setPlatformCommission(platform, commissionFieldId) {
-            const commissionField = document.getElementById(commissionFieldId);
-            if (!commissionField) return;
-            
-            let commission;
-            switch(platform) {
-                case 'Steam':
-                    commission = '15';
-                    break;
-                case 'CS Float':
-                    commission = '2';
-                    break;
-                case 'CS Money':
-                    commission = '5';
-                    break;
-                case 'Buff163':
-                    commission = '2.5';
-                    break;
-                default:
-                    // Для "Другое" и других вариантов не меняем комиссию
-                    return;
-            }
-            
-            commissionField.value = commission;
-            // Сохраняем в localStorage
-            localStorage.setItem(`saved_${commissionFieldId}`, commission);
-            
-            // Если это поле для расширенных сделок, пересчитываем прибыль
-            if (commissionFieldId === 'commission') {
-                calculateDealProfit();
-            }
-            // Если это поле для продажи скинов, пересчитываем прибыль
-            if (commissionFieldId === 'sellCommission') {
-                calculateSellProfit();
-            }
-        }
+
+
 
         // Функция для настройки обработчиков платформ
         function setupPlatformHandlers() {
@@ -10031,6 +9972,8 @@
             if (simplePlatformSelect) {
                 simplePlatformSelect.addEventListener('change', function() {
                     // Простые транзакции не имеют поля комиссии, поэтому ничего не делаем
+                    // Но синхронизируем комиссию в калькуляторе, если он открыт
+                    setCommissionByPlatform(this.value, 'calcCommission');
                 });
             }
             
@@ -10038,7 +9981,9 @@
             const advancedPlatformSelect = document.getElementById('advancedPlatform');
             if (advancedPlatformSelect) {
                 advancedPlatformSelect.addEventListener('change', function() {
-                    setPlatformCommission(this.value, 'commission');
+                    setCommissionByPlatform(this.value, 'commission');
+                    // Также обновляем калькулятор, если он открыт
+                    setCommissionByPlatform(this.value, 'calcCommission');
                 });
             }
             
@@ -10046,7 +9991,7 @@
             const sellPlatformSelect = document.getElementById('sellPlatform');
             if (sellPlatformSelect) {
                 sellPlatformSelect.addEventListener('change', function() {
-                    setPlatformCommission(this.value, 'sellCommission');
+                    setCommissionByPlatform(this.value, 'sellCommission');
                 });
             }
         }
@@ -10196,11 +10141,17 @@
             if (modalId === 'transactionModal') {
                 document.getElementById('transactionForm').reset();
                 const today = getLocalDateString();
-                const lastPlatform = getLastPlatform();
                 document.getElementById('transactionDate').value = today;
                 document.getElementById('advancedDate').value = today;
-                document.getElementById('simplePlatform').value = lastPlatform;
-                document.getElementById('advancedPlatform').value = lastPlatform;
+                document.getElementById('simplePlatform').value = '';
+                document.getElementById('advancedPlatform').value = '';
+                // Очищаем поля комиссии
+                const commissionInput = document.getElementById('commission');
+                if (commissionInput) {
+                    commissionInput.value = '';
+                    commissionInput.placeholder = 'Выберите платформу';
+                    commissionInput.readOnly = true;
+                }
                 document.getElementById('transactionType').value = 'simple';
                 toggleTransactionFields();
             }
@@ -10435,7 +10386,7 @@
             } else {
                 const buyPrice = parseFloat(document.getElementById('buyPrice').value);
                 const sellPrice = parseFloat(document.getElementById('sellPrice').value);
-                const commission = parseFloat(document.getElementById('commission').value) || 13;
+                const commission = parseFloat(document.getElementById('commission').value) || 0;
                 const skinName = document.getElementById('skinName').value;
                 const advancedDate = document.getElementById('advancedDate').value;
 
@@ -10643,7 +10594,11 @@
                         document.getElementById('skinQuality').value = quality;
                         document.getElementById('buyPrice').value = transaction.buyPrice || '';
                         document.getElementById('sellPrice').value = transaction.sellPrice || '';
-                        document.getElementById('commission').value = transaction.commission || 13;
+                        document.getElementById('commission').value = transaction.commission || '';
+            // Если есть сохраненная платформа, устанавливаем соответствующую комиссию
+            if (transaction.platform) {
+                setCommissionByPlatform(transaction.platform, 'commission');
+            }
                         document.getElementById('advancedDate').value = transaction.date;
                         document.getElementById('advancedPlatform').value = transaction.platform || 'Steam';
                     } else {
@@ -11723,6 +11678,35 @@
         // Глобальная переменная для хранения ID удаляемого скина
         let skinToDelete = null;
 
+        function getLastPlatform() {
+            return localStorage.getItem('last_platform') || 'Steam';
+        }
+
+        function saveLastPlatform(platform) {
+            localStorage.setItem('last_platform', platform);
+        }
+
+        function setPlatformCommissionIfSupported(platform, inputId = 'sellCommission') {
+            const commissions = {
+                'Steam': 15,
+                'CS Float': 2,
+                'CS Money': 5,
+                'Buff163': 2.5,
+                'Другое': 0
+            };
+
+            const commission = commissions[platform];
+            if (commission !== undefined) {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.value = commission;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         function openSellSkinModal(id) {
             const skin = skins.find(s => s.id === id);
             if (!skin) return;
@@ -12400,6 +12384,44 @@
             }
         }
         
+        // Функция для установки комиссии по платформе
+        function setCommissionByPlatform(platform, targetInputId) {
+            const commissionRates = {
+                'Steam': 15,
+                'CS Float': 2,
+                'CS Money': 5,
+                'Buff163': 2.5,
+                'Другое': '' // Для "Другое" не устанавливаем автоматически
+            };
+            
+            const commissionInput = document.getElementById(targetInputId);
+            if (commissionInput) {
+                const rate = commissionRates[platform];
+                if (rate !== undefined && rate !== '') {
+                    commissionInput.value = rate;
+                    commissionInput.placeholder = `${rate}% (${platform})`;
+                    commissionInput.readOnly = false;
+                } else if (platform === 'Другое') {
+                    commissionInput.value = '';
+                    commissionInput.placeholder = 'Введите комиссию вручную';
+                    commissionInput.readOnly = false;
+                } else {
+                    commissionInput.value = '';
+                    commissionInput.placeholder = 'Выберите платформу';
+                    commissionInput.readOnly = true;
+                }
+                
+                // Автоматически пересчитываем после изменения комиссии
+                if (targetInputId === 'commission') {
+                    calculateDealProfit();
+                } else if (targetInputId === 'calcCommission') {
+                    calculateProfit();
+                } else if (targetInputId === 'sellCommission') {
+                    calculateSellProfit();
+                }
+            }
+        }
+
         // Функция для обновления tooltips
         function updateTooltips() {
             // Устанавливаем русские tooltips
