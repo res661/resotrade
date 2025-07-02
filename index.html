@@ -6,7 +6,6 @@
     <title>RESOTRADE</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
-<script src="translations.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
     * {
@@ -2399,7 +2398,6 @@
     <title>RESOTRADE</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
-<script src="translations.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
     * {
@@ -8483,35 +8481,35 @@
             <div class="sidebar-nav">
                 <button class="nav-btn" onclick="setActiveNav(this); showView('dashboard'); collapseSidebar()" data-tooltip-key="tooltip_overview">
                     <i class="fas fa-chart-line"></i>
-                    <span class="nav-btn-text" data-translate="overview">Обзор</span>
+                    <span class="nav-btn-text">Обзор</span>
                 </button>
                 <button class="nav-btn" onclick="setActiveNav(this); showView('calendar'); collapseSidebar()" data-tooltip-key="tooltip_calendar">
                     <i class="fas fa-calendar"></i>
-                    <span class="nav-btn-text" data-translate="calendar">Календарь</span>
+                    <span class="nav-btn-text">Календарь</span>
                 </button>
                 <button class="nav-btn" onclick="setActiveNav(this); openNewTransactionModal(); collapseSidebar()" data-tooltip-key="tooltip_add">
                     <i class="fas fa-plus"></i>
-                    <span class="nav-btn-text" data-translate="add">Добавить</span>
+                    <span class="nav-btn-text">Добавить</span>
                 </button>
                 <div class="nav-separator"></div>
                 <button class="nav-btn" onclick="setActiveNav(this); showModal('calculatorModal'); collapseSidebar()" data-tooltip-key="tooltip_calculator">
                     <i class="fas fa-calculator"></i>
-                    <span class="nav-btn-text" data-translate="calculator">Калькулятор</span>
+                    <span class="nav-btn-text">Калькулятор</span>
                 </button>
                 <button class="nav-btn" onclick="setActiveNav(this); showView('skins'); collapseSidebar()" data-tooltip-key="tooltip_skins">
                     <i class="fas fa-box"></i>
-                    <span class="nav-btn-text" data-translate="my_skins">Мои скины</span>
+                    <span class="nav-btn-text">Мои скины</span>
                 </button>
                 <div class="nav-separator"></div>
 
                 <div style="margin-top: auto;">
                     <button class="nav-btn" onclick="showModal('exportFormatModal'); collapseSidebar()" data-tooltip-key="tooltip_export">
                         <i class="fas fa-download"></i>
-                        <span class="nav-btn-text" data-translate="export">Экспорт</span>
+                        <span class="nav-btn-text">Экспорт</span>
                     </button>
                     <button class="nav-btn" onclick="showModal('importFormatModal'); collapseSidebar()" data-tooltip-key="tooltip_import">
                         <i class="fas fa-upload"></i>
-                        <span class="nav-btn-text" data-translate="import">Импорт</span>
+                        <span class="nav-btn-text">Импорт</span>
                     </button>
                 </div>
             </div>
@@ -8533,10 +8531,7 @@
                     <span class="active-line"></span>
                     <i class="fas fa-question"></i>
                 </button>
-                <button class="right-nav-btn" onclick="showModal('settingsModal')" data-tooltip-key="tooltip_settings">
-                    <span class="active-line"></span>
-                    <i class="fas fa-cog"></i>
-                </button>
+
             </div>
         </div>
 
@@ -8551,9 +8546,9 @@
         <div id="home" class="view">
             <div class="hero-banner">
                 <div class="hero-content">
-                    <h1 class="hero-title"><span data-translate="main_title">Управляй каждой сделкой с</span> <span class="hero-brand">RESOTRADE</span></h1>
-                    <p class="hero-subtitle" data-translate="hero_subtitle">Записывай покупки и продажи • Анализируй прибыль • Максимизируй доходы</p>
-                    <button class="hero-btn" onclick="setActiveNav(document.querySelector('.nav-btn[onclick*=&quot;dashboard&quot;]')); showView('dashboard')" data-translate="start_trading">НАЧАТЬ ТРЕЙДИНГ</button>
+                    <h1 class="hero-title"><span>Управляй каждой сделкой с</span> <span class="hero-brand">RESOTRADE</span></h1>
+                    <p class="hero-subtitle">Записывай покупки и продажи • Анализируй прибыль • Максимизируй доходы</p>
+                    <button class="hero-btn" onclick="setActiveNav(document.querySelector('.nav-btn[onclick*=&quot;dashboard&quot;]')); showView('dashboard')">НАЧАТЬ ТРЕЙДИНГ</button>
                 </div>
                 <div class="hero-decoration">
                     <img src="playside (66) (1).png" alt="АК-47 скин" class="hero-weapon">
@@ -8567,60 +8562,60 @@
                             <div class="home-card-icon">
                                 <i class="fas fa-plus-circle"></i>
                             </div>
-                            <h3 data-translate="create_transaction">Создать Сделку</h3>
-                            <p data-translate="create_transaction_desc">Добавь новую покупку или продажу скина</p>
+                            <h3>Создать Сделку</h3>
+                            <p>Добавь новую покупку или продажу скина</p>
                         </div>
                         
                         <div class="home-card" onclick="setActiveNav(document.querySelectorAll('.nav-btn')[3]); showView('statistics')">
                             <div class="home-card-icon">
                                 <i class="fas fa-chart-bar"></i>
                             </div>
-                            <h3 data-translate="statistics_card">Статистика</h3>
-                            <p data-translate="statistics_desc">Посмотри свои доходы и расходы</p>
+                            <h3>Статистика</h3>
+                            <p>Посмотри свои доходы и расходы</p>
                         </div>
                         
                         <div class="home-card" onclick="setActiveNav(document.querySelectorAll('.nav-btn')[1]); showView('calendar')">
                             <div class="home-card-icon">
                                 <i class="fas fa-calendar-alt"></i>
                             </div>
-                            <h3 data-translate="calendar_card">Календарь</h3>
-                            <p data-translate="calendar_desc">Отслеживай сделки по дням</p>
+                            <h3>Календарь</h3>
+                            <p>Отслеживай сделки по дням</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="main-section-right">
-                    <h4 data-translate="our_channels">Наши каналы</h4>
+                    <h4>Наши каналы</h4>
                     <div class="telegram-links">
                         <a href="https://t.me/res661" class="telegram-link" target="_blank">
                             <i class="fab fa-telegram"></i>
                             <div>
-                                <span class="tg-title" data-translate="res_channel">RES 6️⃣6️⃣1️⃣</span>
-                                <span class="tg-desc" data-translate="res_desc">Трейдинг и сделки</span>
+                                <span class="tg-title">RES 6️⃣6️⃣1️⃣</span>
+                                <span class="tg-desc">Трейдинг и сделки</span>
                             </div>
                         </a>
                         
                         <a href="https://t.me/slavniytrade" class="telegram-link" target="_blank">
                             <i class="fab fa-telegram"></i>
                             <div>
-                                <span class="tg-title" data-translate="slavniy_channel">Славный трейд</span>
-                                <span class="tg-desc" data-translate="slavniy_desc">Торговля скинами</span>
+                                <span class="tg-title">Славный трейд</span>
+                                <span class="tg-desc">Торговля скинами</span>
                             </div>
                         </a>
                         
                         <a href="https://www.youtube.com/@RESGG661" class="telegram-link youtube-link" target="_blank">
                             <i class="fab fa-youtube"></i>
                             <div>
-                                <span class="tg-title" data-translate="youtube_res">RESGG661</span>
-                                <span class="tg-desc" data-translate="youtube_res_desc">YouTube канал</span>
+                                <span class="tg-title">RESGG661</span>
+                                <span class="tg-desc">YouTube канал</span>
                             </div>
                         </a>
                         
                         <a href="https://www.youtube.com/@slavniytrade" class="telegram-link youtube-link" target="_blank">
                             <i class="fab fa-youtube"></i>
                             <div>
-                                <span class="tg-title" data-translate="youtube_slavniy">Slavniy Trade</span>
-                                <span class="tg-desc" data-translate="youtube_slavniy_desc">YouTube видео</span>
+                                <span class="tg-title">Slavniy Trade</span>
+                                <span class="tg-desc">YouTube видео</span>
                             </div>
                         </a>
                     </div>
@@ -8636,9 +8631,9 @@
                     <div class="dashboard-hero-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <h1 class="dashboard-hero-title" data-translate="dashboard_title">Обзор сделок</h1>
-                    <p class="dashboard-hero-subtitle" data-translate="dashboard_subtitle">Обзор сделок, баланса, доходов и расходов</p>
-                    <p class="dashboard-hero-description" data-translate="dashboard_description" data-translate-html="true">На этой странице отображаются все ваши сделки, текущий баланс, а также график для визуализации прибыли и убытков.<br>Вы также можете добавить депозит, если это необходимо.</p>
+                    <h1 class="dashboard-hero-title">Обзор сделок</h1>
+                    <p class="dashboard-hero-subtitle">Обзор сделок, баланса, доходов и расходов</p>
+                    <p class="dashboard-hero-description">На этой странице отображаются все ваши сделки, текущий баланс, а также график для визуализации прибыли и убытков.<br>Вы также можете добавить депозит, если это необходимо.</p>
                 </div>
                 <div class="dashboard-hero-decoration">
                     <img src="playside (62) (1).png" alt="Скин обзора" class="dashboard-weapon">
@@ -9827,86 +9822,9 @@
         </div>
     </div>
 
-    <!-- Модальное окно настроек -->
-    <div id="settingsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="hideModal('settingsModal')">&times;</span>
-            <h3><i class="fas fa-cog"></i> <span data-translate="settings_title">Настройки</span></h3>
-            
-            <div class="settings-sections">
-                <!-- Секция языка -->
-                <div class="settings-section">
-                    <h4><i class="fas fa-language"></i> <span data-translate="language_setting">Язык интерфейса</span></h4>
-                    <div class="language-selector">
-                        <label for="languageSelect" data-translate="select_language">Выберите язык</label>
-                        <select id="languageSelect" class="form-control" onchange="changeLanguage(this.value)">
-                            <option value="ru" data-translate="russian">Русский</option>
-                            <option value="uk" data-translate="ukrainian">Украинский</option>
-                            <option value="en" data-translate="english">English</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Секция настроек в главной области -->
-    <div id="settings" class="view" style="display: none;">
-        <div class="settings-hero-banner">
-            <div class="settings-hero-content">
-                <div class="settings-hero-icon">
-                    <i class="fas fa-cog"></i>
-                </div>
-                <h1 class="settings-hero-title" data-translate="settings_title">Настройки</h1>
-                <p class="settings-hero-subtitle">Персонализируйте интерфейс под себя</p>
-            </div>
-        </div>
-        
-        <div class="settings-content">
-            <div class="settings-card">
-                <div class="settings-card-header">
-                    <h3><i class="fas fa-language"></i> <span data-translate="language_setting">Язык интерфейса</span></h3>
-                    <p data-translate="select_language">Выберите язык</p>
-                </div>
-                <div class="settings-card-body">
-                    <div class="language-options">
-                        <div class="language-option" onclick="changeLanguage('ru')">
-                            <div class="language-flag">🇷🇺</div>
-                            <div class="language-info">
-                                <span class="language-name" data-translate="russian">Русский</span>
-                                <span class="language-desc">Русский язык</span>
-                            </div>
-                            <div class="language-check" id="lang-check-ru">
-                                <i class="fas fa-check"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="language-option" onclick="changeLanguage('uk')">
-                            <div class="language-flag">🇺🇦</div>
-                            <div class="language-info">
-                                <span class="language-name" data-translate="ukrainian">Украинский</span>
-                                <span class="language-desc">Українська мова</span>
-                            </div>
-                            <div class="language-check" id="lang-check-uk">
-                                <i class="fas fa-check"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="language-option" onclick="changeLanguage('en')">
-                            <div class="language-flag">🇺🇸</div>
-                            <div class="language-info">
-                                <span class="language-name" data-translate="english">English</span>
-                                <span class="language-desc">English language</span>
-                            </div>
-                            <div class="language-check" id="lang-check-en">
-                                <i class="fas fa-check"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
 
             </div>
         </div>
@@ -10245,6 +10163,9 @@
             
             // Проверяем наличие данных из старого трекера для автоматической миграции
             checkForLegacyDataMigration();
+            
+            // Обновляем tooltips после загрузки всех элементов
+            updateTooltips();
         });
 
         // Управление темой
@@ -12478,6 +12399,29 @@
                 }, 300);
             }
         }
+        
+        // Функция для обновления tooltips
+        function updateTooltips() {
+            // Устанавливаем русские tooltips
+            const tooltips = {
+                'tooltip_overview': 'ОБЗОР',
+                'tooltip_calendar': 'Календарь', 
+                'tooltip_add': 'Добавить сделку',
+                'tooltip_calculator': 'Калькулятор прибыли',
+                'tooltip_skins': 'Мои скины',
+                'tooltip_export': 'Экспорт данных',
+                'tooltip_import': 'Импорт данных',
+                'tooltip_statistics': 'СТАТИСТИКА',
+                'tooltip_skin_pool': 'ПУЛ СКИНОВ',
+                'tooltip_faq': 'FAQ'
+            };
+            
+            document.querySelectorAll('[data-tooltip-key]').forEach(element => {
+                const key = element.getAttribute('data-tooltip-key');
+                const tooltip = tooltips[key] || key;
+                element.setAttribute('data-tooltip', tooltip);
+            });
+        }
 
         function importFromTxt(txtData) {
             // Парсим TXT данные согласно структуре экспорта
@@ -13776,311 +13720,10 @@
 
     </script>
 
-    <style>
-        /* Стили для настроек */
-        .settings-sections {
-            margin-top: 20px;
-        }
 
-        .settings-section {
-            margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .settings-section h4 {
-            color: var(--text-primary);
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .settings-section h4 i {
-            color: var(--accent);
-            font-size: 1rem;
-        }
-
-        .language-selector {
-            margin-top: 15px;
-        }
-
-        .language-selector label {
-            display: block;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-
-        .language-selector select {
-            width: 100%;
-            padding: 10px 15px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-        }
-
-        /* Стили для страницы настроек */
-        .settings-hero-banner {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
-            text-align: center;
-            border: 1px solid #333333;
-        }
-
-        .settings-hero-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .settings-hero-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--accent) 0%, #0056b3 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 2rem;
-            color: white;
-        }
-
-        .settings-hero-title {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 15px;
-            color: var(--text-primary);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .settings-hero-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .settings-content {
-            margin-top: 30px;
-        }
-
-        .settings-card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            margin-bottom: 25px;
-        }
-
-        .settings-card-header {
-            padding: 25px 30px;
-            border-bottom: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .settings-card-header h3 {
-            color: var(--text-primary);
-            font-size: 1.3rem;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .settings-card-header h3 i {
-            color: var(--accent);
-            font-size: 1.1rem;
-        }
-
-        .settings-card-header p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin: 0;
-        }
-
-        .settings-card-body {
-            padding: 30px;
-        }
-
-        .language-options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .language-option {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .language-option:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .language-option.active {
-            background: rgba(0, 123, 255, 0.15);
-            border-color: var(--accent);
-        }
-
-        .language-flag {
-            font-size: 2rem;
-            margin-right: 20px;
-            line-height: 1;
-        }
-
-        .language-info {
-            flex: 1;
-        }
-
-        .language-name {
-            display: block;
-            color: var(--text-primary);
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 3px;
-        }
-
-        .language-desc {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .language-check {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: var(--accent);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.9rem;
-        }
-
-        .language-option.active .language-check {
-            display: flex;
-        }
-
-        @media (max-width: 768px) {
-            .settings-hero-banner {
-                padding: 30px 20px;
-            }
-
-            .settings-hero-title {
-                font-size: 2rem;
-            }
-
-            .settings-hero-subtitle {
-                font-size: 1rem;
-            }
-
-            .settings-card-header,
-            .settings-card-body {
-                padding: 20px;
-            }
-
-            .language-option {
-                padding: 15px;
-            }
-
-            .language-flag {
-                font-size: 1.5rem;
-                margin-right: 15px;
-            }
-
-            .language-name {
-                font-size: 1rem;
-            }
-
-            .language-desc {
-                font-size: 0.8rem;
-            }
-        }
-    </style>
 
     <script>
-        // Функции для работы с настройками и языками
-        function showSettingsView() {
-            setActiveRightNav(document.querySelector('.right-nav-btn[onclick*="showModal(\'settingsModal\')"]'));
-            showView('settings');
-        }
 
-        function changeLanguage(lang) {
-            setLanguage(lang);
-            
-            // Обновляем выбранный язык в select
-            const selectElement = document.getElementById('languageSelect');
-            if (selectElement) {
-                selectElement.value = lang;
-            }
-            
-            // Обновляем активные состояния языковых опций
-            document.querySelectorAll('.language-option').forEach(option => {
-                option.classList.remove('active');
-            });
-            
-            const activeOption = document.getElementById(`lang-check-${lang}`);
-            if (activeOption) {
-                activeOption.closest('.language-option').classList.add('active');
-            }
-            
-            // Скрываем модальное окно настроек если оно открыто
-            hideModal('settingsModal');
-        }
-
-        // Инициализация настроек при загрузке страницы
-        function initializeSettings() {
-            const currentLang = getCurrentLanguage();
-            
-            // Устанавливаем значение в select
-            const selectElement = document.getElementById('languageSelect');
-            if (selectElement) {
-                selectElement.value = currentLang;
-            }
-            
-            // Устанавливаем активное состояние языковой опции
-            document.querySelectorAll('.language-option').forEach(option => {
-                option.classList.remove('active');
-            });
-            
-            const activeOption = document.getElementById(`lang-check-${currentLang}`);
-            if (activeOption) {
-                activeOption.closest('.language-option').classList.add('active');
-            }
-        }
-
-        // Обновляем функцию DOMContentLoaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Существующий код...
-            initializeSettings();
-        });
-
-        // Добавляем обработчик клика для кнопки настроек в правом сайдбаре
-        function showSettingsModal() {
-            showModal('settingsModal');
-        }
-
-        // Обновляем функцию для правого сайдбара
-        function goToSettings(button) {
-            setActiveRightNav(button);
-            showView('settings');
-        }
     </script>
 </body>
 </html> 
